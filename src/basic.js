@@ -4,7 +4,7 @@ describe("WIMS", function () {
   this.abortOnElementLocateError = false;
 
   test("Workplace2", function (browser) {
-    var coveo = browser.page.Coveo();
+    const coveo = browser.page.Coveo();
     browser.url(
       "https://search.cloud.coveo.com/pages/workplacedemoqjjnc2v7/full2"
     );
@@ -13,44 +13,45 @@ describe("WIMS", function () {
   });
 
   test("Philips", function (browser) {
-    var coveo = browser.page.Coveo();
+    const coveo = browser.page.Coveo();
     browser.url(
       "https://search-eu.cloud.coveo.com/pages/philips5pi3khvx/Demo#q=one%20blade&first=10&t=All&sort=relevancy"
     );
     browser.pause(5000);
-  }),
-    test("subzero", function (browser) {
-      var coveo = browser.page.Coveo();
-      //Set pause between events to 1 second
-      browser.url("https://www.subzero-wolf.com/");
-      coveo.c_click(".visitNASiteHandler");
-      //Open search box
-      coveo.c_click("#search-trigger");
-      coveo.c_search(
-        "grill",
-        "",
-        "#spotlightSearch .CoveoQuerybox .magic-box-input > input"
-      );
-      browser.keys(browser.Keys.ENTER);
+  });
 
-      browser.pause(3000);
-      coveo.c_moveToElement("article:nth-child(2)", 10, 10);
-      browser.pause(2000);
-      coveo.c_moveToElement("article:nth-child(3)", 10, 10);
-      browser.pause(2000);
-      coveo.c_moveToElement("article:nth-child(4)", 10, 10);
-      browser.pause(5000);
+  test("subzero", function (browser) {
+    const coveo = browser.page.Coveo();
+    //Set pause between events to 1 second
+    browser.url("https://www.subzero-wolf.com/");
+    coveo.c_click(".visitNASiteHandler");
+    //Open search box
+    coveo.c_click("#search-trigger");
+    coveo.c_search(
+      "grill",
+      "",
+      "#spotlightSearch .CoveoQuerybox .magic-box-input > input"
+    );
+    browser.keys(browser.Keys.ENTER);
 
-      coveo.c_setPause(1000);
-      browser.url("https://www.enbridge.com/about-us");
+    browser.pause(3000);
+    coveo.c_moveToElement("article:nth-child(2)", 10, 10);
+    browser.pause(2000);
+    coveo.c_moveToElement("article:nth-child(3)", 10, 10);
+    browser.pause(2000);
+    coveo.c_moveToElement("article:nth-child(4)", 10, 10);
+    browser.pause(5000);
 
-      coveo.c_search("gas", "", "#mainSearch");
-      browser.keys(browser.Keys.ENTER);
-      browser.pause(1000);
-    });
+    coveo.c_setPause(1000);
+    browser.url("https://www.enbridge.com/about-us");
+
+    coveo.c_search("gas", "", "#mainSearch");
+    browser.keys(browser.Keys.ENTER);
+    browser.pause(1000);
+  });
 
   test("enbridge", function (browser) {
-    var coveo = browser.page.Coveo();
+    const coveo = browser.page.Coveo();
     //Set pause between events to 1 second
     browser.url(
       "https://www.enbridge.com/about-us/natural-gas-transmission-and-midstream"
@@ -122,7 +123,7 @@ describe("WIMS", function () {
   });
 
   test("step b: the gym search", function (browser) {
-    var coveo = browser.page.Coveo();
+    const coveo = browser.page.Coveo();
     //Set pause between events to 1 second
     coveo.c_setPause(1000);
     browser.url("https://thegym.coveodemo.com/");
@@ -162,7 +163,7 @@ describe("WIMS", function () {
   });
 
   test("Workplace", function (browser) {
-    var coveo = browser.page.Coveo();
+    const coveo = browser.page.Coveo();
     browser.url(
       "https://search.cloud.coveo.com/pages/workplacedemoqjjnc2v7/full2"
     );
@@ -189,7 +190,7 @@ describe("WIMS", function () {
   });
 
   test("step b: salesforce search", function (browser) {
-    var coveo = browser.page.Coveo();
+    const coveo = browser.page.Coveo();
     //Set pause between events to 1 second
     coveo.c_setPause(1000);
     browser.url("https://help.salesforce.com/home");
@@ -222,7 +223,7 @@ describe("WIMS", function () {
   });
 
   test("step b: bmc search", function (browser) {
-    var coveo = browser.page.Coveo();
+    const coveo = browser.page.Coveo();
     //Set pause between events to 1 second
     coveo.c_setPause(1000);
     browser.url("https://www.bmc.com/support/resources/support-search.html");
@@ -252,7 +253,7 @@ describe("WIMS", function () {
   });
 
   test("step b: coveo search", function (browser) {
-    var coveo = browser.page.Coveo();
+    const coveo = browser.page.Coveo();
     //Set pause between events to 1 second
     coveo.c_setPause(1000);
     browser.url(
@@ -278,7 +279,7 @@ describe("WIMS", function () {
     browser.end();
   });
   test("step b: motorola search", function (browser) {
-    var coveo = browser.page.Coveo();
+    const coveo = browser.page.Coveo();
     //Set pause between events to 1 second
     coveo.c_setPause(1000);
     browser.url(
