@@ -1,0 +1,24 @@
+{
+  "name": "automatic-tester",
+  "version": "1.0.0",
+  "description": "Nightwatch scripts to test Coveo implementations and generate test traffic.",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "chromedriver": "^87.0.0",
+    "nightwatch": "^1.5.1"
+  },
+  "scripts": {
+    "test": "npx nightwatch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coveo-labs/automatic-tester.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coveo-labs/automatic-tester/issues"
+  },
+  "homepage": "https://github.com/coveo-labs/automatic-tester#readme"
+}
