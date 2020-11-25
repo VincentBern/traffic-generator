@@ -1,0 +1,19 @@
+{
+  "src_folders": [
+    "src"
+  ],
+  "webdriver": {
+    "start_process": true,
+    "server_path": "node_modules/.bin/chromedriver",
+    "port": 9515
+  },
+  "page_objects_path": "pages",
+  "test_settings": {
+    "default": {
+      "desiredCapabilities": {
+        "browserName": "chrome"
+      }
+    }
+  },
+  "test_workers": true
+}
