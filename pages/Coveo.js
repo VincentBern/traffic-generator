@@ -92,13 +92,14 @@ const coveoCommands = {
   //c_click, click on an element
   //*******************************************************
   c_click: function (selector) {
-    return this.waitForElementVisible({
-          selector: selector,
-          abortOnFailure: false,
-          suppressNotFoundErrors: true,
-        },
-        5000
-      )
+    return this.waitForElementVisible(
+      {
+        selector: selector,
+        abortOnFailure: false,
+        suppressNotFoundErrors: true,
+      },
+      5000
+    )
       .moveToElement(selector, 10, 10)
       .click({
         selector: selector,
@@ -110,13 +111,14 @@ const coveoCommands = {
   //c_click, click on an element
   //*******************************************************
   c_moveToElement: function (selector, x, y) {
-    return this.waitForElementVisible({
-          selector: selector,
-          abortOnFailure: false,
-          suppressNotFoundErrors: true,
-        },
-        5000
-      )
+    return this.waitForElementVisible(
+      {
+        selector: selector,
+        abortOnFailure: false,
+        suppressNotFoundErrors: true,
+      },
+      5000
+    )
       .moveToElement(selector, x, y)
       .pause(currentPause);
   },
@@ -273,10 +275,10 @@ const coveoCommands = {
       selector = specific;
     }
     return this.waitForElementVisible({
-        selector: selector,
-        abortOnFailure: false,
-        timeout: 5000,
-      })
+      selector: selector,
+      abortOnFailure: false,
+      timeout: 5000,
+    })
       .moveToElement(selector, 10, 10)
       .pause(200)
       .click({
@@ -366,26 +368,31 @@ const coveoCommands = {
       .c_click("#idSIButton9")
       .c_click("#idBtn_Back");
   },
-  c_waitForElement: function (selector, callback) {
-    let tries = 0;
+  c_waitForElement: function (selector, tries = 1, callback) {
+    let _this = this;
     console.log("CHECK FOR ELEMENT " + selector + " (" + tries + ")");
     return this.waitForElementVisible(selector, 4000, false, function (result) {
       if (result.value && result.value == true) {
         console.log("Element is there... " + selector);
         callback(true);
-        return;
       } else {
         console.log("Element is NOT there... , retry " + selector);
-        this.pause(200);
-        this.moveToElement(selector, 10, 10);
         tries += 1;
-        if (tries < 5) this.c_waitForElement(selector, callback);
+        if (tries < 3) {
+          _this.pause(200);
+          _this.moveToElement(selector, 10, 10);
+          _this.c_waitForElement(selector, tries, callback);
+        } else {
+          console.log("Element is NOT there... sending FALSE " + selector);
+          callback(false);
+        }
       }
     });
   },
-  c_clickv2: function (selector) {
+  c_clickv2: function (selector, callback) {
     let _this = this;
-    this.c_waitForElement(selector, function (result) {
+    this.c_waitForElement(selector, 1, function (result) {
+      console.log(result);
       if (result) {
         console.log("Click on Element " + selector);
         _this.click({
@@ -393,14 +400,21 @@ const coveoCommands = {
           abortOnFailure: false,
           suppressNotFoundErrors: true,
         });
+        callback(true);
+      } else {
+        console.log("NO Click because element was not found " + selector);
+        callback(false);
       }
     });
   },
-  c_setValuev2: function (selector, val) {
+  c_setValuev2: function (selector, val, callback) {
     let _this = this;
-    this.c_waitForElement(selector, function (result) {
+    this.c_waitForElement(selector, 1, function (result) {
       if (result) {
         _this.setValue(selector, val);
+        callback(true);
+      } else {
+        callback(false);
       }
     });
   },
@@ -408,12 +422,17 @@ const coveoCommands = {
   //c_loginOfficev2
   //*******************************************************
   c_loginOfficev2: function (user, pass) {
-    this.c_clickv2("#loginWithOffice365");
-    this.c_setValuev2("#i0116", user);
-    this.c_clickv2("#idSIButton9");
-    this.c_setValuev2("#i0118", pass);
-    this.c_clickv2("#idSIButton9");
-    this.c_clickv2("#idBtn_Back");
+    this.c_clickv2("#loginWithOffice365", () =>
+      this.c_setValuev2("#i0116", user, () =>
+        this.c_clickv2("#idSIButton9", () =>
+          this.c_setValuev2("#i0118", pass, () =>
+            this.c_clickv2("#idSIButton9", () =>
+              this.c_clickv2("#idBtn_Back", () => {})
+            )
+          )
+        )
+      )
+    );
   },
 };
 
