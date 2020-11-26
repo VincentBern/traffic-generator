@@ -2,7 +2,7 @@ let prevRND = 1;
 let currentPause = 1000;
 let currentFacet = "";
 
-var coveoCommands = {
+const coveoCommands = {
   //*******************************************************
   //getRandomInt, for getting random results
   //*******************************************************
@@ -33,7 +33,7 @@ var coveoCommands = {
   c_makeVisible: function (selector) {
     this.api.execute(
       function (selector) {
-        var element = document.querySelectorAll(selector);
+        const element = document.querySelectorAll(selector);
         element.forEach((el) => {
           el.setAttribute("style", "display:inherit");
         });
@@ -109,14 +109,13 @@ var coveoCommands = {
   //c_click, click on an element
   //*******************************************************
   c_click: function (selector) {
-    return this.waitForElementVisible(
-      {
-        selector: selector,
-        abortOnFailure: false,
-        suppressNotFoundErrors: true,
-      },
-      5000
-    )
+    return this.waitForElementVisible({
+          selector: selector,
+          abortOnFailure: false,
+          suppressNotFoundErrors: true,
+        },
+        5000
+      )
       .moveToElement(selector, 10, 10)
       .setValue(selector, "")
       .pause(200)
@@ -131,14 +130,13 @@ var coveoCommands = {
   //c_click, click on an element
   //*******************************************************
   c_moveToElement: function (selector, x, y) {
-    return this.waitForElementVisible(
-      {
-        selector: selector,
-        abortOnFailure: false,
-        suppressNotFoundErrors: true,
-      },
-      5000
-    )
+    return this.waitForElementVisible({
+          selector: selector,
+          abortOnFailure: false,
+          suppressNotFoundErrors: true,
+        },
+        5000
+      )
       .moveToElement(selector, x, y)
       .pause(currentPause);
   },
@@ -295,10 +293,10 @@ var coveoCommands = {
       selector = specific;
     }
     return this.waitForElementVisible({
-      selector: selector,
-      abortOnFailure: false,
-      timeout: 5000,
-    })
+        selector: selector,
+        abortOnFailure: false,
+        timeout: 5000,
+      })
       .moveToElement(selector, 10, 10)
       .pause(200)
       .click({
