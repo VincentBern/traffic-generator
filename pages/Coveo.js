@@ -31,7 +31,7 @@ const coveoCommands = {
   //c_makeVisible, make elements visible
   //*******************************************************
   c_makeVisible: function (selector) {
-    this.api.execute(
+    return this.api.execute(
       function (selector) {
         const element = document.querySelectorAll(selector);
         element.forEach((el) => {
@@ -45,36 +45,19 @@ const coveoCommands = {
   //c_search, search for text. Do not click on submit
   //*******************************************************
   c_search: function (text, searchinterface = "", specific = "") {
-    let selector = "";
-    if (searchinterface != "") {
-      searchinterface = searchinterface + " ";
-    }
-    selector += ".CoveoSearchbox .magic-box-input > input";
-    if (specific != "") {
-      selector = specific;
-    }
-    return this.waitForElementVisible(searchinterface + selector)
-      .clearValue(searchinterface + selector)
-      .setValue(searchinterface + selector, text)
-      .pause(currentPause);
+    const selector = specific || '.CoveoSearchbox .magic-box-input > input';
+    const inputBoxSelector = `${searchinterface} ${selector}`;
+
+    return this.waitForElementVisible(inputBoxSelector)
+      .clearValue(inputBoxSelector)
+      .setValue(inputBoxSelector, text);
   },
   //*******************************************************
   //c_searchAndSubmit, search for text and click on submit
   //*******************************************************
   c_searchAndSubmit: function (text, searchinterface = "", specific = "") {
-    let selector = "";
-    if (searchinterface != "") {
-      searchinterface = searchinterface + " ";
-    }
-    selector += ".CoveoSearchbox .magic-box-input > input";
-    if (specific != "") {
-      selector = specific;
-    }
-    return this.waitForElementVisible(searchinterface + selector)
-      .clearValue(searchinterface + selector)
-      .setValue(searchinterface + selector, text)
-      .c_click(searchinterface + ".CoveoSearchButton")
-      .pause(currentPause);
+    return this.c_search(text, searchinterface, specific)
+      .c_click(`${searchinterface} .CoveoSearchButton`);
   },
   //*******************************************************
   //c_searchAndClickSuggestion, search for text and click on NR suggestion
@@ -117,14 +100,11 @@ const coveoCommands = {
         5000
       )
       .moveToElement(selector, 10, 10)
-      .setValue(selector, "")
-      .pause(200)
       .click({
         selector: selector,
         abortOnFailure: false,
         suppressNotFoundErrors: true,
-      })
-      .pause(currentPause);
+      });
   },
   //*******************************************************
   //c_click, click on an element
@@ -324,9 +304,9 @@ const coveoCommands = {
       max = this.getMaxResults(selector);
       nr = this.getRandomInt(1, max);
     }
-    selector +=
-      ".CoveoResultList > div > div:nth-child(" + nr + ")  .CoveoQuickview";
-    this.waitForElementVisible(selector, 5000)
+    selector += ".CoveoResultList > div > div:nth-child(" + nr + ")  .CoveoQuickview";
+
+    let returnContext = this.waitForElementVisible(selector, 5000)
       .moveToElement(selector, 10, 10)
       .pause(200)
       .click({
@@ -335,7 +315,12 @@ const coveoCommands = {
         suppressNotFoundErrors: true,
       })
       .pause(currentPause);
-    if (autoclose) this.c_closeQuickview();
+
+    if (autoclose) {
+      returnContext = returnContext.c_closeQuickview();
+    }
+
+    return returnContext;
   },
   //*******************************************************
   //c_closeQuickview, close the quickview window
@@ -374,7 +359,7 @@ const coveoCommands = {
   //c_loginOffice
   //*******************************************************
   c_loginOffice: function (user, pass) {
-    this.c_click("#loginWithOffice365")
+    return this.c_click("#loginWithOffice365")
       .c_setValue("#i0116", user)
       .c_click("#idSIButton9")
       .c_setValue("#i0118", pass)
@@ -384,7 +369,7 @@ const coveoCommands = {
   c_waitForElement: function (selector, callback) {
     let tries = 0;
     console.log("CHECK FOR ELEMENT " + selector + " (" + tries + ")");
-    this.waitForElementVisible(selector, 4000, false, function (result) {
+    return this.waitForElementVisible(selector, 4000, false, function (result) {
       if (result.value && result.value == true) {
         console.log("Element is there... " + selector);
         callback(true);
