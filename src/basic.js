@@ -8,7 +8,7 @@ describe("WIMS", function () {
     browser.url(
       "https://search.cloud.coveo.com/pages/workplacedemoqjjnc2v7/full2"
     );
-    coveo.c_loginOfficev2("adelev@M365x988456.onmicrosoft.com", "&Qwerty 123");
+    coveo.c_loginOffice("adelev@M365x988456.onmicrosoft.com", "&Qwerty 123");
     browser.pause(5000);
   });
 
@@ -20,34 +20,35 @@ describe("WIMS", function () {
     browser.pause(5000);
   });
 
+
   test("subzero", function (browser) {
     const coveo = browser.page.Coveo();
-    //Set pause between events to 1 second
     browser.url("https://www.subzero-wolf.com/");
-    coveo.c_click(".visitNASiteHandler");
-    //Open search box
-    coveo.c_click("#search-trigger");
+    coveo
+      .c_click("#js-allow-cookies")
+      .c_click("#search-trigger")
+      .c_search(
+        "grill",
+        "",
+        "#spotlightSearch .CoveoQuerybox .magic-box-input > input"
+      );
+
+    browser
+      .keys(browser.Keys.ENTER)
+      .waitForElementVisible('.search-result__section .search-result')
+      .waitForElementVisible('xpath', `//*[contains(@class,'CoveoResultLink') and contains(text(), 'Outdoor Gas')]`);
+
     coveo.c_search(
-      "grill",
+      "cooler",
       "",
       "#spotlightSearch .CoveoQuerybox .magic-box-input > input"
     );
-    browser.keys(browser.Keys.ENTER);
+    browser
+      .waitForElementNotPresent('xpath', `//*[contains(@class,'CoveoResultLink') and contains(text(), 'Wine Storage')]`)
+      .keys(browser.Keys.ENTER)
+      .waitForElementVisible('xpath', `//*[contains(@class,'CoveoResultLink') and contains(text(), 'Wine Storage')]`);
 
-    browser.pause(3000);
-    coveo.c_moveToElement("article:nth-child(2)", 10, 10);
-    browser.pause(2000);
-    coveo.c_moveToElement("article:nth-child(3)", 10, 10);
-    browser.pause(2000);
-    coveo.c_moveToElement("article:nth-child(4)", 10, 10);
-    browser.pause(5000);
-
-    coveo.c_setPause(1000);
-    browser.url("https://www.enbridge.com/about-us");
-
-    coveo.c_search("gas", "", "#mainSearch");
-    browser.keys(browser.Keys.ENTER);
-    browser.pause(1000);
+    browser.end();
   });
 
   test("enbridge", function (browser) {
