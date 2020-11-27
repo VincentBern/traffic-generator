@@ -351,7 +351,9 @@ describe("WIMS", function () {
     //Get rid of pop up consent
     browser.getAttribute(".truste_box_overlay iframe", "id", (result) => {
       browser.pause(1000);
-      browser.frame(result.value).click(".pdynamicbutton > a");
+      let frame = browser.frame(result.value, (result) => {
+        browser.click(".pdynamicbutton > a");
+      });
     });
     browser.pause(1000);
     //Continue with search

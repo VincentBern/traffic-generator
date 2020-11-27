@@ -1,5 +1,5 @@
 let prevRND = 1;
-let currentPause = 1000;
+let currentPause = 500;
 let currentFacet = "";
 
 const coveoCommands = {
@@ -53,10 +53,12 @@ const coveoCommands = {
         if (result) {
           _this.clearValue(inputBoxSelector, (result) => {
             if (result.status == -1) {
+              _this.pause(currentPause);
               resolve(false);
             }
             _this.setValue(inputBoxSelector, text, (result) => {
               if (result.status != -1) {
+                _this.pause(currentPause);
                 resolve(true);
               } else {
                 resolve(false);
@@ -81,6 +83,7 @@ const coveoCommands = {
             .c_click(`${searchinterface} .CoveoSearchButton`)
             .then(function (result) {
               if (result.status != -1) {
+                _this.pause(currentPause);
                 resolve(true);
               } else {
                 resolve(false);
@@ -128,6 +131,7 @@ const coveoCommands = {
                 _this.c_click(selectorSuggestion).then(function (result) {
                   if (result.status != -1) {
                     console.log("Suggestion is clicked");
+                    _this.pause(currentPause);
                     resolve(true);
                   } else {
                     console.log("Suggestion is NOT clicked");
@@ -174,6 +178,7 @@ const coveoCommands = {
         if (result) {
           _this.moveToElement(selector, x, y, (result) => {
             if (result.status != -1) {
+              _this.pause(currentPause);
               resolve(true);
             } else {
               resolve(false);
@@ -206,6 +211,7 @@ const coveoCommands = {
     return new Promise((resolve) => {
       this.c_click(selector).then(function (result) {
         if (result.status != -1) {
+          _this.pause(currentPause);
           resolve(true);
         } else {
           resolve(false);
@@ -230,6 +236,7 @@ const coveoCommands = {
     return new Promise((resolve) => {
       this.c_click(selector).then(function (result) {
         if (result.status != -1) {
+          _this.pause(currentPause);
           resolve(true);
         } else {
           resolve(false);
@@ -246,6 +253,7 @@ const coveoCommands = {
     return new Promise((resolve) => {
       this.c_click(selector).then(function (result) {
         if (result.status != -1) {
+          _this.pause(currentPause);
           resolve(true);
         } else {
           resolve(false);
@@ -261,6 +269,7 @@ const coveoCommands = {
     return new Promise((resolve) => {
       this.c_click(selector).then(function (result) {
         if (result.status != -1) {
+          _this.pause(currentPause);
           resolve(true);
         } else {
           resolve(false);
@@ -276,6 +285,7 @@ const coveoCommands = {
     return new Promise((resolve) => {
       this.c_click(selector).then(function (result) {
         if (result.status != -1) {
+          _this.pause(currentPause);
           resolve(true);
         } else {
           resolve(false);
@@ -308,6 +318,7 @@ const coveoCommands = {
     return new Promise((resolve) => {
       this.c_click(selector).then(function (result) {
         if (result.status != -1) {
+          _this.pause(currentPause);
           resolve(true);
         } else {
           resolve(false);
@@ -340,6 +351,7 @@ const coveoCommands = {
     return new Promise((resolve) => {
       this.c_click(selector).then(function (result) {
         if (result.status != -1) {
+          _this.pause(currentPause);
           resolve(true);
         } else {
           resolve(false);
@@ -374,6 +386,7 @@ const coveoCommands = {
           if (autoclose) {
             _this.c_closeQuickview().then(function (result) {
               if (result) {
+                _this.pause(currentPause);
                 resolve(true);
               } else {
                 resolve(false);
@@ -397,6 +410,7 @@ const coveoCommands = {
     return new Promise((resolve) => {
       this.c_click(selector).then(function (result) {
         if (result.status != -1) {
+          _this.pause(currentPause);
           resolve(true);
         } else {
           resolve(false);
@@ -412,6 +426,7 @@ const coveoCommands = {
     return new Promise((resolve) => {
       this.c_click(selector).then(function (result) {
         if (result.status != -1) {
+          _this.pause(currentPause);
           resolve(true);
         } else {
           resolve(false);
@@ -438,6 +453,7 @@ const coveoCommands = {
       this.isVisible(using, selector, (result) => {
         //If visible
         if (result.status != -1) {
+          _this.pause(currentPause);
           resolve(true);
           return;
         }
@@ -448,6 +464,7 @@ const coveoCommands = {
             _this.isVisible(using, selector, (result) => {
               //If visible
               if (result.status != -1) {
+                _this.pause(currentPause);
                 resolve(true);
                 return;
               } else {
@@ -479,6 +496,7 @@ const coveoCommands = {
             (result) => {
               if (result.status != -1) {
                 console.log("CLICKED ON " + selector);
+                _this.pause(currentPause);
                 resolve(true);
               } else {
                 console.log(
@@ -504,6 +522,7 @@ const coveoCommands = {
         if (result) {
           _this.setValue(selector, val, (result) => {
             if (result.status != -1) {
+              _this.pause(currentPause);
               resolve(true);
             } else {
               resolve(false);
