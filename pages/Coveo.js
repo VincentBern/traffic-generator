@@ -16,7 +16,7 @@ const coveoCommands = {
   getMaxResults: function (selector = "") {
     selector += " .CoveoResult";
     let max = 0;
-    this.elements("css selector", selector, (labels) => {
+    this.api.elements("css selector", selector, (labels) => {
       max = labels.length;
     });
     return max;
@@ -45,19 +45,52 @@ const coveoCommands = {
   //c_search, search for text. Do not click on submit
   //*******************************************************
   c_search: function (text, searchinterface = "", specific = "") {
-    const selector = specific || '.CoveoSearchbox .magic-box-input > input';
+    const selector = specific || ".CoveoSearchbox .magic-box-input > input";
     const inputBoxSelector = `${searchinterface} ${selector}`;
-
-    return this.waitForElementVisible(inputBoxSelector)
-      .clearValue(inputBoxSelector)
-      .setValue(inputBoxSelector, text);
+    let _this = this;
+    return new Promise((resolve) => {
+      this.c_waitForElement(inputBoxSelector).then(function (result) {
+        if (result) {
+          _this.clearValue(inputBoxSelector, (result) => {
+            if (result.status == -1) {
+              resolve(false);
+            }
+            _this.setValue(inputBoxSelector, text, (result) => {
+              if (result.status != -1) {
+                resolve(true);
+              } else {
+                resolve(false);
+              }
+            });
+          });
+        } else {
+          resolve(false);
+        }
+      });
+    });
   },
   //*******************************************************
   //c_searchAndSubmit, search for text and click on submit
   //*******************************************************
   c_searchAndSubmit: function (text, searchinterface = "", specific = "") {
-    return this.c_search(text, searchinterface, specific)
-      .c_click(`${searchinterface} .CoveoSearchButton`);
+    let _this = this;
+    return new Promise((resolve) => {
+      this.c_search(text, searchinterface, specific).then(function (result) {
+        if (result) {
+          _this
+            .c_click(`${searchinterface} .CoveoSearchButton`)
+            .then(function (result) {
+              if (result.status != -1) {
+                resolve(true);
+              } else {
+                resolve(false);
+              }
+            });
+        } else {
+          resolve(false);
+        }
+      });
+    });
   },
   //*******************************************************
   //c_searchAndClickSuggestion, search for text and click on NR suggestion
@@ -81,17 +114,41 @@ const coveoCommands = {
     if (specificSuggestion != "") {
       selectorSuggestion = specificSuggestion;
     }
-    return this.waitForElementVisible(searchinterface + selector)
-      .clearValue(searchinterface + selector)
 
-      .setValue(searchinterface + selector, text)
-      .click(selectorSuggestion)
-      .pause(currentPause);
+    let _this = this;
+    return new Promise((resolve) => {
+      this.c_waitForElement(searchinterface + selector).then(function (result) {
+        if (result) {
+          _this.clearValue(searchinterface + selector, (result) => {
+            if (result.status == -1) {
+              resolve(false);
+            }
+            _this.setValue(searchinterface + selector, text, (result) => {
+              if (result.status != -1) {
+                _this.c_click(selectorSuggestion).then(function (result) {
+                  if (result.status != -1) {
+                    console.log("Suggestion is clicked");
+                    resolve(true);
+                  } else {
+                    console.log("Suggestion is NOT clicked");
+                    resolve(false);
+                  }
+                });
+              } else {
+                resolve(false);
+              }
+            });
+          });
+        } else {
+          resolve(false);
+        }
+      });
+    });
   },
   //*******************************************************
   //c_click, click on an element
   //*******************************************************
-  c_click: function (selector) {
+  c_clickv1: function (selector) {
     return this.waitForElementVisible(
       {
         selector: selector,
@@ -111,21 +168,27 @@ const coveoCommands = {
   //c_click, click on an element
   //*******************************************************
   c_moveToElement: function (selector, x, y) {
-    return this.waitForElementVisible(
-      {
-        selector: selector,
-        abortOnFailure: false,
-        suppressNotFoundErrors: true,
-      },
-      5000
-    )
-      .moveToElement(selector, x, y)
-      .pause(currentPause);
+    let _this = this;
+    return new Promise((resolve) => {
+      this.c_waitForElement(selector).then(function (result) {
+        if (result) {
+          _this.moveToElement(selector, x, y, (result) => {
+            if (result.status != -1) {
+              resolve(true);
+            } else {
+              resolve(false);
+            }
+          });
+        } else {
+          resolve(false);
+        }
+      });
+    });
   },
   //*******************************************************
   //c_setValue, set value of an element
   //*******************************************************
-  c_setValue: function (selector, val) {
+  c_setValuev1: function (selector, val) {
     return this.waitForElementVisible(selector, 5000)
       .moveToElement(selector, 10, 10)
       .setValue(selector, val);
@@ -140,15 +203,15 @@ const coveoCommands = {
     let selector =
       '.CoveoFacet[data-field="' + field + '"] > ul > li:nth-child(' + nr + ")";
     currentFacet = selector;
-    return this.waitForElementVisible(selector, 5000)
-      .moveToElement(selector, 10, 10)
-      .pause(200)
-      .click({
-        selector: selector,
-        abortOnFailure: false,
-        suppressNotFoundErrors: true,
-      })
-      .pause(currentPause);
+    return new Promise((resolve) => {
+      this.c_click(selector).then(function (result) {
+        if (result.status != -1) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    });
   },
   //*******************************************************
   //c_selectDynamicFacet, select random facet from field or take the nr requested
@@ -164,15 +227,15 @@ const coveoCommands = {
       nr +
       ")";
     currentFacet = selector;
-    return this.waitForElementVisible(selector, 5000)
-      .moveToElement(selector, 10, 10)
-      .pause(200)
-      .click({
-        selector: selector,
-        abortOnFailure: false,
-        suppressNotFoundErrors: true,
-      })
-      .pause(currentPause);
+    return new Promise((resolve) => {
+      this.c_click(selector).then(function (result) {
+        if (result.status != -1) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    });
   },
   //*******************************************************
   //c_deselectFacet, deselect the facet value, earlier selected with selectFacet/selectDynamicFacet
@@ -180,45 +243,45 @@ const coveoCommands = {
   c_deselectFacet: function () {
     //Deselects the previous (random facet selected)
     let selector = currentFacet;
-    return this.waitForElementVisible(selector, 5000)
-      .moveToElement(selector, 10, 10)
-      .pause(200)
-      .click({
-        selector: selector,
-        abortOnFailure: false,
-        suppressNotFoundErrors: true,
-      })
-      .pause(currentPause);
+    return new Promise((resolve) => {
+      this.c_click(selector).then(function (result) {
+        if (result.status != -1) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    });
   },
   //*******************************************************
   //c_selectFacetValue, select facet with specific value
   //*******************************************************
   c_selectFacetValue: function (value) {
     let selector = 'li[data-value="' + value + '"]';
-    return this.waitForElementVisible(selector, 5000)
-      .moveToElement(selector, 10, 10)
-      .pause(200)
-      .click({
-        selector: selector,
-        abortOnFailure: false,
-        suppressNotFoundErrors: true,
-      })
-      .pause(currentPause);
+    return new Promise((resolve) => {
+      this.c_click(selector).then(function (result) {
+        if (result.status != -1) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    });
   },
   //*******************************************************
   //c_deSelectFacetValue, deselect facet with specific value
   //*******************************************************
   c_deSelectFacetValue: function (value) {
     let selector = 'li[data-value="' + value + '"]';
-    return this.waitForElementVisible(selector, 5000)
-      .moveToElement(selector, 10, 10)
-      .pause(200)
-      .click({
-        selector: selector,
-        abortOnFailure: false,
-        suppressNotFoundErrors: true,
-      })
-      .pause(currentPause);
+    return new Promise((resolve) => {
+      this.c_click(selector).then(function (result) {
+        if (result.status != -1) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    });
   },
   //*******************************************************
   //c_clickResult, click on result nr (RND or number) with resultlist id. Choose between 1 and max of occurences for RND
@@ -242,15 +305,15 @@ const coveoCommands = {
     if (specific != "") {
       selector = specific;
     }
-    return this.waitForElementVisible(selector, 5000)
-      .moveToElement(selector, 10, 10)
-      .pause(200)
-      .click({
-        selector: selector,
-        abortOnFailure: false,
-        suppressNotFoundErrors: true,
-      })
-      .pause(currentPause);
+    return new Promise((resolve) => {
+      this.c_click(selector).then(function (result) {
+        if (result.status != -1) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    });
   },
   //*******************************************************
   //c_clickRecommendation, click on recommendation nr (RND or number) with resultlist id. Choose between 1 and max of occurences for RND
@@ -274,19 +337,15 @@ const coveoCommands = {
     if (specific != "") {
       selector = specific;
     }
-    return this.waitForElementVisible({
-      selector: selector,
-      abortOnFailure: false,
-      timeout: 5000,
-    })
-      .moveToElement(selector, 10, 10)
-      .pause(200)
-      .click({
-        selector: selector,
-        abortOnFailure: false,
-        suppressNotFoundErrors: true,
-      })
-      .pause(currentPause);
+    return new Promise((resolve) => {
+      this.c_click(selector).then(function (result) {
+        if (result.status != -1) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    });
   },
   //*******************************************************
   //c_clickQuickview, click on quickview nr (RND or number) with resultlist id. Choose between 1 and max of occurences for RND
@@ -306,23 +365,28 @@ const coveoCommands = {
       max = this.getMaxResults(selector);
       nr = this.getRandomInt(1, max);
     }
-    selector += ".CoveoResultList > div > div:nth-child(" + nr + ")  .CoveoQuickview";
-
-    let returnContext = this.waitForElementVisible(selector, 5000)
-      .moveToElement(selector, 10, 10)
-      .pause(200)
-      .click({
-        selector: selector,
-        abortOnFailure: false,
-        suppressNotFoundErrors: true,
-      })
-      .pause(currentPause);
-
-    if (autoclose) {
-      returnContext = returnContext.c_closeQuickview();
-    }
-
-    return returnContext;
+    selector +=
+      ".CoveoResultList > div > div:nth-child(" + nr + ")  .CoveoQuickview";
+    let _this = this;
+    return new Promise((resolve) => {
+      this.c_click(selector).then(function (result) {
+        if (result.status != -1) {
+          if (autoclose) {
+            _this.c_closeQuickview().then(function (result) {
+              if (result) {
+                resolve(true);
+              } else {
+                resolve(false);
+              }
+            });
+          } else {
+            resolve(true);
+          }
+        } else {
+          resolve(false);
+        }
+      });
+    });
   },
   //*******************************************************
   //c_closeQuickview, close the quickview window
@@ -330,37 +394,35 @@ const coveoCommands = {
   c_closeQuickview: function () {
     let selector =
       "div.coveo-modal-container.coveo-opened.coveo-mod-big.coveo-quick-view.coveo-mod-fade-in-scale > div > header > span";
-    return this.waitForElementVisible(selector, 5000)
-      .moveToElement(selector, 10, 10)
-      .pause(200)
-      .click({
-        selector: selector,
-        abortOnFailure: false,
-        suppressNotFoundErrors: true,
-      })
-
-      .pause(currentPause);
+    return new Promise((resolve) => {
+      this.c_click(selector).then(function (result) {
+        if (result.status != -1) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    });
   },
   //*******************************************************
   //c_selectTab, tab to select (using the caption)
   //*******************************************************
   c_selectTab: function (caption) {
     let selector = '.CoveoTab[data-caption="' + caption + '"]';
-    return this.waitForElementVisible(selector, 5000)
-      .moveToElement(selector, 10, 10)
-      .pause(200)
-      .click({
-        selector: selector,
-        abortOnFailure: false,
-        suppressNotFoundErrors: true,
-      })
-
-      .pause(currentPause);
+    return new Promise((resolve) => {
+      this.c_click(selector).then(function (result) {
+        if (result.status != -1) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    });
   },
   //*******************************************************
   //c_loginOffice
   //*******************************************************
-  c_loginOffice: function (user, pass) {
+  c_loginOfficev1: function (user, pass) {
     return this.c_click("#loginWithOffice365")
       .c_setValue("#i0116", user)
       .c_click("#idSIButton9")
@@ -368,71 +430,103 @@ const coveoCommands = {
       .c_click("#idSIButton9")
       .c_click("#idBtn_Back");
   },
-  c_waitForElement: function (selector, tries = 1, callback) {
+  c_waitForElement: function (selector, using = "css selector") {
     let _this = this;
-    console.log("CHECK FOR ELEMENT " + selector + " (" + tries + ")");
-    return this.waitForElementVisible(selector, 4000, false, function (result) {
-      if (result.value && result.value == true) {
-        console.log("Element is there... " + selector);
-        callback(true);
-      } else {
-        console.log("Element is NOT there... , retry " + selector);
-        tries += 1;
-        if (tries < 3) {
-          _this.pause(200);
-          _this.moveToElement(selector, 10, 10);
-          _this.c_waitForElement(selector, tries, callback);
-        } else {
-          console.log("Element is NOT there... sending FALSE " + selector);
-          callback(false);
+    return new Promise((resolve) => {
+      //First try isVisible
+      console.log(using);
+      this.isVisible(using, selector, (result) => {
+        //If visible
+        if (result.status != -1) {
+          resolve(true);
+          return;
         }
-      }
-    });
-  },
-  c_clickv2: function (selector, callback) {
-    let _this = this;
-    this.c_waitForElement(selector, 1, function (result) {
-      console.log(result);
-      if (result) {
-        console.log("Click on Element " + selector);
-        _this.click({
-          selector: selector,
-          abortOnFailure: false,
-          suppressNotFoundErrors: true,
+        //Not visible, wait, and move to the element
+        _this.pause(1000);
+        _this.moveToElement(using, selector, 10, 10, (result) => {
+          if (result.status != -1) {
+            _this.isVisible(using, selector, (result) => {
+              //If visible
+              if (result.status != -1) {
+                resolve(true);
+                return;
+              } else {
+                resolve(false);
+                return;
+              }
+            });
+          } else {
+            resolve(false);
+            return;
+          }
         });
-        callback(true);
-      } else {
-        console.log("NO Click because element was not found " + selector);
-        callback(false);
-      }
+      });
     });
   },
-  c_setValuev2: function (selector, val, callback) {
+  c_click: function (selector) {
     let _this = this;
-    this.c_waitForElement(selector, 1, function (result) {
-      if (result) {
-        _this.setValue(selector, val);
-        callback(true);
-      } else {
-        callback(false);
-      }
+    return new Promise((resolve) => {
+      this.c_waitForElement(selector).then(function (result) {
+        console.log(result);
+        if (result) {
+          console.log("Click on Element " + selector);
+          _this.click(
+            {
+              selector: selector,
+              abortOnFailure: false,
+              suppressNotFoundErrors: true,
+            },
+            (result) => {
+              if (result.status != -1) {
+                console.log("CLICKED ON " + selector);
+                resolve(true);
+              } else {
+                console.log(
+                  "NO Click because element was not found (step 2) " + selector
+                );
+                resolve(false);
+              }
+            }
+          );
+        } else {
+          console.log(
+            "NO Click because element was not found (step 1) " + selector
+          );
+          resolve(false);
+        }
+      });
+    });
+  },
+  c_setValue: function (selector, val, callback) {
+    let _this = this;
+    return new Promise((resolve) => {
+      this.c_waitForElement(selector).then(function (result) {
+        if (result) {
+          _this.setValue(selector, val, (result) => {
+            if (result.status != -1) {
+              resolve(true);
+            } else {
+              resolve(false);
+            }
+          });
+        } else {
+          resolve(false);
+        }
+      });
     });
   },
   //*******************************************************
   //c_loginOfficev2
   //*******************************************************
-  c_loginOfficev2: function (user, pass) {
-    this.c_clickv2("#loginWithOffice365", () =>
-      this.c_setValuev2("#i0116", user, () =>
-        this.c_clickv2("#idSIButton9", () =>
-          this.c_setValuev2("#i0118", pass, () =>
-            this.c_clickv2("#idSIButton9", () =>
-              this.c_clickv2("#idBtn_Back", () => {})
-            )
-          )
-        )
-      )
-    );
+  c_loginOffice: async function (user, pass) {
+    let res = true;
+    if (res) res = await this.c_click("#loginWithOffice365");
+    if (res) res = await this.c_setValue("#i0116", user);
+    if (res) res = await this.c_click("#idSIButton9");
+    if (res) res = await this.c_setValue("#i0118", pass);
+    if (res) res = await this.c_click("#idSIButton9");
+    if (res) res = await this.c_click("#idBtn_Back");
+    return res;
   },
 };
 
