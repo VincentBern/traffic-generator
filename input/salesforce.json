@@ -1,0 +1,35 @@
+{
+  "url": "https://help.salesforce.com/home",
+  "title": "Salesforce Search",
+  "logfile": "output/Salesforce.log",
+  "randomScripts": [
+    "searchAndOpen2x",
+    "searchAndClick",
+    "searchAndOpen2x",
+    "searchAndChangeTab"
+  ],
+  "randomKeywords": [
+    "accountfeed",
+    "account",
+    "lightning",
+    "report",
+    "chatter",
+    "chatterfeed"
+  ],
+  "scriptKeywords": [
+    {
+      "script": "searchSpecial1",
+      "keyword": "exchange"
+    },
+    {
+      "script": "searchSpecial1",
+      "keyword": "exchange feed"
+    },
+    {
+      "script": "searchSpecial2",
+      "keyword": "account"
+    }
+  ],
+  "username": "wnijmeijer@coveo.com",
+  "password": "boebla"
+}
