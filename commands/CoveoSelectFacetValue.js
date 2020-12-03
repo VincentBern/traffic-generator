@@ -40,11 +40,11 @@ module.exports = class CoveoSelectFacetValue {
         const aqHasValue = aq.includes(`"${facetValue}"`);
         if ((selectValue && aqHasValue) || (!selectValue && !aqHasValue)) {
           // facet was applied
-          resolve();
           validatedFacet = true;
+          return resolve();
         } else {
           // try again after a pause;
-          await this.api.pause(1000);
+          await this.api.pause(250);
         }
       }
     });

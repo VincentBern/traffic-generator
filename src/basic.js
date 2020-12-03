@@ -26,7 +26,7 @@ describe("WIMS", function () {
     browser.pause(5000);
   });
 
-  xtest("subzero", async function (browser) {
+  test("subzero", async function (browser) {
     const coveo = browser.page.Coveo();
     browser.url("https://www.subzero-wolf.com/");
     let res = true;
