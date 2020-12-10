@@ -8,7 +8,8 @@ module.exports = class CoveoSearch {
     result = await this.api.clearValue(inputBoxSelector);
     if (result.status == -1) return false;
 
-    result = this.api.setValue(inputBoxSelector, text);
+    result = await this.api.setValue(inputBoxSelector, text);
+    result = await this.api.keys(this.api.Keys.ENTER);
 
     return (result.status !== -1);
   }

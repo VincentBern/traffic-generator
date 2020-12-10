@@ -27,36 +27,25 @@ describe("WIMS", function () {
   });
 
   test("subzero", async function (browser) {
-    const coveo = browser.page.Coveo();
     browser.url("https://www.subzero-wolf.com/");
-    let res = true;
-    if (res) res = await browser.CoveoClick("#js-allow-cookies");
-    if (res) res = await browser.CoveoClick("#search-trigger");
-    if (res)
-      res = await browser.CoveoSearch(
-        "grill",
-        "",
-        "#spotlightSearch .CoveoQuerybox .magic-box-input > input"
-      );
 
+    await browser.CoveoClick("#js-allow-cookies");
+    await browser.CoveoSearch("grill");
 
-    if (res) {
-      browser.keys(browser.Keys.ENTER);
-      res = await coveo.c_waitForElement(".search-result__section .search-result");
-      if (res)
-        res = await coveo.c_waitForElement(`//*[contains(@class,'CoveoResultLink') and contains(text(), 'Outdoor Gas')]`, "xpath");
-    }
-
-    await browser.CoveoSearch("cooler", "", "#spotlightSearch .CoveoQuerybox .magic-box-input > input");
+    await browser.waitForElementVisible(".coveo-main-section .CoveoResultList .CoveoResult");
+    await browser.waitForElementVisible(
+      "xpath",
+      `//*[contains(@class,'CoveoResult')]//*[@class='coveo-result']/a[contains(text(), 'Outdoor Grill')]`
+    );
 
     await browser.waitForElementNotPresent(
       "xpath",
-      `//*[contains(@class,'CoveoResultLink') and contains(text(), 'Wine Storage')]`
+      `//*[contains(@class,'CoveoResult')]//*[@class='coveo-result']/a[contains(text(), 'Wine Storage')]`
     );
-    await browser.keys(browser.Keys.ENTER);
+    await browser.CoveoSearch("cooler");
     await browser.waitForElementVisible(
       "xpath",
-      `//*[contains(@class,'CoveoResultLink') and contains(text(), 'Wine Storage')]`
+      `//*[contains(@class,'CoveoResult')]//*[@class='coveo-result']/a[contains(text(), 'Wine Storage')]`
     );
 
     browser.end();
