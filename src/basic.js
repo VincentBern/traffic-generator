@@ -26,54 +26,38 @@ describe("WIMS", function () {
     browser.pause(5000);
   });
 
-  xtest("subzero", async function (browser) {
+  test("subzero", async function (browser) {
     const coveo = browser.page.Coveo();
     browser.url("https://www.subzero-wolf.com/");
     let res = true;
-    if (res) res = await coveo.c_click("#js-allow-cookies");
-    if (res) res = await coveo.c_click("#search-trigger");
+    if (res) res = await browser.CoveoClick("#js-allow-cookies");
+    if (res) res = await browser.CoveoClick("#search-trigger");
     if (res)
-      res = await coveo.search(
+      res = await browser.CoveoSearch(
         "grill",
         "",
         "#spotlightSearch .CoveoQuerybox .magic-box-input > input"
       );
-    /*coveo
-      .c_click("#js-allow-cookies")
-      .c_click("#search-trigger")
-      .c_search(
-        "grill",
-        "",
-        "#spotlightSearch .CoveoQuerybox .magic-box-input > input"
-      );*/
+
+
     if (res) {
       browser.keys(browser.Keys.ENTER);
-      res = await coveo.c_waitForElement(
-        ".search-result__section .search-result"
-      );
+      res = await coveo.c_waitForElement(".search-result__section .search-result");
       if (res)
-        res = await coveo.c_waitForElement(
-          `//*[contains(@class,'CoveoResultLink') and contains(text(), 'Outdoor Gas')]`,
-          "xpath"
-        );
+        res = await coveo.c_waitForElement(`//*[contains(@class,'CoveoResultLink') and contains(text(), 'Outdoor Gas')]`, "xpath");
     }
 
-    if (res)
-      res = await coveo.search(
-        "cooler",
-        "",
-        "#spotlightSearch .CoveoQuerybox .magic-box-input > input"
-      );
-    /*browser
-      .waitForElementNotPresent(
-        "xpath",
-        `//*[contains(@class,'CoveoResultLink') and contains(text(), 'Wine Storage')]`
-      )
-      .keys(browser.Keys.ENTER)
-      .waitForElementVisible(
-        "xpath",
-        `//*[contains(@class,'CoveoResultLink') and contains(text(), 'Wine Storage')]`
-      );*/
+    await browser.CoveoSearch("cooler", "", "#spotlightSearch .CoveoQuerybox .magic-box-input > input");
+
+    await browser.waitForElementNotPresent(
+      "xpath",
+      `//*[contains(@class,'CoveoResultLink') and contains(text(), 'Wine Storage')]`
+    );
+    await browser.keys(browser.Keys.ENTER);
+    await browser.waitForElementVisible(
+      "xpath",
+      `//*[contains(@class,'CoveoResultLink') and contains(text(), 'Wine Storage')]`
+    );
 
     browser.end();
   });
@@ -273,12 +257,9 @@ describe("WIMS", function () {
   xtest("step b: bmc search", async function (browser) {
     const coveo = browser.page.Coveo();
     //Set pause between events to 1 second
-    coveo.setPause(1000);
+    coveo.setPause(100);
     browser.url("https://www.bmc.com/support/resources/support-search.html");
-    //Get rid of pop up consent
-    browser.pause(1000);
     browser.getAttribute(".truste_box_overlay iframe", "id", (result) => {
-      browser.pause(1000);
       let frame = browser.frame(result.value, (result) => {
         browser.click(".pdynamicbutton > a");
         browser.click("#gwt-debug-close_id");
@@ -308,7 +289,7 @@ describe("WIMS", function () {
     browser.end();
   });
 
-  test("step b: coveo search", async function (browser) {
+  xtest("step b: coveo search", async function (browser) {
     const coveo = browser.page.Coveo();
     //Set pause between events to 1 second
     coveo.setPause(1000);
@@ -344,22 +325,16 @@ describe("WIMS", function () {
     if (res) res = await coveo.clickRecommendation("RND");
     browser.end();
   });
+
   test("step b: motorola search", async function (browser) {
     const coveo = browser.page.Coveo();
     //Set pause between events to 1 second
-    coveo.setPause(1000);
-    browser.url(
-      "https://www.motorolasolutions.com/en_us/search.html#t=Tab_All"
-    );
-    browser.pause(1000);
-    //Get rid of pop up consent
-    browser.getAttribute(".truste_box_overlay iframe", "id", (result) => {
-      browser.pause(1000);
-      let frame = browser.frame(result.value, (result) => {
-        browser.click(".pdynamicbutton > a");
-      });
-    });
-    browser.pause(1000);
+    coveo.setPause(100);
+    browser.url("https://www.motorolasolutions.com/en_us/search.html#t=Tab_All");
+
+    await browser.setCoveoSpy('#coveoSearchInterface_main');
+
+
     //Continue with search
     let res = true;
     if (res)
@@ -368,14 +343,11 @@ describe("WIMS", function () {
         "#coveoSearchInterface_main",
         2
       );
-    browser.pause(5000);
-    if (res)
-      res = await coveo.searchAndSubmit("retail", "#coveoSearchInterface_main");
-    browser.pause(5000);
-    if (res) res = await coveo.selectFacetValue("MSI.com DAM");
-    browser.pause(1000);
-    if (res) res = await coveo.deSelectFacetValue("MSI.com DAM");
-    browser.pause(5000);
+
+    if (res) res = await coveo.searchAndSubmit("retail", "#coveoSearchInterface_main");
+    await browser.CoveoSelectFacetValue("MSI.com DAM");
+    await browser.CoveoSelectFacetValue("MSI.com DAM", false); // deselect
+
     //Random facets
     if (res) res = await coveo.selectFacet("@source");
     if (res) res = await coveo.deselectFacet();
