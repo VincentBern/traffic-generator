@@ -104,7 +104,8 @@ const coveoResultsCommands = {
     nr = "RND",
     resultlist = "",
     max = 5,
-    autoclose = true
+    autoclose = true,
+    child = -1
   ) {
     let selector = "";
     if (resultlist != "") {
@@ -116,7 +117,12 @@ const coveoResultsCommands = {
       nr = this.api.page.CoveoFiles.Generic().getRandomInt(1, max);
     }
     selector +=
-      ".CoveoResultList > div > div:nth-child(" + nr + ")  .CoveoQuickview";
+      ".CoveoResultList > div > div:nth-child(" +
+      nr +
+      ")  .CoveoQuickview.coveo-accessible-button";
+    if (child != -1) {
+      selector += `:nth-child(${child})`;
+    }
     selector = selector.trim();
     let _this = this;
     return new Promise((resolve) => {
