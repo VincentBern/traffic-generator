@@ -12,7 +12,7 @@ describe("WIMS", function () {
     );
     let result = await coveo.c_loginOffice(
       "adelev@M365x988456.onmicrosoft.com",
-      "&Qwerty 123"
+      "PASS"
     );
     console.log("Logged in: " + result);
     browser.pause(5000);
@@ -39,15 +39,23 @@ describe("WIMS", function () {
         "#spotlightSearch .CoveoQuerybox .magic-box-input > input"
       );
 
-
     if (res) {
       browser.keys(browser.Keys.ENTER);
-      res = await coveo.c_waitForElement(".search-result__section .search-result");
+      res = await coveo.c_waitForElement(
+        ".search-result__section .search-result"
+      );
       if (res)
-        res = await coveo.c_waitForElement(`//*[contains(@class,'CoveoResultLink') and contains(text(), 'Outdoor Gas')]`, "xpath");
+        res = await coveo.c_waitForElement(
+          `//*[contains(@class,'CoveoResultLink') and contains(text(), 'Outdoor Gas')]`,
+          "xpath"
+        );
     }
 
-    await browser.CoveoSearch("cooler", "", "#spotlightSearch .CoveoQuerybox .magic-box-input > input");
+    await browser.CoveoSearch(
+      "cooler",
+      "",
+      "#spotlightSearch .CoveoQuerybox .magic-box-input > input"
+    );
 
     await browser.waitForElementNotPresent(
       "xpath",
@@ -178,7 +186,7 @@ describe("WIMS", function () {
     if (res)
       res = await coveo.loginOffice(
         "adelev@M365x988456.onmicrosoft.com",
-        "&Qwerty 123"
+        "PASS"
       );
     browser.pause(2000);
     if (res) res = await coveo.c_setValue("#ProfilesDropdown", "Mark 8");
@@ -330,10 +338,11 @@ describe("WIMS", function () {
     const coveo = browser.page.Coveo();
     //Set pause between events to 1 second
     coveo.setPause(100);
-    browser.url("https://www.motorolasolutions.com/en_us/search.html#t=Tab_All");
+    browser.url(
+      "https://www.motorolasolutions.com/en_us/search.html#t=Tab_All"
+    );
 
-    await browser.setCoveoSpy('#coveoSearchInterface_main');
-
+    await browser.setCoveoSpy("#coveoSearchInterface_main");
 
     //Continue with search
     let res = true;
@@ -344,7 +353,8 @@ describe("WIMS", function () {
         2
       );
 
-    if (res) res = await coveo.searchAndSubmit("retail", "#coveoSearchInterface_main");
+    if (res)
+      res = await coveo.searchAndSubmit("retail", "#coveoSearchInterface_main");
     await browser.CoveoSelectFacetValue("MSI.com DAM");
     await browser.CoveoSelectFacetValue("MSI.com DAM", false); // deselect
 
