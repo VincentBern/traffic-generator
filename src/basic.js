@@ -12,7 +12,7 @@ describe("WIMS", function () {
     );
     let result = await coveo.c_loginOffice(
       "adelev@M365x988456.onmicrosoft.com",
-      "&Qwerty 123"
+      "PASS"
     );
     console.log("Logged in: " + result);
     browser.pause(5000);
@@ -121,7 +121,7 @@ describe("WIMS", function () {
     if (res)
       res = await coveo.loginOffice(
         "adelev@M365x988456.onmicrosoft.com",
-        "&Qwerty 123"
+        "PASS"
       );
     browser.pause(2000);
     if (res) res = await coveo.c_setValue("#ProfilesDropdown", "Mark 8");

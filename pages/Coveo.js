@@ -131,13 +131,15 @@ const coveoCommands = {
     nr = "RND",
     resultlist = "",
     max = 5,
-    autoclose = true
+    autoclose = true,
+    child = -1
   ) {
     return this.api.page.CoveoFiles.Results().c_clickQuickview(
       nr,
       resultlist,
       max,
-      autoclose
+      autoclose,
+      child
     );
   },
   //*******************************************************

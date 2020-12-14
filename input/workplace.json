@@ -1,0 +1,84 @@
+{
+  "url": "https://search.cloud.coveo.com/pages/workplacedemoqjjnc2v7/full2",
+  "title": "Workplace Search",
+  "logfile": "output/Workplace.log",
+  "randomScripts": [
+    "searchRandomFacets",
+    "searchAndClick",
+    "searchRandomFacets",
+    "searchAndChangeTab"
+  ],
+  "randomKeywords": [
+    "mark 8",
+    "customer focused approach",
+    "sales plan",
+    "event management",
+    "events",
+    "upcoming events",
+    "web marketing",
+    "team management",
+    "recruitment",
+    "raise",
+    "mark 8 pilot",
+    "portal",
+    "mark 8 parts",
+    "ideas",
+    "product launch",
+    "customer data",
+    "mark 8 reports",
+    "expense",
+    "expense relocation",
+    "relocation expense"
+  ],
+  "randomScriptsMarketing": [
+    "searchRandomFacetsMarketing",
+    "searchAndChangeTabMarketing"
+  ],
+  "randomKeywordsMarketing": [
+    "marketing plan",
+    "marketing resources",
+    "expense",
+    "expense relocation",
+    "relocation expense",
+    "marketing review",
+    "web marketing",
+    "annual leave",
+    "sabattical",
+    "team management",
+    "recruitment",
+    "raise",
+    "portal",
+    "marketing sales plan",
+    "marketing initiatives",
+    "marketing principals"
+  ],
+  "scriptKeywords": [
+    {
+      "script": "clickWidgets",
+      "keyword": ""
+    },
+    {
+      "script": "searchSpecific",
+      "keyword": "mark 8"
+    },
+    {
+      "script": "searchSpecific",
+      "keyword": "customer focused approach"
+    },
+    {
+      "script": "selfService",
+      "keyword": "expense"
+    },
+    {
+      "script": "selfService",
+      "keyword": "expense relocation"
+    },
+    {
+      "script": "selfService",
+      "keyword": "relocation expense"
+    }
+  ],
+  "profile": "Mark 8",
+  "username": "",
+  "password": ""
+}
