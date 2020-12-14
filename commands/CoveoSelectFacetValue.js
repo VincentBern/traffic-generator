@@ -1,17 +1,8 @@
 module.exports = class CoveoSelectFacetValue {
   async command(facetValue, selectValue = true) {
 
-    const getLastResponse = () => new Promise(resolve => {
-      this.api.executeAsync(function (done) {
-        setTimeout(() => done(window._LAST_COVEO_RESPONSE), 1);
-      }, (result) => {
-        resolve(JSON.parse(result.value));
-      });
-    });
-
-
     return new Promise(async resolve => {
-      let lastResponse = await getLastResponse();
+      let lastResponse = await this.api.getLastResponse();
       let aq = lastResponse.query.aq || '';
 
       if (selectValue) {
@@ -35,13 +26,13 @@ module.exports = class CoveoSelectFacetValue {
 
       let validatedFacet = false;
       while (!validatedFacet) {
-        lastResponse = await getLastResponse();
+        lastResponse = await this.api.getLastResponse();
         aq = lastResponse.query.aq || '';
         const aqHasValue = aq.includes(`"${facetValue}"`);
         if ((selectValue && aqHasValue) || (!selectValue && !aqHasValue)) {
           // facet was applied
           validatedFacet = true;
-          return resolve();
+          return resolve({ status: 0 });
         } else {
           // try again after a pause;
           await this.api.pause(250);

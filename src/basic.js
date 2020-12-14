@@ -27,7 +27,7 @@ describe("WIMS", function () {
   });
 
   test("subzero", async function (browser) {
-    browser.url("https://www.subzero-wolf.com/");
+    await browser.url("https://www.subzero-wolf.com/");
 
     await browser.CoveoClick("#js-allow-cookies");
     await browser.CoveoSearch("grill");
@@ -51,66 +51,20 @@ describe("WIMS", function () {
     browser.end();
   });
 
-  xtest("enbridge", async function (browser) {
-    const coveo = browser.page.Coveo();
-    //Set pause between events to 1 second
+  test("enbridge", async function (browser) {
+    await browser.url("https://www.enbridge.com/about-us");
 
-    coveo.setPause(1000);
-    browser.url("https://www.enbridge.com/about-us");
-
-    let res = await coveo.search("gas", "", "#mainSearch");
-    if (res) {
-      browser.keys(browser.Keys.ENTER);
-      browser.pause(1000);
-
-      res = await coveo.c_moveToElement(
-        "#search > div:nth-child(3) > div > div > div.coveo-results-column.search-results > div.CoveoResultList > div.results-container.coveo-result-list-container > div:nth-child(1) > div.small-22.small-centered.medium-uncentered.medium-24.large-8.xlarge-12.medium-wide-only.xlarge-wide-up.columns > article",
-        20,
-        20
-      );
-    }
-    if (res) browser.pause(1000);
-    res = await coveo.c_click(
-      "#search > div:nth-child(3) > div > div > div.coveo-results-column.search-results > div.CoveoResultList > div.results-container.coveo-result-list-container > div:nth-child(1) > div.small-22.small-centered.medium-uncentered.medium-24.large-8.medium-wide-only.xlarge-wide-up.xlarge-12.columns > article > div.tile__cta > a"
+    await browser.CoveoSearch("gas", "", "#mainSearch");
+    await browser.waitForElementVisible(".coveo-main-section .CoveoResultList .CoveoResult");
+    await browser.waitForElementVisible(
+      "xpath",
+      `//*[contains(@class,'CoveoResult')]//div[@class='tile__primary-text' and contains(text(), 'Natural Gas')]`
     );
-    //************************************************************
-    //Could be that current window is switched
-    //************************************************************
-    let closeCurrentWindow = false;
-    browser.windowHandles(function (result) {
-      if (result.value.length == 2) {
-        handle = result.value[1];
-        browser.switchWindow(handle);
-        closeCurrentWindow = true;
-      }
-    });
-    //right column
-    browser.pause(2000);
-    //We first need to move to the element, then the result link will appear
-    res = await coveo.c_moveToElement("article:nth-child(2)", 10, 10);
-    browser.pause(2000);
-    res = await coveo.c_click("article:nth-child(2) > div.tile__cta > a");
-
-    browser.pause(2000);
-    //Close the new window
-    if (closeCurrentWindow) {
-      browser.closeWindow();
-      browser.windowHandles(function (result) {
-        handle = result.value[0];
-        browser.switchWindow(handle);
-      });
-    }
 
     browser.url(
       "https://www.enbridge.com/about-us/natural-gas-transmission-and-midstream"
     );
-    browser.pause(2000);
-    res = await coveo.c_moveToElement("article:nth-child(2)", 10, 10);
-    browser.pause(2000);
-    res = await coveo.c_moveToElement("article:nth-child(3)", 10, 10);
-    browser.pause(2000);
-    res = await coveo.c_moveToElement("article:nth-child(4)", 10, 10);
-    browser.pause(5000);
+    res = await browser.moveToElement("article:nth-child(4)", 10, 10);
 
     browser.end();
   });
@@ -316,32 +270,33 @@ describe("WIMS", function () {
   });
 
   test("step b: motorola search", async function (browser) {
-    const coveo = browser.page.Coveo();
-    //Set pause between events to 1 second
-    coveo.setPause(100);
-    browser.url("https://www.motorolasolutions.com/en_us/search.html#t=Tab_All");
+    let res = await browser.url("https://www.motorolasolutions.com/en_us/search.html#t=Tab_All");
 
-    await browser.setCoveoSpy('#coveoSearchInterface_main');
+    const SEARCH_INTERFACE = '#coveoSearchInterface_main';
 
+    await browser.setCoveoSpy(SEARCH_INTERFACE);
 
     //Continue with search
-    let res = true;
-    if (res)
-      res = await coveo.searchAndClickSuggestion(
-        "ret",
-        "#coveoSearchInterface_main",
-        2
-      );
+    res = await browser.CoveoSearchAndClickSuggestion("ret", 2, SEARCH_INTERFACE);
 
-    if (res) res = await coveo.searchAndSubmit("retail", "#coveoSearchInterface_main");
+    await browser.CoveoSearch("retail", SEARCH_INTERFACE);
     await browser.CoveoSelectFacetValue("MSI.com DAM");
-    await browser.CoveoSelectFacetValue("MSI.com DAM", false); // deselect
+    res = await browser.CoveoSelectFacetValue("MSI.com DAM", false); // deselect
 
-    //Random facets
-    if (res) res = await coveo.selectFacet("@source");
-    if (res) res = await coveo.deselectFacet();
-    if (res) res = await coveo.selectTab("Tab_PagesDocs__caption");
-    if (res) res = await coveo.clickResult("1");
+    // Random facets
+    if (res) res = await browser.CoveoSelectFacet("@source");
+    result = browser.CoveoWaitForSearch();
+
+    if (res) res = await browser.CoveoSelectFacet(res.field, res.nthValue);
+    result = browser.CoveoWaitForSearch();
+
+    // select tab
+    if (res) res = await browser.click('.CoveoTab[data-caption="Tab_PagesDocs__caption"]');
+    result = browser.CoveoWaitForSearch();
+
+    // click first result
+    if (res) res = await browser.click('.CoveoResult:nth-child(1)');
+
     browser.end();
   });
 });
