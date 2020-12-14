@@ -51,7 +51,7 @@ describe("WIMS", function () {
     browser.end();
   });
 
-  test("enbridge", async function (browser) {
+  xtest("enbridge", async function (browser) {
     await browser.url("https://www.enbridge.com/about-us");
 
     await browser.CoveoSearch("gas", "", "#mainSearch");
