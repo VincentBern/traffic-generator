@@ -6,6 +6,12 @@ const coveoCommands = {
     return this.api.page.CoveoFiles.Generic().c_setPause(nr);
   },
   //*******************************************************
+  //pause, to wait
+  //*******************************************************
+  c_Pause: function () {
+    return this.api.page.CoveoFiles.Generic().c_Pause();
+  },
+  //*******************************************************
   //c_makeVisible, make elements visible
   //*******************************************************
   makeVisible: function (selector) {
@@ -163,8 +169,8 @@ const coveoCommands = {
   //*******************************************************
   //c_selectTab, tab to select (using the caption)
   //*******************************************************
-  c_click: function (selector) {
-    return this.api.page.CoveoFiles.Generic().c_click(selector);
+  c_click: function (selector, using = "css selector") {
+    return this.api.page.CoveoFiles.Generic().c_click(selector, using);
   },
   //*******************************************************
   //c_selectTab, tab to select (using the caption)

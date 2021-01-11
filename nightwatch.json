@@ -7,7 +7,13 @@
     "server_path": "node_modules/.bin/chromedriver",
     "port": 9515
   },
-  "custom_commands_path": "commands",
+  "custom_commands_path": [
+    "commands",
+    "./node_modules/nightwatch-xhr/es5/commands"
+  ],
+  "custom_assertions_path": [
+    "./node_modules/nightwatch-xhr/es5/assertions"
+  ],
   "page_objects_path": "pages",
   "test_settings": {
     "default": {

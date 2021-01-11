@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Nightwatch scripts to test Coveo implementations and generate test traffic.",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "nightwatch-xhr": "^0.4.7"
+  },
   "devDependencies": {
     "chromedriver": "^87.0.2",
     "nightwatch": "^1.5.1"

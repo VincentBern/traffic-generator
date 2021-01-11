@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 describe("WIMS", function () {
   //Keep browser open when fails
   this.endSessionOnFail = false;
@@ -26,7 +28,7 @@ describe("WIMS", function () {
     browser.pause(5000);
   });
 
-  test("subzero", async function (browser) {
+  xtest("subzero", async function (browser) {
     const coveo = browser.page.Coveo();
     browser.url("https://www.subzero-wolf.com/");
     let res = true;
@@ -134,7 +136,7 @@ describe("WIMS", function () {
     browser.end();
   });
 
-  xtest("step b: the gym search", async function (browser) {
+  test("step b: the gym search", async function (browser) {
     const coveo = browser.page.Coveo();
     //Set pause between events to 1 second
     coveo.setPause(1000);
@@ -148,17 +150,74 @@ describe("WIMS", function () {
       "#form-search > div.search-field-wrap > div > div:nth-child(2)"
     );
     console.log(" Here now: " + res);
-    if (res) res = await coveo.selectFacetValue("M");
+    //if (res) res = await coveo.selectFacetValue("M");
     if (res)
       res = await coveo.clickResult(
         "2",
+        false,
         "",
         5,
         "#coveo-result-list4 > div > div:nth-child(2) .card__item-price"
       );
-    browser.pause(1000);
+    //browser.pause(1000);
     //Add to cart
-    if (res) res = await coveo.c_click("form > div > button");
+
+    //-------------------------------------------------------------------------
+    await browser.execute(fs.readFileSync("src/ajaxListener.js").toString());
+    //browser.listenXHR();
+    await browser.pause(3000);
+    result = await browser.click({
+      selector: "form > div > button",
+      abortOnFailure: false,
+      suppressNotFoundErrors: true,
+    });
+    await browser.pause(1000);
+    await browser.getLog("browser", function (traffics) {
+      traffics.forEach(function (traffic) {
+        consoleMessage = traffic.message;
+        try {
+          jsonObj = JSON.parse(
+            JSON.parse(consoleMessage.substring(18, consoleMessage.length))
+          );
+          method = jsonObj.method;
+          url = jsonObj.url;
+          requestData = jsonObj.requestData;
+          responseCode = jsonObj.responseCode;
+          responseHeader = jsonObj.responseHeader;
+          responseText = jsonObj.responseText;
+
+          console.log("**********************");
+          console.log("method: " + method);
+          console.log("url: " + url);
+          console.log("requestData: " + requestData);
+          console.log("responseCode: " + responseCode);
+          console.log("responseHeader: " + responseHeader);
+          console.log("responseText: " + responseText);
+          console.log("\n");
+        } catch (err) {}
+      });
+    });
+    //browser.getXHR("", 2000, function assertValues(xhr) {
+    console.log(xhr.status);
+    /*browser.assert.equal(xhr.status, "success");
+          browser.assert.equal(xhr.method, "POST");
+          browser.assert.equal(xhr.requestData, "200");
+          browser.assert.equal(xhr.httpResponseCode, "200");
+          browser.assert.equal(xhr.responseData, "");*/
+    console.log(xhr);
+    //});
+    //-------------------------------------------------------------------------
+    if (res) {
+      const { res2, xhr } = await browser.CoveoClickAndTrace(
+        browser,
+        "form > div > button",
+        "collect"
+      );
+      console.log("XHR FEEEDBAKC:");
+      console.log(xhr);
+    }
+
+    //if (res) res = await coveo.c_click("form > div > button");
     browser.pause(2000);
     //Click on recommendation
     if (res)
@@ -334,7 +393,7 @@ describe("WIMS", function () {
     browser.end();
   });
 
-  test("step b: motorola search", async function (browser) {
+  xtest("step b: motorola search", async function (browser) {
     const coveo = browser.page.Coveo();
     //Set pause between events to 1 second
     coveo.setPause(100);
