@@ -15,6 +15,8 @@ module.exports = class CoveoSelectFacetValue {
     let selector = `*[data-field="${field}"] > ul > li:nth-child(${nthValue})`;
     let res = await this.api.click(selector);
 
+    res = await this.api.CoveoWaitForSearch();
+
     return { ...res, field, nthValue };
   }
 };

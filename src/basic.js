@@ -285,14 +285,11 @@ describe("WIMS", function () {
 
     // Random facets
     if (res) res = await browser.CoveoSelectFacet("@source");
-    result = browser.CoveoWaitForSearch();
-
+    // unselect previous facet
     if (res) res = await browser.CoveoSelectFacet(res.field, res.nthValue);
-    result = browser.CoveoWaitForSearch();
 
     // select tab
     if (res) res = await browser.click('.CoveoTab[data-caption="Tab_PagesDocs__caption"]');
-    result = browser.CoveoWaitForSearch();
 
     // click first result
     if (res) res = await browser.click('.CoveoResult:nth-child(1)');
