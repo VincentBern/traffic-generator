@@ -85,7 +85,7 @@ describe("WIMS", function () {
     console.log(" Here now: " + res);
     if (res) res = await coveo.selectFacetValue("M");
     if (res)
-      res = await coveo.clickResult(
+      res = await browser.CoveoOpenResult(
         "2",
         "",
         5,
@@ -173,8 +173,8 @@ describe("WIMS", function () {
     //Random facets
     if (res) res = await coveo.selectFacet("@objecttype");
     if (res) res = await coveo.deselectFacet();
-    if (res) res = await coveo.selectTab("Answers");
-    if (res) res = await coveo.selectTab("Articles");
+    if (res) res = await browser.CoveoSelectTab("Answers");
+    if (res) res = await browser.CoveoSelectTab("Articles");
     if (res)
       res = await coveo.c_click(
         "#TopicFacet > ul > li:nth-child(1) > div.coveo-has-childs-toggle > span.coveo-hierarchical-facet-expand"
@@ -188,7 +188,7 @@ describe("WIMS", function () {
         "All|General Salesforce Functionality|Desktop Add-Ons"
       );
 
-    if (res) res = await coveo.clickResult("1");
+    if (res) res = await browser.CoveoOpenResult("1");
     if (res)
       res = await coveo.clickRecommendation(
         "2",
@@ -227,7 +227,7 @@ describe("WIMS", function () {
     if (res) res = await coveo.deselectFacet();
     if (res) res = await coveo.clickQuickview("RND");
     if (res) res = await coveo.clickQuickview("2");
-    if (res) res = await coveo.clickResult("1");
+    if (res) res = await browser.CoveoOpenResult("1");
     if (res) res = await coveo.clickRecommendation("RND");
     browser.end();
   });
@@ -264,7 +264,7 @@ describe("WIMS", function () {
     if (res) res = await coveo.selectFacet("@commonplatformcomponent");
     if (res) res = await coveo.deselectFacet();
     if (res) res = await coveo.clickQuickview("2");
-    if (res) res = await coveo.clickResult("1");
+    if (res) res = await browser.CoveoOpenResult("1");
     if (res) res = await coveo.clickRecommendation("RND");
     browser.end();
   });
@@ -285,14 +285,9 @@ describe("WIMS", function () {
 
     // Random facets
     if (res) res = await browser.CoveoSelectFacet("@source");
-    // unselect previous facet
-    if (res) res = await browser.CoveoSelectFacet(res.field, res.nthValue);
-
-    // select tab
-    if (res) res = await browser.click('.CoveoTab[data-caption="Tab_PagesDocs__caption"]');
-
-    // click first result
-    if (res) res = await browser.click('.CoveoResult:nth-child(1)');
+    if (res) res = await browser.CoveoSelectFacet(res.field, res.nthValue); // unselect previous facet
+    if (res) res = await browser.CoveoSelectTab('Tab_PagesDocs__caption');
+    if (res) res = await browser.CoveoOpenResult(1);
 
     browser.end();
   });
