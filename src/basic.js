@@ -1,3 +1,5 @@
+const config = require("./config");
+
 describe("WIMS", function () {
   //Keep browser open when fails
   this.endSessionOnFail = false;
@@ -119,10 +121,8 @@ describe("WIMS", function () {
     );
     let res = true;
     if (res)
-      res = await coveo.loginOffice(
-        "adelev@M365x988456.onmicrosoft.com",
-        "PASS"
-      );
+      res = await coveo.loginOffice(config.user, config.pass);
+
     browser.pause(2000);
     if (res) res = await coveo.c_setValue("#ProfilesDropdown", "Mark 8");
     browser.pause(2000);
@@ -132,18 +132,18 @@ describe("WIMS", function () {
     if (res) res = await coveo.clickQuickview("1", "#Rec2");
     if (res) res = await coveo.clickQuickview("2", "#Rec1");
     if (res)
-      res = await coveo.c_click(
+      res = await browser.CoveoClick(
         "#teamwidget > div > div.coveo-facet-settings-more"
-      );
-    if (res) res = await coveo.c_click("body");
+      ); // Failing when window is too small (Recommendations get hidden in popup)
+    if (res) res = await browser.CoveoClick("body");
     if (res)
-      res = await coveo.c_click(
+      res = await browser.CoveoClick(
         "#selectedwidget > div > div.coveo-facet-settings-more"
       );
-    if (res) res = await coveo.c_click("body");
-    if (res) res = await coveo.c_click("#mySidePeople");
-    if (res) res = await coveo.c_click("#myDashboard");
-    if (res) res = await coveo.searchAndSubmit("mark 8");
+    if (res) res = await browser.CoveoClick("body");
+    if (res) res = await browser.CoveoClick("#mySidePeople");
+    if (res) res = await browser.CoveoClick("#myDashboard");
+    if (res) res = await browser.CoveoSearch("mark 8");
     browser.pause(5000);
     //coveo.waitForElementVisible("@searchbox");
     //coveo.search("exchange");
