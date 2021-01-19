@@ -89,24 +89,7 @@ const coveoCommands = {
   deSelectFacetValue: function (value) {
     return this.api.page.CoveoFiles.Facets().c_deSelectFacetValue(value);
   },
-  //*******************************************************
-  //clickResult, click on result nr (RND or number) with resultlist id. Choose between 1 and max of occurences for RND
-  //*******************************************************
-  clickResult: function (
-    nr = "RND",
-    closeWindow = false,
-    resultlist = "",
-    max = 5,
-    specific = ""
-  ) {
-    return this.api.page.CoveoFiles.Results().c_clickResult(
-      nr,
-      closeWindow,
-      resultlist,
-      max,
-      specific
-    );
-  },
+
   //*******************************************************
   //clickRecommendation, click on recommendation nr (RND or number) with resultlist id. Choose between 1 and max of occurences for RND
   //*******************************************************
@@ -148,27 +131,15 @@ const coveoCommands = {
   closeQuickview: function () {
     return this.api.page.CoveoFiles.Results().c_closeQuickview();
   },
-  //*******************************************************
-  //selectTab, tab to select (using the caption)
-  //*******************************************************
-  selectTab: function (caption) {
-    return this.api.page.CoveoFiles.Misc().c_selectTab(caption);
-  },
-  //*******************************************************
-  //c_selectTab, tab to select (using the caption)
-  //*******************************************************
+
   c_waitForElement: function (selector, using = "css selector") {
     return this.api.page.CoveoFiles.Generic().c_waitForElement(selector, using);
   },
-  //*******************************************************
-  //c_selectTab, tab to select (using the caption)
-  //*******************************************************
+
   c_click: function (selector) {
     return this.api.page.CoveoFiles.Generic().c_click(selector);
   },
-  //*******************************************************
-  //c_selectTab, tab to select (using the caption)
-  //*******************************************************
+
   c_setValue: function (selector, val, callback) {
     return this.api.page.CoveoFiles.Generic().c_setValue(
       selector,

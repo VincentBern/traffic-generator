@@ -1,4 +1,4 @@
-module.exports = class CustomCommand {
+module.exports = class CoveoClick {
   async command(selector) {
     let result = await this.api.waitForElementVisible(selector);
     if (result.status == -1) return false;

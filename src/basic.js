@@ -1,3 +1,5 @@
+const config = require("./config");
+
 describe("WIMS", function () {
   //Keep browser open when fails
   this.endSessionOnFail = false;
@@ -27,109 +29,44 @@ describe("WIMS", function () {
   });
 
   test("subzero", async function (browser) {
-    const coveo = browser.page.Coveo();
-    browser.url("https://www.subzero-wolf.com/");
-    let res = true;
-    if (res) res = await browser.CoveoClick("#js-allow-cookies");
-    if (res) res = await browser.CoveoClick("#search-trigger");
-    if (res)
-      res = await browser.CoveoSearch(
-        "grill",
-        "",
-        "#spotlightSearch .CoveoQuerybox .magic-box-input > input"
-      );
+    await browser.url("https://www.subzero-wolf.com/");
 
-    if (res) {
-      browser.keys(browser.Keys.ENTER);
-      res = await coveo.c_waitForElement(
-        ".search-result__section .search-result"
-      );
-      if (res)
-        res = await coveo.c_waitForElement(
-          `//*[contains(@class,'CoveoResultLink') and contains(text(), 'Outdoor Gas')]`,
-          "xpath"
-        );
-    }
+    await browser.CoveoClick("#js-allow-cookies");
+    await browser.CoveoSearch("grill");
 
-    await browser.CoveoSearch(
-      "cooler",
-      "",
-      "#spotlightSearch .CoveoQuerybox .magic-box-input > input"
+    await browser.waitForElementVisible(".coveo-main-section .CoveoResultList .CoveoResult");
+    await browser.waitForElementVisible(
+      "xpath",
+      `//*[contains(@class,'CoveoResult')]//*[@class='coveo-result']/a[contains(text(), 'Outdoor Grill')]`
     );
 
     await browser.waitForElementNotPresent(
       "xpath",
-      `//*[contains(@class,'CoveoResultLink') and contains(text(), 'Wine Storage')]`
+      `//*[contains(@class,'CoveoResult')]//*[@class='coveo-result']/a[contains(text(), 'Wine Storage')]`
     );
-    await browser.keys(browser.Keys.ENTER);
+    await browser.CoveoSearch("cooler");
     await browser.waitForElementVisible(
       "xpath",
-      `//*[contains(@class,'CoveoResultLink') and contains(text(), 'Wine Storage')]`
+      `//*[contains(@class,'CoveoResult')]//*[@class='coveo-result']/a[contains(text(), 'Wine Storage')]`
     );
 
     browser.end();
   });
 
   xtest("enbridge", async function (browser) {
-    const coveo = browser.page.Coveo();
-    //Set pause between events to 1 second
+    await browser.url("https://www.enbridge.com/about-us");
 
-    coveo.setPause(1000);
-    browser.url("https://www.enbridge.com/about-us");
-
-    let res = await coveo.search("gas", "", "#mainSearch");
-    if (res) {
-      browser.keys(browser.Keys.ENTER);
-      browser.pause(1000);
-
-      res = await coveo.c_moveToElement(
-        "#search > div:nth-child(3) > div > div > div.coveo-results-column.search-results > div.CoveoResultList > div.results-container.coveo-result-list-container > div:nth-child(1) > div.small-22.small-centered.medium-uncentered.medium-24.large-8.xlarge-12.medium-wide-only.xlarge-wide-up.columns > article",
-        20,
-        20
-      );
-    }
-    if (res) browser.pause(1000);
-    res = await coveo.c_click(
-      "#search > div:nth-child(3) > div > div > div.coveo-results-column.search-results > div.CoveoResultList > div.results-container.coveo-result-list-container > div:nth-child(1) > div.small-22.small-centered.medium-uncentered.medium-24.large-8.medium-wide-only.xlarge-wide-up.xlarge-12.columns > article > div.tile__cta > a"
+    await browser.CoveoSearch("gas", "", "#mainSearch");
+    await browser.waitForElementVisible(".coveo-main-section .CoveoResultList .CoveoResult");
+    await browser.waitForElementVisible(
+      "xpath",
+      `//*[contains(@class,'CoveoResult')]//div[@class='tile__primary-text' and contains(text(), 'Natural Gas')]`
     );
-    //************************************************************
-    //Could be that current window is switched
-    //************************************************************
-    let closeCurrentWindow = false;
-    browser.windowHandles(function (result) {
-      if (result.value.length == 2) {
-        handle = result.value[1];
-        browser.switchWindow(handle);
-        closeCurrentWindow = true;
-      }
-    });
-    //right column
-    browser.pause(2000);
-    //We first need to move to the element, then the result link will appear
-    res = await coveo.c_moveToElement("article:nth-child(2)", 10, 10);
-    browser.pause(2000);
-    res = await coveo.c_click("article:nth-child(2) > div.tile__cta > a");
-
-    browser.pause(2000);
-    //Close the new window
-    if (closeCurrentWindow) {
-      browser.closeWindow();
-      browser.windowHandles(function (result) {
-        handle = result.value[0];
-        browser.switchWindow(handle);
-      });
-    }
 
     browser.url(
       "https://www.enbridge.com/about-us/natural-gas-transmission-and-midstream"
     );
-    browser.pause(2000);
-    res = await coveo.c_moveToElement("article:nth-child(2)", 10, 10);
-    browser.pause(2000);
-    res = await coveo.c_moveToElement("article:nth-child(3)", 10, 10);
-    browser.pause(2000);
-    res = await coveo.c_moveToElement("article:nth-child(4)", 10, 10);
-    browser.pause(5000);
+    res = await browser.moveToElement("article:nth-child(4)", 10, 10);
 
     browser.end();
   });
@@ -150,7 +87,7 @@ describe("WIMS", function () {
     console.log(" Here now: " + res);
     if (res) res = await coveo.selectFacetValue("M");
     if (res)
-      res = await coveo.clickResult(
+      res = await browser.CoveoOpenResult(
         "2",
         "",
         5,
@@ -184,10 +121,8 @@ describe("WIMS", function () {
     );
     let res = true;
     if (res)
-      res = await coveo.loginOffice(
-        "adelev@M365x988456.onmicrosoft.com",
-        "PASS"
-      );
+      res = await coveo.loginOffice(config.user, config.pass);
+
     browser.pause(2000);
     if (res) res = await coveo.c_setValue("#ProfilesDropdown", "Mark 8");
     browser.pause(2000);
@@ -197,18 +132,18 @@ describe("WIMS", function () {
     if (res) res = await coveo.clickQuickview("1", "#Rec2");
     if (res) res = await coveo.clickQuickview("2", "#Rec1");
     if (res)
-      res = await coveo.c_click(
+      res = await browser.CoveoClick(
         "#teamwidget > div > div.coveo-facet-settings-more"
-      );
-    if (res) res = await coveo.c_click("body");
+      ); // Failing when window is too small (Recommendations get hidden in popup)
+    if (res) res = await browser.CoveoClick("body");
     if (res)
-      res = await coveo.c_click(
+      res = await browser.CoveoClick(
         "#selectedwidget > div > div.coveo-facet-settings-more"
       );
-    if (res) res = await coveo.c_click("body");
-    if (res) res = await coveo.c_click("#mySidePeople");
-    if (res) res = await coveo.c_click("#myDashboard");
-    if (res) res = await coveo.searchAndSubmit("mark 8");
+    if (res) res = await browser.CoveoClick("body");
+    if (res) res = await browser.CoveoClick("#mySidePeople");
+    if (res) res = await browser.CoveoClick("#myDashboard");
+    if (res) res = await browser.CoveoSearch("mark 8");
     browser.pause(5000);
     //coveo.waitForElementVisible("@searchbox");
     //coveo.search("exchange");
@@ -238,8 +173,8 @@ describe("WIMS", function () {
     //Random facets
     if (res) res = await coveo.selectFacet("@objecttype");
     if (res) res = await coveo.deselectFacet();
-    if (res) res = await coveo.selectTab("Answers");
-    if (res) res = await coveo.selectTab("Articles");
+    if (res) res = await browser.CoveoSelectTab("Answers");
+    if (res) res = await browser.CoveoSelectTab("Articles");
     if (res)
       res = await coveo.c_click(
         "#TopicFacet > ul > li:nth-child(1) > div.coveo-has-childs-toggle > span.coveo-hierarchical-facet-expand"
@@ -253,7 +188,7 @@ describe("WIMS", function () {
         "All|General Salesforce Functionality|Desktop Add-Ons"
       );
 
-    if (res) res = await coveo.clickResult("1");
+    if (res) res = await browser.CoveoOpenResult("1");
     if (res)
       res = await coveo.clickRecommendation(
         "2",
@@ -292,7 +227,7 @@ describe("WIMS", function () {
     if (res) res = await coveo.deselectFacet();
     if (res) res = await coveo.clickQuickview("RND");
     if (res) res = await coveo.clickQuickview("2");
-    if (res) res = await coveo.clickResult("1");
+    if (res) res = await browser.CoveoOpenResult("1");
     if (res) res = await coveo.clickRecommendation("RND");
     browser.end();
   });
@@ -329,40 +264,31 @@ describe("WIMS", function () {
     if (res) res = await coveo.selectFacet("@commonplatformcomponent");
     if (res) res = await coveo.deselectFacet();
     if (res) res = await coveo.clickQuickview("2");
-    if (res) res = await coveo.clickResult("1");
+    if (res) res = await browser.CoveoOpenResult("1");
     if (res) res = await coveo.clickRecommendation("RND");
     browser.end();
   });
 
   test("step b: motorola search", async function (browser) {
-    const coveo = browser.page.Coveo();
-    //Set pause between events to 1 second
-    coveo.setPause(100);
-    browser.url(
-      "https://www.motorolasolutions.com/en_us/search.html#t=Tab_All"
-    );
+    let res = await browser.url("https://www.motorolasolutions.com/en_us/search.html#t=Tab_All");
 
-    await browser.setCoveoSpy("#coveoSearchInterface_main");
+    const SEARCH_INTERFACE = '#coveoSearchInterface_main';
+
+    await browser.setCoveoSpy(SEARCH_INTERFACE);
 
     //Continue with search
-    let res = true;
-    if (res)
-      res = await coveo.searchAndClickSuggestion(
-        "ret",
-        "#coveoSearchInterface_main",
-        2
-      );
+    res = await browser.CoveoSearchAndClickSuggestion("ret", 2, SEARCH_INTERFACE);
 
-    if (res)
-      res = await coveo.searchAndSubmit("retail", "#coveoSearchInterface_main");
+    await browser.CoveoSearch("retail", SEARCH_INTERFACE);
     await browser.CoveoSelectFacetValue("MSI.com DAM");
-    await browser.CoveoSelectFacetValue("MSI.com DAM", false); // deselect
+    res = await browser.CoveoSelectFacetValue("MSI.com DAM", false); // deselect
 
-    //Random facets
-    if (res) res = await coveo.selectFacet("@source");
-    if (res) res = await coveo.deselectFacet();
-    if (res) res = await coveo.selectTab("Tab_PagesDocs__caption");
-    if (res) res = await coveo.clickResult("1");
+    // Random facets
+    if (res) res = await browser.CoveoSelectFacet("@source");
+    if (res) res = await browser.CoveoSelectFacet(res.field, res.nthValue); // unselect previous facet
+    if (res) res = await browser.CoveoSelectTab('Tab_PagesDocs__caption');
+    if (res) res = await browser.CoveoOpenResult(1);
+
     browser.end();
   });
 });
