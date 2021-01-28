@@ -4,8 +4,9 @@ module.exports = class getLastResponse {
       this.api.executeAsync(function (done) {
         setTimeout(() => done(window._LAST_COVEO_RESPONSE), 1);
       }, (result) => {
-        // console.log('LastResponse:', result);
-        resolve(JSON.parse(result.value));
+        let response = JSON.parse(result.value) || {};
+        // console.log('LastResponse:', response.searchUid);
+        resolve(response);
       });
     });
   }

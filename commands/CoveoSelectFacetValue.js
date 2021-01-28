@@ -3,7 +3,9 @@ module.exports = class CoveoSelectFacetValue {
 
     return new Promise(async resolve => {
       let lastResponse = await this.api.getLastResponse();
-      let aq = lastResponse.query.aq || '';
+      let aq = (lastResponse.query && lastResponse.query.aq) || '';
+
+      let lastSearchUid = lastResponse.searchUid;
 
       if (selectValue) {
         // check if value is not already selected:
@@ -23,11 +25,12 @@ module.exports = class CoveoSelectFacetValue {
         await this.api.waitForElementPresent(`li.coveo-selected[data-value="${facetValue}"]`);
         await this.api.click(`li.coveo-selected[data-value="${facetValue}"]`);
       }
+      lastResponse = await this.api.CoveoWaitForSearch(lastSearchUid);
 
       let validatedFacet = false;
       while (!validatedFacet) {
         lastResponse = await this.api.getLastResponse();
-        aq = lastResponse.query.aq || '';
+        aq = (lastResponse.query && lastResponse.query.aq) || '';
         const aqHasValue = aq.includes(`"${facetValue}"`);
         if ((selectValue && aqHasValue) || (!selectValue && !aqHasValue)) {
           // facet was applied
