@@ -1,4 +1,4 @@
-module.exports = class CoveoSelectTab {
+module.exports = class CoveoSelectFacet {
 
   getRandomInt(min, max) {
     return min + Math.floor(Math.random() * Math.floor(max));

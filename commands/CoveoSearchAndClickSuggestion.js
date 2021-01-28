@@ -1,4 +1,4 @@
-module.exports = class CoveoSearch {
+module.exports = class CoveoSearchAndClickSuggestion {
   async command(
     text,
     suggestions = 0, // supports number for position, or text for CSS selector.

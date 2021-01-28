@@ -1,4 +1,4 @@
-module.exports = class CustomCommand {
+module.exports = class invalidateSearchResults {
   command(selector = ".CoveoResult") {
     return new Promise(resolve => {
       this.api.execute(function (selector, done) {
