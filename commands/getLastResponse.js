@@ -1,4 +1,4 @@
-module.exports = class CustomCommand {
+module.exports = class getLastResponse {
   command() {
     return new Promise(resolve => {
       this.api.executeAsync(function (done) {

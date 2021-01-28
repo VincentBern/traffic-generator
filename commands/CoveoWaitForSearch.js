@@ -1,6 +1,6 @@
 let LAST_SEARCH_UID = '0';
 
-module.exports = class CustomCommand {
+module.exports = class CoveoWaitForSearch {
   async command(lastSearchUid) {
     if (!lastSearchUid) {
       lastSearchUid = LAST_SEARCH_UID;
