@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+  redis:
+    image: redis:5-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - ./docker_volumes/redis:/data
+    networks:
+      - redis
+      - default
+    restart: unless-stopped
+
+  flask:
+    build: ./poc
+    command: flask run --host=0.0.0.0
+    ports:
+      - 5000:5000
+    env_file:
+      - .env
+    environment:
+      AWS_DEFAULT_REGION: us-east-1
+      FLASK_DEBUG: 1
+      FLASK_APP: app.py
+      # REDIS_HOST: host.docker.internal
+      REDIS_PORT: 6379
+      FIREHOSE_STREAM_NAME: thegym-demo-api-dev
+      IS_DEBUG: 1
+      DNE_CONFIDENCE_ENABLED: 1
+      DISCOVERY_CONFIDENCE_ENABLED: 0
+      TYPE_AHEAD_CONFIDENCE_ENABLED: 0
+      PYTHONUNBUFFERED: 1
+      PYTHONDONTWRITEBYTECODE: 1
+    volumes:
+      - ./poc/app.api:/app:ro
+      - ./poc/models:/app.models:rw
+    depends_on:
+      - redis
+    networks:
+      - redis
+      - default
+    restart: unless-stopped
+
+networks:
+  default:
+  redis:
