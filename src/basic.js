@@ -141,7 +141,8 @@ describe("WIMS", function () {
     //Set pause between events to 1 second
     coveo.setPause(1000);
     browser.url("https://thegym.coveodemo.com/");
-
+    await browser.execute(fs.readFileSync("src/ajaxListener.js").toString());
+    await browser.pause(2000);
     let res = await coveo.searchAndClickSuggestion(
       "pan",
       "",
@@ -163,7 +164,7 @@ describe("WIMS", function () {
     //Add to cart
 
     //-------------------------------------------------------------------------
-    await browser.execute(fs.readFileSync("src/ajaxListener.js").toString());
+
     //browser.listenXHR();
     await browser.pause(3000);
     result = await browser.click({
@@ -172,7 +173,19 @@ describe("WIMS", function () {
       suppressNotFoundErrors: true,
     });
     await browser.pause(1000);
-    await browser.getLog("browser", function (traffics) {
+    browser.execute(`return window.events`, (result) => {
+      console.log(result.value);
+      for (var i = 0; i < result.value.length; i++) {
+        let traffic = result.value[i];
+        //console.log(traffic);
+        let json = JSON.parse(traffic);
+        console.log("type:" + json.type);
+        console.log("url:" + json.url);
+        console.log("data: " + json.obj);
+      }
+      //console.log(result);
+    });
+    /*    await browser.getLog("browser", function (traffics) {
       traffics.forEach(function (traffic) {
         consoleMessage = traffic.message;
         try {
@@ -196,15 +209,15 @@ describe("WIMS", function () {
           console.log("\n");
         } catch (err) {}
       });
-    });
+    });*/
     //browser.getXHR("", 2000, function assertValues(xhr) {
-    console.log(xhr.status);
+    //console.log(xhr.status);
     /*browser.assert.equal(xhr.status, "success");
           browser.assert.equal(xhr.method, "POST");
           browser.assert.equal(xhr.requestData, "200");
           browser.assert.equal(xhr.httpResponseCode, "200");
           browser.assert.equal(xhr.responseData, "");*/
-    console.log(xhr);
+    //console.log(xhr);
     //});
     //-------------------------------------------------------------------------
     if (res) {

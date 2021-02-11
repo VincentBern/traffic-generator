@@ -1,0 +1,48 @@
+[
+  {
+    "command": "CLICK",
+    "selector": "\"INPUT[aria-label='Recherche']\"",
+    "type": "CSS"
+  },
+  {
+    "command": "SETVALUE",
+    "selector": "INPUT[aria-label='Recherche']",
+    "content": "chat",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\".coveo-magnifier-circle-svg\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\".coveo-facet-value-caption[data-original-value='Promotions']\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\".coveo-checkbox-span-label[title='CatIt']\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\".coveo-checkbox[aria-label='Sélectionner CatIt avec 112 résultats']\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\".coveo-checkbox[aria-label='Sélectionner CatIt avec 112 résultats']\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\".coveo-breadcrumb-clear-all[aria-label='Tout effacer'] DIV\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\".CoveoResultLink[href='https://www.mondou.com/fr-CA/p-laisse-pour-chats-poisson/1034760-MASTER'] .CoveoImageFieldValue[data-field='@mondou_pb_imageurl'] IMG\"",
+    "type": "CSS"
+  }
+]

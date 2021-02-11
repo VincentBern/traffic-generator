@@ -1,7 +1,7 @@
 {
-  "url": "https://help.salesforce.com/home",
-  "title": "Salesforce Search",
-  "logfile": "output/Salesforce.log",
+  "url": "https://www.mondou.com/fr-CA/",
+  "title": "Mondou Search",
+  "logfile": "output/Mondou.log",
   "randomScripts": [
     "RECORDER",
     "RECORDER"

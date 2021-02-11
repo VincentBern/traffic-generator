@@ -19,8 +19,8 @@ describe("AutomaticTester", async function () {
   this.abortOnAssertionFailure = false;
   this.waitForConditionTimeout = 5000;
   let mypage = undefined;
-  let settings = loadSettings("input/salesforce.json");
-  let recorded = loadSettings("input/salesforce_recorder.json");
+  let settings = loadSettings("input/mondou.json");
+  let recorded = loadSettings("input/mondou_recorder.json");
   let ts = new Date(Date.now());
   var logger = fs.createWriteStream(settings.logfile, { flags: "a" });
   logger.write(
@@ -39,9 +39,6 @@ describe("AutomaticTester", async function () {
     mypage.setPause(1000);
     //Open URL
     browser.url(settings.url);
-    //Get rid of pop up consent
-    browser.pause(1000);
-    await mypage.c_click("#onetrust-accept-btn-handler");
     browser.pause(1000);
   }
 

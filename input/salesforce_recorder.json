@@ -1,0 +1,88 @@
+[
+  {
+    "command": "OPEN",
+    "content": "'https://help.salesforce.com/home'"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\"INPUT[aria-label='Search']\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\"INPUT[aria-label='Search']\"",
+    "type": "CSS"
+  },
+  {
+    "command": "SETVALUE",
+    "selector": "INPUT[aria-label='Search']",
+    "content": "setup",
+    "type": "CSS"
+  },
+  {
+    "command": "ENTER",
+    "selector": "",
+    "content": "",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\"INPUT[aria-label='Search']\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\"INPUT[aria-label='Search']\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\"label > .coveo-facet-value-label-wrapper > .coveo-facet-value-caption\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\".coveo-facet-value-caption[data-original-value='HTDeveloperDocumentsC']\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\"label > .coveo-facet-value-label-wrapper > .coveo-facet-value-caption\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\"label > .coveo-facet-value-label-wrapper > .coveo-facet-value-caption\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\".CoveoTab[data-id='AnswersTab'] P\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\"#ht_appExchange P\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\"#ht_appExchange P\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\".CoveoTab[data-id='TopResultTab'] P\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\".CoveoTab[data-id='TopResultTab'] P\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\".CoveoResultLink[href='articleView?id=sf.console_lex_service_setup.htm&type=5']\"",
+    "type": "CSS"
+  }
+]
