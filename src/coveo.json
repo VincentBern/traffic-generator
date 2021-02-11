@@ -1,0 +1,57 @@
+[
+  {
+    "command": "OPEN",
+    "content": "'https://connect.coveo.com/s/global-search/%40uri#t=All&sort=relevancy&'"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\"INPUT[aria-label='Search']\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\"INPUT[aria-label='Search']\"",
+    "type": "CSS"
+  },
+  {
+    "command": "SETVALUE",
+    "selector": "INPUT[aria-label='Search']",
+    "content": "exchange",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\"#c4sc\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\"#c4sc\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\".coveo-breadcrumb-clear-all[aria-label='Clear All Filters'] DIV\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\".coveo-breadcrumb-clear-all[aria-label='Clear All Filters'] DIV\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\".coveo-facet-value-caption[data-original-value='Technical Documentation']\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\"label > .coveo-facet-value-label-wrapper > .coveo-facet-value-caption\"",
+    "type": "CSS"
+  },
+  {
+    "command": "CLICK",
+    "selector": "\".CoveoResultLink[href='https://docs.coveo.com/en/2026/'] .coveo-highlight\"",
+    "type": "CSS"
+  }
+]
