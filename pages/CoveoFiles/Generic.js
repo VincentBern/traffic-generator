@@ -72,11 +72,14 @@ const coveoGenericCommands = {
     return new Promise((resolve) => {
       this.c_waitForElement(selector).then(function (result) {
         if (result) {
+          console.log("MoveToElement: " + selector);
           _this.moveToElement(selector, x, y, (result) => {
             if (result.status != -1) {
+              console.log("MoveToElement, done: " + selector);
               _this.c_Pause();
               resolve(true);
             } else {
+              console.log("MoveToElement, failed: " + selector);
               resolve(false);
             }
           });
@@ -96,21 +99,27 @@ const coveoGenericCommands = {
       this.isVisible(using, selector, (result) => {
         //If visible
         if (result.status != -1) {
+          console.log("WaitForElement - visible, done: " + selector);
+
           _this.c_Pause();
           resolve(true);
           return;
         }
         //Not visible, wait, and move to the element
+        console.log("WaitForElement - NOT visible, moving to it: " + selector);
         _this.c_Pause(waitRetry);
         _this.moveToElement(using, selector, 10, 10, (result) => {
           if (result.status != -1) {
             _this.isVisible(using, selector, (result) => {
               //If visible
               if (result.status != -1) {
+                console.log("MoveToElement - after move, done: " + selector);
+
                 _this.c_Pause();
                 resolve(true);
                 return;
               } else {
+                console.log("MoveToElement - after move, failed: " + selector);
                 resolve(false);
                 return;
               }
@@ -126,15 +135,18 @@ const coveoGenericCommands = {
   //*******************************************************
   //c_click, click on element
   //*******************************************************
-  c_click: function (selector) {
+  c_click: function (selector, using = "css selector") {
     let _this = this;
+    console.log("In Click on Element " + selector);
     return new Promise((resolve) => {
-      this.c_waitForElement(selector).then(function (result) {
+      this.c_waitForElement(selector, using).then(function (result) {
         console.log(result);
         if (result) {
           console.log("Click on Element " + selector);
+          _this.c_Pause();
           _this.click(
             {
+              using: using,
               selector: selector,
               abortOnFailure: false,
               suppressNotFoundErrors: true,
@@ -169,15 +181,20 @@ const coveoGenericCommands = {
     return new Promise((resolve) => {
       this.c_waitForElement(selector).then(function (result) {
         if (result) {
+          console.log("setValue - after wait: " + selector);
           _this.setValue(selector, val, (result) => {
             if (result.status != -1) {
+              console.log("setValue - done: " + selector);
               _this.c_Pause();
+
               resolve(true);
             } else {
+              console.log("setValue - failed: " + selector);
               resolve(false);
             }
           });
         } else {
+          console.log("setValue - directly failed: " + selector);
           resolve(false);
         }
       });

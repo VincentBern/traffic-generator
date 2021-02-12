@@ -8,7 +8,14 @@
     "port": 9515
   },
   "custom_commands_path": "commands",
+  "globals_path": "./src/globals.js",
   "page_objects_path": "pages",
+  "globals": {
+    "abortOnAssertionFailure": false,
+    "abortOnElementLocateError": false,
+    "waitForConditionPollInterval": 500,
+    "waitForConditionTimeout": 5000
+  },
   "test_settings": {
     "default": {
       "desiredCapabilities": {

@@ -1,0 +1,50 @@
+{
+  "url": "https://help.salesforce.com/home",
+  "title": "Salesforce Search",
+  "logfile": "output/Salesforce.log",
+  "randomScripts": [
+    "searchAndOpen2x",
+    "searchAndClick",
+    "searchAndOpen2x",
+    "searchAndChangeTab"
+  ],
+  "randomKeywords": [
+    "audio",
+    "appliances",
+    "Home Theather",
+    "Computers",
+    "Tablets",
+    "Cell Phones",
+    "Video Games",
+    "Car Electronics",
+    "Toys",
+    "Health",
+    "Wearable",
+    "Smart Home",
+    "Projector",
+    "Apple Watch",
+    "Microphones",
+    "Sheet Music",
+    "Karaoke",
+    "Drums",
+    "Folk",
+    "Band",
+    "Guitars"
+  ],
+  "scriptKeywords": [
+    {
+      "script": "searchSpecial1",
+      "keyword": "exchange"
+    },
+    {
+      "script": "searchSpecial1",
+      "keyword": "exchange feed"
+    },
+    {
+      "script": "searchSpecial2",
+      "keyword": "account"
+    }
+  ],
+  "username": "",
+  "password": ""
+}

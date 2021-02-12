@@ -3,7 +3,8 @@ const coveoSearchCommands = {
   //c_search, search for text. Do not click on submit
   //*******************************************************
   c_search: function (text, searchinterface = "", specific = "") {
-    const selector = specific || ".CoveoSearchbox .magic-box-input > input";
+    const selector = specific || ".CoveoSearchbox .magic-box-input > input, #search-box";
+
     const inputBoxSelector = `${searchinterface} ${selector}`;
     let _this = this;
     return new Promise((resolve) => {
@@ -11,11 +12,14 @@ const coveoSearchCommands = {
         .c_waitForElement(inputBoxSelector)
         .then(function (result) {
           if (result) {
+            console.log('clearValue');
             _this.clearValue(inputBoxSelector, (result) => {
               if (result.status == -1) {
                 _this.api.page.CoveoFiles.Generic().c_Pause();
                 resolve(false);
               }
+              console.log('setValue');
+              _this.setValue(inputBoxSelector, '');
               _this.setValue(inputBoxSelector, text, (result) => {
                 if (result.status != -1) {
                   _this.api.page.CoveoFiles.Generic().c_Pause();

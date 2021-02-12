@@ -9,11 +9,21 @@ module.exports = class CoveoOpenResult {
       nthValue = this.getRandomInt(1, max);
     }
 
-    let selector = `${resultlist} .CoveoResultList .CoveoResult:nth-child(${nthValue}) .CoveoResultLink`.trim();
+    let selector = `${resultlist} .CoveoResultList .CoveoResult:nth-child(${nthValue}) .CoveoResultLink, .MuiGrid-spacing-xs-4 .MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-4:nth-child(${nthValue}) .MuiLink-root`.trim();
     if (specific) {
       selector = specific;
     }
-    let res = await this.api.click(selector);
+    console.log('In CoveoOpenResult');
+    console.log(selector);
+    await this.api.pause(1000);
+    //let res = await this.api.click(selector);
+    let res = await this.api.click(
+      {
+        selector: selector,
+        abortOnFailure: false,
+        suppressNotFoundErrors: true,
+      });
+    console.log('In CoveoOpenResult, click: ' + JSON.stringify(res));
     await this.api.pause(1000);
 
     if (closeWindow) {
