@@ -25,6 +25,7 @@ module.exports = class CoveoSearch {
     result = await this.api.keys(this.api.Keys.ENTER);
 
     await this.api.CoveoWaitForSearch(lastSearchUid);
+    await this.api.pause(1000); // slow down a bit for UA events
 
     return (result.status !== -1);
   }
