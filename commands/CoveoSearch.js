@@ -1,5 +1,5 @@
 module.exports = class CoveoSearch {
-  async command(text, searchinterface = "", selector = ".CoveoSearchbox .magic-box-input > input") {
+  async command(text, searchinterface = "", selector = ".CoveoSearchbox .magic-box-input > input, #search-box") {
     const inputBoxSelector = `${searchinterface} ${selector}`;
 
     let result = await this.api.waitForElementVisible(inputBoxSelector);
@@ -16,9 +16,6 @@ module.exports = class CoveoSearch {
 
     await this.api.pause(1000);
     await this.api.CoveoWaitForSearch(lastSearchUid);
-
-    await this.api.waitForElementPresent('.CoveoSearchInterface.coveo-after-initialization');
-    await this.api.waitForElementNotPresent('.CoveoSearchInterface.coveo-after-initialization.coveo-executing-query');
 
     return (result.status !== -1);
   }
