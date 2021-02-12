@@ -18,6 +18,7 @@ describe("BestBuy (Storefront headless)", function () {
     await browser.CoveoSelectFacetValue("Washers & Dryers");
     await browser.CoveoSelectFacetValue("Washing Machines");
 
+    await browser.CoveoSearch("Dryer");
   });
 
   afterEach(browser => browser.end());
