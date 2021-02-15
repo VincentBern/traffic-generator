@@ -6,6 +6,9 @@ module.exports = class CoveoOpenResult {
 
   async command(nthValue = "RND", closeWindow = false, resultlist = "", max = 5, specific = "") {
     if (nthValue === "RND") {
+      let results = await this.api.elements('css selector', `${resultlist} .CoveoResultList .CoveoResult`);
+      max = Math.min(max, results?.value?.length || 1);
+
       nthValue = this.getRandomInt(1, max);
     }
 

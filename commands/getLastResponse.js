@@ -14,9 +14,9 @@ module.exports = class getLastResponse {
     }
 
     // in Headless, we set the data-search-uid on the result list, so we can track when it changes
-    let result = await this.api.waitForElementPresent('*[data-search-uid]', 1000, false);
-    if (result.status !== -1) {
-      result = await this.api.getAttribute('*[data-search-uid]', 'data-search-uid');
+    let hasSearchUid = await this.api.CoveoIsVisible('*[data-search-uid]');
+    if (hasSearchUid) {
+      let result = await this.api.getAttribute('*[data-search-uid]', 'data-search-uid');
       if (result !== -1) {
         return { searchUid: result.value };
       }
