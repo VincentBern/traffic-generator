@@ -7,39 +7,30 @@ module.exports = class CoveoSearch {
     console.log('In CoveoSearch, wait input: ' + JSON.stringify(result));
     if (result.status == -1) return false;
 
-    await this.api.pause(1000);
-    console.log('clearValue Searchbox');
-    await this.api.click(selector);
-    let value = await this.api.getValue(selector);
-    //First sent END
-    /*await this.api.setValue(selector, "\uE010");
-    console.log(value.value);
-    for (var i = 0; i < value.value.length; i++) {
-      //await this.api.Keys.BACKSPACE;
-      await this.api.setValue(selector, "\u0008");
-    }*/
-    result = await this.api.setValue(selector, [
-      this.api.Keys.CONTROL,
-      "a",
-      this.api.Keys.DELETE,
-    ]);
+    await this.api.click(inputBoxSelector);
+    await this.api.pause(500);
 
-    result = await this.api.clearValue(inputBoxSelector);
-    console.log('In CoveoSearch, clear input: ' + JSON.stringify(result));
+    let clearButton = await this.api.CoveoIsVisible('button.MuiAutocomplete-clearIndicator.MuiAutocomplete-clearIndicatorDirty');
+    if (clearButton === true) { // need to check with 'true' because value would be an object in case of error.
+      result = await this.api.click('button.MuiAutocomplete-clearIndicator');
+      await this.api.pause(500);
+    }
+    else {
+      result = await this.api.clearValue(inputBoxSelector);
+    }
     if (result.status == -1) return false;
-
 
     await this.api.pause(1000);
     //let lastSearchUid = (await this.api.getLastResponse()).searchUid;
     result = await this.api.setValue(inputBoxSelector, '');
 
+    await this.api.click(inputBoxSelector);
     result = await this.api.setValue(inputBoxSelector, text);
     await this.api.pause(1000);
     result = await this.api.keys(this.api.Keys.ENTER);
 
-    await this.api.pause(1000);
-    //await this.api.CoveoWaitForSearch(lastSearchUid);
-    console.log('return Searchbox');
+    await this.api.CoveoWaitForSearch(lastSearchUid);
+    await this.api.pause(1000); // slow down a bit for UA events
 
     return (result.status !== -1);
   }
