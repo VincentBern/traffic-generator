@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+  <html>
+  <head><meta charset="UTF-8">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <link rel="stylesheet" href="http://coveo.github.io/vapor/dist/css/CoveoStyleGuide.css">
+  <link rel="stylesheet" href="https://static.cloud.coveo.com/styleguide/v2.10.0/css/CoveoStyleGuide.css">
+  <style type="text/css">
+  body.coveo-styleguide {display:block; padding: 0 30px 30px;}
+  header.header {min-height: 48px;}
+  .header-section {font-size: 1.2em; font-weight: bold;}
+  a {outline: none;}
+  a img {outline: none;}
+  img {border: 0;}
+  a:focus {outline: none;}
+  .bg-polygon {
+    background-color: rgb(51, 51, 87) !important;
+      background-image: none;
+  }
+  .admin-logo {
+    width: 139px !important;
+    height: 65px !important;
+    padding-left: 15px !important;
+    margin-top: -8px;
+  }
+  
+  hr {
+    clear: both;
+}
+h1 {
+  font-weight: bold;
+}
+h2, .h2 {
+  font-size: 20px;
+  font-weight: bold;
+}
+  .popup-content {padding-left: 8px; padding-right: 8px; padding-top: 0px; overflow: auto;}
+
+  .coveo-styleguide .collapsible .collapsible-header {background-position: left 20px center; display: flex; line-height: 50px;}
+  .coveo-styleguide .collapsible .collapsible-header .msg {flex: 1;}
+  .coveo-styleguide table:not(.datepicker-table) tr:hover td {background-color: transparent;}
+
+  .mycode {font-family: courier; font-variant: normal !important; font-weight: normal !important; word-wrap: break-word; white-space: pre-wrap; word-break: break-all;}
+  .coveo-styleguide .collapsible .collapsible-header .details {color: #ce3f00; font-size: 8px;}
+  .coveo-styleguide .collapsible .collapsible-header .result {color: #ce3f00; margin: auto;}
+  .coveo-styleguide .collapsible .collapsible-header .result .wheel {position: relative; width: auto;}
+  .coveo-styleguide .collapsible .collapsible-header .result .wheel svg {width: 40px; position: absolute; margin-top: -40px; margin-left: -10px;}
+  .coveo-styleguide .collapsible .collapsible-header .result div.wheel svg .back-ring {stroke: #fff; fill: none;}
+  .coveo-styleguide .collapsible .collapsible-header .result .wheel-title {display: none;}
+  .coveo-styleguide .collapsible .collapsible-header.active {background-image: none;}
+  .coveo-styleguide .collapsible .collapsible-body {padding: 0;}
+  .coveo-styleguide table:not(.datepicker-table) td.line-result { text-align: left; font-weight: bold; vertical-align: top;}
+  .coveo-styleguide table:not(.datepicker-table) th:last-child, .coveo-styleguide table:not(.datepicker-table) td:last-child {padding-left: 25px;}
+  
+.mycode {
+  font-family: courier;
+  font-variant: normal !important;
+  font-weight: normal !important;
+  font-size: 14px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.valid { width:30px !important;background-position: center;background-size:25px;background-repeat:no-repeat;background-image:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaWQ9IkxheWVyXzEiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsOiM0MUFENDk7fQo8L3N0eWxlPjxnPjxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iNDM0LjgsNDkgMTc0LjIsMzA5LjcgNzYuOCwyMTIuMyAwLDI4OS4yIDE3NC4xLDQ2My4zIDE5Ni42LDQ0MC45IDE5Ni42LDQ0MC45IDUxMS43LDEyNS44IDQzNC44LDQ5ICAgICAiLz48L2c+PC9zdmc+)}
+.notvalid { width:30px !important;background-position: center;background-size:25px;background-repeat:no-repeat;background-image:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaWQ9IkxheWVyXzEiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDYxMiA3OTI7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA2MTIgNzkyIiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsOiNFNDQwNjE7fQo8L3N0eWxlPjxnPjxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iMzgyLjIsMzk2LjQgNTYwLjgsMjE3LjggNDg0LDE0MSAzMDUuNCwzMTkuNiAxMjYuOCwxNDEgNTAsMjE3LjggMjI4LjYsMzk2LjQgNTAsNTc1IDEyNi44LDY1MS44ICAgIDMwNS40LDQ3My4yIDQ4NCw2NTEuOCA1NjAuOCw1NzUgMzgyLjIsMzk2LjQgICIvPjwvZz48L3N2Zz4=)}
+.validInd { background-position: left;padding-left:17px !important;background-size:15px;background-repeat:no-repeat;background-image:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaWQ9IkxheWVyXzEiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsOiM0MUFENDk7fQo8L3N0eWxlPjxnPjxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iNDM0LjgsNDkgMTc0LjIsMzA5LjcgNzYuOCwyMTIuMyAwLDI4OS4yIDE3NC4xLDQ2My4zIDE5Ni42LDQ0MC45IDE5Ni42LDQ0MC45IDUxMS43LDEyNS44IDQzNC44LDQ5ICAgICAiLz48L2c+PC9zdmc+)}
+.notvalidInd { background-position: left;padding-left:17px !important;background-size:15px;background-repeat:no-repeat;background-image:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaWQ9IkxheWVyXzEiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDYxMiA3OTI7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA2MTIgNzkyIiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsOiNFNDQwNjE7fQo8L3N0eWxlPjxnPjxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iMzgyLjIsMzk2LjQgNTYwLjgsMjE3LjggNDg0LDE0MSAzMDUuNCwzMTkuNiAxMjYuOCwxNDEgNTAsMjE3LjggMjI4LjYsMzk2LjQgNTAsNTc1IDEyNi44LDY1MS44ICAgIDMwNS40LDQ3My4yIDQ4NCw2NTEuOCA1NjAuOCw1NzUgMzgyLjIsMzk2LjQgICIvPjwvZz48L3N2Zz4=)}
+.validIndB { background-position: left;padding-left:30px !important;background-size:25px;background-repeat:no-repeat;background-image:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaWQ9IkxheWVyXzEiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsOiM0MUFENDk7fQo8L3N0eWxlPjxnPjxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iNDM0LjgsNDkgMTc0LjIsMzA5LjcgNzYuOCwyMTIuMyAwLDI4OS4yIDE3NC4xLDQ2My4zIDE5Ni42LDQ0MC45IDE5Ni42LDQ0MC45IDUxMS43LDEyNS44IDQzNC44LDQ5ICAgICAiLz48L2c+PC9zdmc+)}
+.notvalidIndB { background-position: left;padding-left:30px !important;background-size:25px;background-repeat:no-repeat;background-image:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaWQ9IkxheWVyXzEiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDYxMiA3OTI7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA2MTIgNzkyIiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsOiNFNDQwNjE7fQo8L3N0eWxlPjxnPjxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iMzgyLjIsMzk2LjQgNTYwLjgsMjE3LjggNDg0LDE0MSAzMDUuNCwzMTkuNiAxMjYuOCwxNDEgNTAsMjE3LjggMjI4LjYsMzk2LjQgNTAsNTc1IDEyNi44LDY1MS44ICAgIDMwNS40LDQ3My4yIDQ4NCw2NTEuOCA1NjAuOCw1NzUgMzgyLjIsMzk2LjQgICIvPjwvZz48L3N2Zz4=)}
+
+.help {  cursor:pointer;width:30px !important;background-position: center;background-size:25px;background-repeat:no-repeat;background-image:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDUwIDUwIiBoZWlnaHQ9IjUwcHgiIGlkPSJMYXllcl8xIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA1MCA1MCIgd2lkdGg9IjUwcHgiIHhtbDpzcGFjZT0icHJlc2VydmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxjaXJjbGUgY3g9IjI1IiBjeT0iMjUiIGZpbGw9Im5vbmUiIHI9IjI0IiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCBmaWxsPSJub25lIiBoZWlnaHQ9IjUwIiB3aWR0aD0iNTAiLz48Zz48cGF0aCBkPSJNMjMuNTMzLDMwLjQwN3YtMS40N2MwLTEuNDM2LDAuMzIyLTIuMTg4LDEuMDc1LTMuMjI5bDIuNDA0LTMuM2MxLjI1NC0xLjcyMSwxLjY4NC0yLjU0NiwxLjY4NC0zLjc2NiAgIGMwLTIuMDQ0LTEuNDM0LTMuMzM1LTMuNDc5LTMuMzM1Yy0yLjAwOCwwLTMuMjk5LDEuMjE5LTMuNzI5LDMuNDA3Yy0wLjAzNiwwLjIxNS0wLjE3OSwwLjMyMy0wLjM5NSwwLjI4N2wtMi4yNTktMC4zOTUgICBjLTAuMjE2LTAuMDM2LTAuMzIzLTAuMTc5LTAuMjg4LTAuMzk1YzAuNTM5LTMuNDQzLDMuMDE0LTUuNzAzLDYuNzQ0LTUuNzAzYzMuODcyLDAsNi40OSwyLjU0Niw2LjQ5LDYuMDk3ICAgYzAsMS43MjItMC42MDgsMi45NzctMS44MjgsNC42NjNsLTIuNDAzLDMuM2MtMC43MTcsMC45NjgtMC45MzMsMS40Ny0wLjkzMywyLjY4OXYxLjE0N2MwLDAuMjE1LTAuMTQzLDAuMzU4LTAuMzU4LDAuMzU4aC0yLjM2NyAgIEMyMy42NzYsMzAuNzY2LDIzLjUzMywzMC42MjIsMjMuNTMzLDMwLjQwN3ogTTIzLjM1NCwzMy44NTFjMC0wLjIxNSwwLjE0My0wLjM1OCwwLjM1OS0wLjM1OGgyLjcyNiAgIGMwLjIxNSwwLDAuMzU4LDAuMTQ0LDAuMzU4LDAuMzU4djMuMDg0YzAsMC4yMTYtMC4xNDQsMC4zNTgtMC4zNTgsMC4zNThoLTIuNzI2Yy0wLjIxNywwLTAuMzU5LTAuMTQzLTAuMzU5LTAuMzU4VjMzLjg1MXoiLz48L2c+PC9zdmc+)}
+.notmandatory { opacity:0.6}  
+.crs th {color: #1e2541;font-weight: bold;} 
+.crs {border:none;margin-top: 5px;width: auto;float:left;padding:10px;border-spacing: 0px;} 
+.crs  th {	text-align: left;	border:1px solid #C0C0C0;		padding:5px;font-family:Arial !important;	font-size:11pt !important;	background:#F0F0F0;	}	
+.crs td { white-space: nowrap;max-width: 500px;min-width: 30px;vertical-align: top;font-family:Arial !important;	font-size:11pt !important;		border:1px solid #C0C0C0;		padding:5px;}	
+.numbers { text-align:right}
+td.nobord {border:none !important;}
+.propvalue,.propex,.sc {
+  display: block;
+    font-weight: normal;
+    font-family: courier;
+    padding-top: 3px;
+    word-break: break-all;
+}
+.propex {
+  font-style: italic;
+  font-size: 0.9em;
+}
+.url a {
+  cursor: pointer;
+  font-weight:normal;
+}
+
+span.spacing {
+  font-size: 1.5em;
+  display: block;
+  padding: 5px;
+  clear: both;
+}
+span.persistent {
+  background-color: #fea1a1;
+  font-family: courier;
+  word-break: break-all;
+  clear: both;
+    display: block;
+  /* width: 200px; */
+}
+
+span.type {
+  font-size: 1.6em;
+  display: block;
+  padding: 5px;
+  /* margin-top: 42px; */
+  border-top: 1px solid #bcc3ca;
+  clear: both;
+  font-weight: bold;
+}
+
+span.time {
+  font-size: 1.3em;
+  display: block;
+  padding: 5px;
+  margin-left: 20px;
+}
+span.url{
+  padding-bottom: 10px;
+    display: block;
+    margin-left: 25px;
+    background-size: 15px;
+    font-size: 1.1em;
+    font-weight: bold;
+    
+}
+.code {
+  margin-left: 30px;
+  font-weight: bold;
+  padding-bottom: 10px !important;
+    display: block;
+    cursor: pointer;
+    clear:both;
+}
+
+.popup-content {
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 0px;
+  overflow: auto;
+}
+ul {
+  font-size:1.1em;
+  font-weight: bold;
+  margin-left: 25px;
+}
+li {
+  font-size: 0.9em;
+  font-weight: bold;
+  /* display: block; */
+  padding-right: 15px;
+  padding-bottom: 5px;
+
+}
+details.code:focus {
+  outline: none !important;
+}
+summary:focus {
+  outline: none;
+}
+
+ul.tabs{
+  list-style-type:none;
+  bottom: -1px;
+  position:relative;
+}
+.tabs li{
+  float:left;
+}
+
+  </style>
+  <link rel="shortcut icon" href="https://www.coveo.com/public/img/favicon.png?v=1.0.72">
+  <title>genericstore coveodemo com</title>
+  </head>
+  <body class="coveo-styleguide">
+  <header class="header bg-polygon">
+    <div class="header-section">
+      <a href="http://coveo.com" target="_blank">
+        <div class="admin-logo">
+          <div id="LogoV2" class="flex full-content"> <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 409.6 103.7" style="enable-background: new 0 0 409.6 103.7;" xml:space="preserve" class="pr1 flex flex-auto"> <style type="text/css"> .st0{fill: #ffffff;}.st1{fill: #00adff;}.st2{fill: #f05245;}.st3{fill: #1cebcf;}.st4{fill: #ffe300;}.st5{opacity: 0.87; fill: #ffffff; enable-background: new;}</style> <path class="st0" d="M164.7,36.2l-4.9,5.2c-3.4-3.3-7-5.2-11.9-5.2c-8.5,0-14.9,6.7-14.9,16.1s6.4,16.1,14.9,16.1c4.6,0,9-1.9,12.2-5.2l4.6,5.2c-4,4.6-9.7,7-16.4,7c-14,0-23.1-10-23.1-23.1c0-13.4,9.1-23.4,23.1-23.4C154.6,28.8,160.6,31.5,164.7,36.2L164.7,36.2z"></path> <path class="st0" d="M219.4,52.3c0,13.1-10,23.1-23.4,23.1c-13.7,0-23.7-10-23.7-23.1c0-13.4,10-23.4,23.7-23.4C209.4,28.9,219.4,38.9,219.4,52.3z M180.2,52.3c0,9.4,6.7,16.1,15.8,16.1c8.8,0,15.5-6.7,15.5-16.1s-6.7-16.1-15.5-16.1C186.9,36.2,180.2,42.9,180.2,52.3L180.2,52.3z"></path> <polygon class="st0" points="252.3,74.5 243.1,74.5 224.3,30.1 232.8,30.1 247.7,66.9 262.6,30.1 270.8,30.1 252.3,74.5 "></polygon> <path class="st0" d="M318.8,52v3h-35c0.9,9.1,7.3,13.7,14.9,13.7c5.1,0.1,10.1-1.8,14-5.2l4,5.2c-5.5,5.2-11.6,6.8-18.3,6.8c-13.4,0-22.8-9.1-22.8-23.1c0-13.7,9.4-23.4,22.2-23.4C310,28.9,318.8,38.6,318.8,52L318.8,52z M283.9,48.6h27.4c-0.9-7.6-6.1-12.8-13.4-12.8C290,35.9,285.1,41,283.9,48.6L283.9,48.6z"></path> <path class="st0" d="M376,52.3c0,13.1-10,23.1-23.4,23.1c-13.7,0-23.7-10-23.7-23.1c0-13.4,10-23.4,23.7-23.4C365.9,28.9,376,38.9,376,52.3z M336.8,52.3c0,9.4,6.7,16.1,15.8,16.1c8.8,0,15.5-6.7,15.5-16.1s-6.7-16.1-15.5-16.1C343.4,36.2,336.8,42.9,336.8,52.3z"></path> <path class="st1" d="M88.1,14.9C79.5,6.4,68.3,1.2,56.2,0c-0.9,0-1.6,0.8-1.6,1.8c0,0.4,0.1,0.7,0.4,1l18.8,18.5c0,0.3,0,0.3-0.3,0.3c-5.2-3.8-11.3-6.1-17.6-6.7c-0.6-0.1-1.1,0.3-1.2,0.9c0,0.3,0.1,0.6,0.3,0.9l12.8,12.8c0,0,0,0.3-0.3,0c-3.5-2.2-7.4-3.6-11.6-4c-0.6,0-0.9,0.6-0.6,1.2l21.6,21.6c0.6,0.6,1.5,0,1.2-0.6c-0.3-4.1-1.7-8.1-4-11.6c-0.3,0,0-0.3,0,0l12.5,12.2c0.6,0.6,1.8,0,1.8-0.9c-0.7-6.4-3-12.6-6.7-17.9c-0.3,0,0-0.3,0,0L100.6,48c0.5,0.6,1.3,0.7,1.9,0.3c0.5-0.3,0.7-0.9,0.5-1.5C101.9,34.7,96.6,23.4,88.1,14.9L88.1,14.9z"></path> <path class="st2" d="M14.9,14.9C23.6,6.5,34.8,1.2,46.8,0c0.9,0,1.6,0.6,1.7,1.5c0,0.4-0.1,0.9-0.5,1.2L29.5,21.3c-0.3,0.3,0,0.3,0,0.3c5.3-3.8,11.5-6.1,17.9-6.7c0.9,0,1.5,1.2,0.9,1.8L35.6,29.5c-0.3,0,0,0.3,0,0c3.5-2.2,7.4-3.5,11.6-4c0.6,0,1.2,0.6,0.6,1.2L26.1,48.3c-0.6,0.6-1.2,0-1.2-0.6c0.4-4.1,1.9-8.1,4.3-11.6c0,0-0.3-0.3-0.3,0L16.7,48.3c-0.9,0.6-2.1,0-1.8-0.9c0.6-6.5,2.9-12.7,6.7-17.9c0,0-0.3-0.3-0.3,0L2.7,48C1.5,49.2,0,48.3,0,46.8C1.2,34.8,6.5,23.6,14.9,14.9z"></path> <path class="st3" d="M14.9,88.8c8.5,8.6,19.8,13.9,31.9,14.9c0.8,0.1,1.5-0.4,1.6-1.2c0.1-0.5-0.1-0.9-0.4-1.3L29.5,82.4c-0.3,0,0-0.3,0,0c5.3,3.8,11.5,6.1,17.9,6.6c0.9,0,1.5-1.2,0.9-1.8L35.6,74.5c-0.3-0.3,0-0.3,0-0.3C39,76.5,43,78,47.1,78.4c0.6,0,1.2-0.9,0.6-1.2L26.1,55.6c-0.6-0.6-1.2-0.3-1.2,0.6c0.4,4.1,1.9,8.1,4.3,11.6c0,0-0.3,0.3-0.3,0L16.7,55.6c-0.9-0.6-2.1-0.3-1.8,0.9c0.6,6.4,2.9,12.5,6.7,17.6c0,0.2-0.1,0.3-0.3,0.3c0,0,0,0,0,0L2.7,55.6C2,55,0.9,55.2,0.4,55.9c-0.2,0.3-0.3,0.6-0.4,1C1.1,68.9,6.4,80.2,14.9,88.8z"></path> <path class="st4" d="M88.1,88.8c-8.5,8.7-19.8,14-31.9,14.9c-1.2,0.3-2.1-1.5-1.2-2.4l18.8-18.8c0,0,0-0.3-0.3,0c-5.2,3.8-11.3,6.1-17.6,6.7c-0.6,0.1-1.1-0.4-1.2-1c0-0.3,0.1-0.6,0.3-0.9l12.8-12.8c0-0.3,0-0.3-0.3-0.3c-3.4,2.4-7.4,3.9-11.5,4.2c-0.5-0.1-0.8-0.5-0.7-0.9c0-0.1,0-0.2,0.1-0.3l21.6-21.6c0.6-0.6,1.5-0.3,1.2,0.6c-0.3,4.1-1.7,8.1-4,11.6c-0.3,0,0,0.3,0,0l12.5-12.2c0.4-0.4,1.1-0.4,1.5,0c0.2,0.2,0.3,0.6,0.3,0.9c-0.7,6.3-3,12.4-6.7,17.6c-0.3,0.3,0,0.3,0,0.3l18.8-18.8c0.9-0.9,2.7,0,2.4,1.2C102,68.9,96.7,80.2,88.1,88.8L88.1,88.8z"></path> <path class="st5" d="M390.8,31.9V43h-1.9V31.9h-3.5v-1.8h9v1.8H390.8z"></path> <path class="st5" d="M407.7,43v-8.6l-3,6.2h-1.4l-3-6.2V43h-2V30.2h2l3.7,8l3.7-8h1.9V43H407.7z"></path> </svg> <div class="logo-text flex flex-center pl1 my3"></div></div>
+        </div>
+      </a>
+    </div>
+    <div class="flex-auto"></div>
+    <div class="header-section mod-padded flex flex-center" id="myTitle">Coveo's Response Checker Report</div>
+  </header>
+  <h1>genericstore coveodemo com</h1><table><tr><td>Created on</td><td>Monday, February 15, 2021</td></tr><tr><td>Url</td><td><a href='https://genericstore.coveodemo.com/searchPage'>https://genericstore.coveodemo.com/searchPage</a></td></tr><tr><td>UA Version</td><td></td></tr></table><BR><br>Online help resources:<br><br>
+   <a href="https://docs.coveo.com/en/52" target="_blank" style='padding-left: 10px;'>Search</a>
+   <a href="https://docs.coveo.com/en/1373" target="_blank" style='padding-left: 10px;'>Analytics</a>
+   <a href="https://docs.coveo.com/en/3188" target="_blank" style='padding-left: 10px;'>E Commerce</a><br><br><h2>Overview</h2><table class="crs datepicker-table"><tbody><tr><th>Valid</th><th>Check</th><th>Nr of Requests</th></tr><tr><td class="valid"></td><td>Queries</td><td class="numbers">3</td></tr><tr><td class="valid"></td><td>Query Suggest</td><td class="numbers">12</td></tr><tr><td class="notvalid"></td><td>Analytics</td><td class="numbers">0</td></tr><tr><td class="notvalid notmandatory"></td><td>E Commerce</td><td class="numbers">4</td></tr><tr><td class="notvalid notmandatory"></td><td>UA Version</td><td class="numbers"></td></tr></tbody></table><hr><h2>Queries</h2><table class="crs datepicker-table"><tbody><tr><th>Valid</th><th>Check</th><th colspan="2">Content (last request)</th></tr><tr><td class="valid "></td><td>searchHub</td><td>true<span class="propex">Expected: Not empty/undefined</span></td></tr><tr><td class="notvalid "></td><td>tab</td><td><span class="propex">Expected: Not empty/undefined</span></td></tr><tr><td class="notvalid "></td><td>locale</td><td><span class="propex">Expected: Not empty/undefined</span></td></tr><tr><td class="notvalid "></td><td>visitorId</td><td><span class="propex">Expected: Not empty/undefined</span></td></tr><tr><td class="valid "></td><td>q</td><td>macbook pro<span class="propex">Expected: Not empty/undefined</span></td></tr><tr><td class="notvalid notmandatory"></td><td>aq</td><td><span class="propex">Expected: Not empty/undefined</span></td></tr><tr><td class="notvalid notmandatory"></td><td>cq</td><td><span class="propex">Expected: Not empty/undefined</span></td></tr><tr><td class="notvalid notmandatory"></td><td>pipeline</td><td>search<span class="propex">Expected: Should be empty</span></td></tr><tr><td class="valid notmandatory"></td><td>recommendation</td><td>true<span class="propex">Expected: Should be empty with normal search</span></td></tr><tr><td class="valid notmandatory"></td><td>context</td><td>true<span class="propex">Expected: Not empty/undefined</span></td></tr><tr><td class="valid notmandatory"></td><td>dq</td><td><span class="propex">Expected: Should be false, decreases performance</span></td></tr><tr><td class="valid notmandatory"></td><td>lq</td><td><span class="propex">Expected: Should be false, decreases performance</span></td></tr><tr><td class="valid notmandatory"></td><td>filterField</td><td><span class="propex">Expected: Should be false, decreases performance</span></td></tr><tr><td class="valid notmandatory"></td><td>partialMatch</td><td><span class="propex">Expected: Should be false, decreases performance</span></td></tr><tr><td class="valid notmandatory"></td><td>enableWildcards</td><td><span class="propex">Expected: Should be false, decreases performance</span></td></tr><tr><td class="valid notmandatory"></td><td>enableDuplicateFiltering</td><td><span class="propex">Expected: Should be false, decreases performance</span></td></tr><tr><td class="notvalid notmandatory"></td><td>commerce</td><td><span class="propex">Expected: In case of Commerce queries, should contain commerce parameters</span></td></tr><tr><td class="notvalid notmandatory"></td><td>dictionaryFieldContext</td><td><span class="propex">Expected: In case of Commerce queries, dictionary fields</span></td></tr></tbody></table><hr><h2>Query Suggest</h2><table class="crs datepicker-table"><tbody><tr><th>Valid</th><th>Check</th><th colspan="2">Content (last request)</th></tr><tr><td class="valid "></td><td>searchHub</td><td>true<span class="propex">Expected: Not empty/undefined</span></td></tr><tr><td class="notvalid "></td><td>visitorId</td><td><span class="propex">Expected: Not empty/undefined</span></td></tr><tr><td class="notvalid notmandatory"></td><td>tab</td><td><span class="propex">Expected: Not empty/undefined</span></td></tr><tr><td class="notvalid notmandatory"></td><td>pipeline</td><td>search<span class="propex">Expected: Should be empty</span></td></tr><tr><td class="valid notmandatory"></td><td>context</td><td>true<span class="propex">Expected: Not empty/undefined</span></td></tr><tr><td class="notvalid notmandatory"></td><td>locale</td><td><span class="propex">Expected: Not empty/undefined</span></td></tr></tbody></table><hr><h2>Analytics</h2><table class="crs datepicker-table"><tbody><tr><th>Valid</th><th>Check</th><th colspan="2">Content (last request)</th></tr></tbody></table><hr><h2>E Commerce</h2><table class="crs datepicker-table"><tbody><tr><th>Valid</th><th>Event</th><th colspan="2">Checks (all requests)</th></tr><tr><td class="notvalid "></td><td>add</td><td style="border-right:none;min-width: 1px;"></td><td style="border-left:none">0 Request(s)</td></tr><tr><td class="notvalid "></td><td>remove</td><td style="border-right:none;min-width: 1px;"></td><td style="border-left:none">0 Request(s)</td></tr><tr><td class="notvalid "></td><td>detail</td><td style="border-right:none;min-width: 1px;"></td><td style="border-left:none">0 Request(s)</td></tr><tr><td class="valid "></td><td>pageview</td><td style="border-right:none;min-width: 1px;"></td><td style="border-left:none">1 Request(s)</td><td class="valid " style="border-right:none"></td><td style="border-left:none">t</td><td class="valid " style="border-right:none"></td><td style="border-left:none">cid</td><td class="valid " style="border-right:none"></td><td style="border-left:none">dl</td><td class="valid notmandatory" style="border-right:none"></td><td style="border-left:none">dt</td><td class="valid " style="border-right:none"></td><td style="border-left:none">pid</td><td class="valid " style="border-right:none"></td><td style="border-left:none">cu</td><td class="valid notmandatory" style="border-right:none"></td><td style="border-left:none">ul</td><td class="valid notmandatory" style="border-right:none"></td><td style="border-left:none">uid</td></tr><tr><td class="valid "></td><td>click</td><td style="border-right:none;min-width: 1px;"></td><td style="border-left:none">1 Request(s)</td><td class="valid " style="border-right:none"></td><td style="border-left:none">t</td><td class="valid " style="border-right:none"></td><td style="border-left:none">cid</td><td class="valid " style="border-right:none"></td><td style="border-left:none">dl</td><td class="valid " style="border-right:none"></td><td style="border-left:none">pid</td><td class="valid " style="border-right:none"></td><td style="border-left:none">cu</td><td class="valid notmandatory" style="border-right:none"></td><td style="border-left:none">uid</td><td class="valid " style="border-right:none"></td><td style="border-left:none">pa</td><td class="valid " style="border-right:none"></td><td style="border-left:none">pal</td><td class="valid " style="border-right:none"></td><td style="border-left:none">pr1id</td><td class="valid " style="border-right:none"></td><td style="border-left:none">pr1br</td><td class="valid " style="border-right:none"></td><td style="border-left:none">pr1nm</td><td class="valid " style="border-right:none"></td><td style="border-left:none">pr1ca</td><td class="valid " style="border-right:none"></td><td style="border-left:none">pr1ps</td><td class="valid " style="border-right:none"></td><td style="border-left:none">pr1pr</td><td class="valid " style="border-right:none"></td><td style="border-left:none">pr1qt</td><td class="valid " style="border-right:none"></td><td style="border-left:none">pr2id</td></tr><tr><td class="notvalid "></td><td>purchase</td><td style="border-right:none;min-width: 1px;"></td><td style="border-left:none">0 Request(s)</td></tr><tr><td class="notvalid "></td><td>event</td><td style="border-right:none;min-width: 1px;"></td><td style="border-left:none">0 Request(s)</td></tr><tr><td class="notvalid "></td><td>impression</td><td style="border-right:none;min-width: 1px;"></td><td style="border-left:none">3 Request(s)</td><td class="valid " style="border-right:none"></td><td style="border-left:none">t</td><td class="valid " style="border-right:none"></td><td style="border-left:none">cid</td><td class="valid " style="border-right:none"></td><td style="border-left:none">dl</td><td class="valid " style="border-right:none"></td><td style="border-left:none">pid</td><td class="valid " style="border-right:none"></td><td style="border-left:none">cu</td><td class="valid notmandatory" style="border-right:none"></td><td style="border-left:none">uid</td><td class="notvalid " style="border-right:none"></td><td style="border-left:none">pa</td><td class="notvalid " style="border-right:none"></td><td style="border-left:none">pal</td><td class="notvalid " style="border-right:none"></td><td style="border-left:none">pr1id</td><td class="valid " style="border-right:none"></td><td style="border-left:none">il1nm</td><td class="valid " style="border-right:none"></td><td style="border-left:none">il1pi1id</td><td class="valid " style="border-right:none"></td><td style="border-left:none">il1pi1br</td><td class="valid " style="border-right:none"></td><td style="border-left:none">il1pi1nm</td><td class="valid " style="border-right:none"></td><td style="border-left:none">il1pi1ca</td><td class="valid " style="border-right:none"></td><td style="border-left:none">il1pi1pr</td><td class="valid " style="border-right:none"></td><td style="border-left:none">il1pi1ps</td><td class="valid " style="border-right:none"></td><td style="border-left:none">il1pi1qt</td></tr></tbody></table><hr><h2>Requests</h2><span class='spacing'></span><span class='type validIndB'>E Commerce - click</span><span class="time">14:43:13</span><span class='url validInd'><a href='https://platform.cloud.coveo.com/rest/ua/v15/analytics/collect' target='_blank'>https://platform.cloud.coveo.com/rest/ua/v15/analytics/collect</a><span class='sc'>statusCode: 200</span></span><ul><li class='validInd '>t (hitType)<span class='propvalue'>event</span><span class='propex'>Expected: event</span></li><li class='validInd '>cid (clientId)<span class='propvalue'>98aa9a0c-6e72-44a2-a3f3-309b6737205a</span><span class='propex'>Expected: /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/</span></li><li class='validInd '>dl (location)<span class='propvalue'>https://genericstore.coveodemo.com/searchpage</span><span class='propex'>Expected: /^https?://.+/</span></li><li class='validInd '>pid (pageViewId)<span class='propvalue'>d1b4df04-be7f-4405-8acc-89ee2c290a6b</span><span class='propex'>Expected: /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/</span></li><li class='validInd '>cu (currencyCode)<span class='propvalue'>cad</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd notmandatory'>uid (userId)<span class='propvalue'>anonymous</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd '>pa (action)<span class='propvalue'>click</span><span class='propex'>Expected: click or quickview</span></li><li class='validInd '>pal (list)<span class='propvalue'>coveo:search:ff77b57a-c118-49d5-8eec-edaa6ac5614c</span><span class='propex'>Expected: /^coveo:search:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/</span></li><li class='validInd '>pr1id<span class='propvalue'>5998701</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd '>pr1br<span class='propvalue'>apple</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd '>pr1nm<span class='propvalue'>macbook pro - 13" display with touch bar - intel core i5 - 8gb memory - 256gb ssd</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd '>pr1ca<span class='propvalue'>macbook pro</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd '>pr1ps<span class='propvalue'>4</span><span class='propex'>Expected: Integer > 0</span></li><li class='validInd '>pr1pr<span class='propvalue'>1399.99</span><span class='propex'>Expected: /^d+(.d+)?$/</span></li><li class='validInd '>pr1qt<span class='propvalue'></span><span class='propex'>Expected: Empty/undefined</span></li><li class='validInd '>pr2id<span class='propvalue'></span><span class='propex'>Expected: Empty/undefined</span></li></ul><details class=code>  <summary>Post/Form Data</summary>  <pre class='mycode'>{
+  "dl": "https://genericstore.coveodemo.com/searchPage",
+  "t": "event",
+  "pid": "d1b4df04-be7f-4405-8acc-89ee2c290a6b",
+  "tm": "1613396593083",
+  "z": "721aae7e-508c-49e7-a2ac-fcac5d107d0e",
+  "sr": "3072x1728",
+  "sd": "24-bit",
+  "ul": "en-US",
+  "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.146 Safari/537.36",
+  "dt": "Main Search | Coveo Store",
+  "de": "UTF-8",
+  "il1pi1nm": "MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 512GB SSD",
+  "il1pi1id": "6287723",
+  "il1pi1br": "Apple",
+  "il1pi1pr": 1449.99,
+  "il1pi1ca": "MacBook Pro",
+  "il1pi1ps": 1,
+  "il1pi2nm": "MacBook Pro 16\" Display with Touch Bar - Intel Core i7 - 32GB Memory - 1TB SSD",
+  "il1pi2id": "6394170",
+  "il1pi2br": "Apple",
+  "il1pi2pr": 3099,
+  "il1pi2ca": "MacBook Pro",
+  "il1pi2ps": 2,
+  "il1pi3nm": "MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 16GB Memory - 512GB SSD (Latest Model)",
+  "il1pi3id": "6287729",
+  "il1pi3br": "Apple",
+  "il1pi3pr": 1799.99,
+  "il1pi3ca": "MacBook Pro",
+  "il1pi3ps": 3,
+  "il1pi4nm": "MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 256GB SSD",
+  "il1pi4id": "5998701",
+  "il1pi4br": "Apple",
+  "il1pi4pr": 1399.99,
+  "il1pi4ca": "MacBook Pro",
+  "il1pi4ps": 4,
+  "il1pi5nm": "MacBook Pro 16\" Laptop - Intel Core i9 - 64GB Memory - 4TB SSD",
+  "il1pi5id": "6394409",
+  "il1pi5br": "Apple",
+  "il1pi5pr": 4799,
+  "il1pi5ca": "MacBook Pro",
+  "il1pi5ps": 5,
+  "il1pi6nm": "MacBook Pro 16\" Laptop - Intel Core i9 - 64GB Memory - 8TB SSD",
+  "il1pi6id": "6394367",
+  "il1pi6br": "Apple",
+  "il1pi6pr": 5999,
+  "il1pi6ca": "MacBook Pro",
+  "il1pi6ps": 6,
+  "il1pi7nm": "MacBook Pro 16\" Laptop - Intel Core i7 - 16GB Memory - 512GB SSD",
+  "il1pi7id": "6394168",
+  "il1pi7br": "Apple",
+  "il1pi7pr": 2599,
+  "il1pi7ca": "MacBook Pro",
+  "il1pi7ps": 7,
+  "il1pi8nm": "Apple 13\" MacBook Pro - 32GB Memory - 512GB SSD - Silver",
+  "il1pi8id": "6445516",
+  "il1pi8br": "Apple",
+  "il1pi8pr": 2399.99,
+  "il1pi8ca": "MacBook Pro",
+  "il1pi8ps": 8,
+  "il1pi9nm": "Apple 13\" MacBook Pro - 32GB Memory - 1TB SSD - Silver",
+  "il1pi9id": "6445508",
+  "il1pi9br": "Apple",
+  "il1pi9pr": 2599.99,
+  "il1pi9ca": "MacBook Pro",
+  "il1pi9ps": 9,
+  "il1pi10nm": "Apple 13\" MacBook Pro - 16GB Memory - 512GB SSD - Silver",
+  "il1pi10id": "6445514",
+  "il1pi10br": "Apple",
+  "il1pi10pr": 1999.99,
+  "il1pi10ca": "MacBook Pro",
+  "il1pi10ps": 10,
+  "il1nm": "coveo:search:ff77b57a-c118-49d5-8eec-edaa6ac5614c",
+  "pr1nm": "MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 256GB SSD",
+  "pr1id": "5998701",
+  "pr1br": "Apple",
+  "pr1pr": 1399.99,
+  "pr1ca": "MacBook Pro",
+  "pr1ps": 4,
+  "pa": "click",
+  "pal": "coveo:search:ff77b57a-c118-49d5-8eec-edaa6ac5614c",
+  "cid": "98aa9a0c-6e72-44a2-a3f3-309b6737205a",
+  "uid": "anonymous",
+  "cu": "CAD",
+  "aip": 1
+}</pre></details><span class='spacing'></span><span class='type notvalidIndB'>E Commerce - impression</span><span class="time">14:43:13</span><span class='url validInd'><a href='https://platform.cloud.coveo.com/rest/ua/v15/analytics/collect' target='_blank'>https://platform.cloud.coveo.com/rest/ua/v15/analytics/collect</a><span class='sc'>statusCode: 200</span></span><ul><li class='validInd '>t (hitType)<span class='propvalue'>event</span><span class='propex'>Expected: event</span></li><li class='validInd '>cid (clientId)<span class='propvalue'>98aa9a0c-6e72-44a2-a3f3-309b6737205a</span><span class='propex'>Expected: /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/</span></li><li class='validInd '>dl (location)<span class='propvalue'>https://genericstore.coveodemo.com/searchpage</span><span class='propex'>Expected: /^https?://.+/</span></li><li class='validInd '>pid (pageViewId)<span class='propvalue'>d1b4df04-be7f-4405-8acc-89ee2c290a6b</span><span class='propex'>Expected: /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/</span></li><li class='validInd '>cu (currencyCode)<span class='propvalue'>cad</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd notmandatory'>uid (userId)<span class='propvalue'>anonymous</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>pa (action)<span class='propvalue'>click</span><span class='propex'>Expected: Empty/undefined</span></li><li class='notvalidInd '>pal (list)<span class='propvalue'>coveo:search:ff77b57a-c118-49d5-8eec-edaa6ac5614c</span><span class='propex'>Expected: Empty/undefined</span></li><li class='notvalidInd '>pr1id<span class='propvalue'>5998701</span><span class='propex'>Expected: Empty/undefined</span></li><li class='validInd '>il1nm<span class='propvalue'>coveo:search:ff77b57a-c118-49d5-8eec-edaa6ac5614c</span><span class='propex'>Expected: /^coveo:search:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/</span></li><li class='validInd '>il1pi1id<span class='propvalue'>6287723</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd '>il1pi1br<span class='propvalue'>apple</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd '>il1pi1nm<span class='propvalue'>macbook pro - 13" display with touch bar - intel core i5 - 8gb memory - 512gb ssd</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd '>il1pi1ca<span class='propvalue'>macbook pro</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd '>il1pi1pr<span class='propvalue'>1449.99</span><span class='propex'>Expected: /^d+(.d+)?$/</span></li><li class='validInd '>il1pi1ps<span class='propvalue'>1</span><span class='propex'>Expected: Integer == 1</span></li><li class='validInd '>il1pi1qt<span class='propvalue'></span><span class='propex'>Expected: Empty/undefined</span></li></ul><details class=code>  <summary>Post/Form Data</summary>  <pre class='mycode'>{
+  "dl": "https://genericstore.coveodemo.com/searchPage",
+  "t": "event",
+  "pid": "d1b4df04-be7f-4405-8acc-89ee2c290a6b",
+  "tm": "1613396593083",
+  "z": "721aae7e-508c-49e7-a2ac-fcac5d107d0e",
+  "sr": "3072x1728",
+  "sd": "24-bit",
+  "ul": "en-US",
+  "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.146 Safari/537.36",
+  "dt": "Main Search | Coveo Store",
+  "de": "UTF-8",
+  "il1pi1nm": "MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 512GB SSD",
+  "il1pi1id": "6287723",
+  "il1pi1br": "Apple",
+  "il1pi1pr": 1449.99,
+  "il1pi1ca": "MacBook Pro",
+  "il1pi1ps": 1,
+  "il1pi2nm": "MacBook Pro 16\" Display with Touch Bar - Intel Core i7 - 32GB Memory - 1TB SSD",
+  "il1pi2id": "6394170",
+  "il1pi2br": "Apple",
+  "il1pi2pr": 3099,
+  "il1pi2ca": "MacBook Pro",
+  "il1pi2ps": 2,
+  "il1pi3nm": "MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 16GB Memory - 512GB SSD (Latest Model)",
+  "il1pi3id": "6287729",
+  "il1pi3br": "Apple",
+  "il1pi3pr": 1799.99,
+  "il1pi3ca": "MacBook Pro",
+  "il1pi3ps": 3,
+  "il1pi4nm": "MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 256GB SSD",
+  "il1pi4id": "5998701",
+  "il1pi4br": "Apple",
+  "il1pi4pr": 1399.99,
+  "il1pi4ca": "MacBook Pro",
+  "il1pi4ps": 4,
+  "il1pi5nm": "MacBook Pro 16\" Laptop - Intel Core i9 - 64GB Memory - 4TB SSD",
+  "il1pi5id": "6394409",
+  "il1pi5br": "Apple",
+  "il1pi5pr": 4799,
+  "il1pi5ca": "MacBook Pro",
+  "il1pi5ps": 5,
+  "il1pi6nm": "MacBook Pro 16\" Laptop - Intel Core i9 - 64GB Memory - 8TB SSD",
+  "il1pi6id": "6394367",
+  "il1pi6br": "Apple",
+  "il1pi6pr": 5999,
+  "il1pi6ca": "MacBook Pro",
+  "il1pi6ps": 6,
+  "il1pi7nm": "MacBook Pro 16\" Laptop - Intel Core i7 - 16GB Memory - 512GB SSD",
+  "il1pi7id": "6394168",
+  "il1pi7br": "Apple",
+  "il1pi7pr": 2599,
+  "il1pi7ca": "MacBook Pro",
+  "il1pi7ps": 7,
+  "il1pi8nm": "Apple 13\" MacBook Pro - 32GB Memory - 512GB SSD - Silver",
+  "il1pi8id": "6445516",
+  "il1pi8br": "Apple",
+  "il1pi8pr": 2399.99,
+  "il1pi8ca": "MacBook Pro",
+  "il1pi8ps": 8,
+  "il1pi9nm": "Apple 13\" MacBook Pro - 32GB Memory - 1TB SSD - Silver",
+  "il1pi9id": "6445508",
+  "il1pi9br": "Apple",
+  "il1pi9pr": 2599.99,
+  "il1pi9ca": "MacBook Pro",
+  "il1pi9ps": 9,
+  "il1pi10nm": "Apple 13\" MacBook Pro - 16GB Memory - 512GB SSD - Silver",
+  "il1pi10id": "6445514",
+  "il1pi10br": "Apple",
+  "il1pi10pr": 1999.99,
+  "il1pi10ca": "MacBook Pro",
+  "il1pi10ps": 10,
+  "il1nm": "coveo:search:ff77b57a-c118-49d5-8eec-edaa6ac5614c",
+  "pr1nm": "MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 256GB SSD",
+  "pr1id": "5998701",
+  "pr1br": "Apple",
+  "pr1pr": 1399.99,
+  "pr1ca": "MacBook Pro",
+  "pr1ps": 4,
+  "pa": "click",
+  "pal": "coveo:search:ff77b57a-c118-49d5-8eec-edaa6ac5614c",
+  "cid": "98aa9a0c-6e72-44a2-a3f3-309b6737205a",
+  "uid": "anonymous",
+  "cu": "CAD",
+  "aip": 1
+}</pre></details><span class='spacing'></span><span class='type notvalidIndB'>E Commerce - impression</span><span class="time">14:43:11</span><span class='url validInd'><a href='https://platform.cloud.coveo.com/rest/ua/v15/analytics/collect' target='_blank'>https://platform.cloud.coveo.com/rest/ua/v15/analytics/collect</a><span class='sc'>statusCode: 200</span></span><ul><li class='validInd '>t (hitType)<span class='propvalue'>event</span><span class='propex'>Expected: event</span></li><li class='validInd '>cid (clientId)<span class='propvalue'>98aa9a0c-6e72-44a2-a3f3-309b6737205a</span><span class='propex'>Expected: /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/</span></li><li class='validInd '>dl (location)<span class='propvalue'>https://genericstore.coveodemo.com/searchpage#q=macbook pro</span><span class='propex'>Expected: /^https?://.+/</span></li><li class='validInd '>pid (pageViewId)<span class='propvalue'>d1b4df04-be7f-4405-8acc-89ee2c290a6b</span><span class='propex'>Expected: /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/</span></li><li class='validInd '>cu (currencyCode)<span class='propvalue'>cad</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd notmandatory'>uid (userId)<span class='propvalue'>anonymous</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>pa (action)<span class='propvalue'>impression</span><span class='propex'>Expected: Empty/undefined</span></li><li class='notvalidInd '>pal (list)<span class='propvalue'>coveo:search:ff77b57a-c118-49d5-8eec-edaa6ac5614c</span><span class='propex'>Expected: Empty/undefined</span></li><li class='validInd '>pr1id<span class='propvalue'></span><span class='propex'>Expected: Empty/undefined</span></li><li class='validInd '>il1nm<span class='propvalue'>coveo:search:ff77b57a-c118-49d5-8eec-edaa6ac5614c</span><span class='propex'>Expected: /^coveo:search:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/</span></li><li class='validInd '>il1pi1id<span class='propvalue'>6287723</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd '>il1pi1br<span class='propvalue'>apple</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd '>il1pi1nm<span class='propvalue'>macbook pro - 13" display with touch bar - intel core i5 - 8gb memory - 512gb ssd</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd '>il1pi1ca<span class='propvalue'>macbook pro</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd '>il1pi1pr<span class='propvalue'>1449.99</span><span class='propex'>Expected: /^d+(.d+)?$/</span></li><li class='validInd '>il1pi1ps<span class='propvalue'>1</span><span class='propex'>Expected: Integer == 1</span></li><li class='validInd '>il1pi1qt<span class='propvalue'></span><span class='propex'>Expected: Empty/undefined</span></li></ul><details class=code>  <summary>Post/Form Data</summary>  <pre class='mycode'>{
+  "dl": "https://genericstore.coveodemo.com/searchPage#q=Macbook Pro",
+  "t": "event",
+  "pid": "d1b4df04-be7f-4405-8acc-89ee2c290a6b",
+  "tm": "1613396591378",
+  "z": "c6836e65-5a61-4d0d-9105-d42df31049d9",
+  "sr": "3072x1728",
+  "sd": "24-bit",
+  "ul": "en-US",
+  "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.146 Safari/537.36",
+  "dt": "Main Search | Coveo Store",
+  "de": "UTF-8",
+  "il1pi1nm": "MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 512GB SSD",
+  "il1pi1id": "6287723",
+  "il1pi1br": "Apple",
+  "il1pi1pr": 1449.99,
+  "il1pi1ca": "MacBook Pro",
+  "il1pi1ps": 1,
+  "il1pi2nm": "MacBook Pro 16\" Display with Touch Bar - Intel Core i7 - 32GB Memory - 1TB SSD",
+  "il1pi2id": "6394170",
+  "il1pi2br": "Apple",
+  "il1pi2pr": 3099,
+  "il1pi2ca": "MacBook Pro",
+  "il1pi2ps": 2,
+  "il1pi3nm": "MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 16GB Memory - 512GB SSD (Latest Model)",
+  "il1pi3id": "6287729",
+  "il1pi3br": "Apple",
+  "il1pi3pr": 1799.99,
+  "il1pi3ca": "MacBook Pro",
+  "il1pi3ps": 3,
+  "il1pi4nm": "MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB Memory - 256GB SSD",
+  "il1pi4id": "5998701",
+  "il1pi4br": "Apple",
+  "il1pi4pr": 1399.99,
+  "il1pi4ca": "MacBook Pro",
+  "il1pi4ps": 4,
+  "il1pi5nm": "MacBook Pro 16\" Laptop - Intel Core i9 - 64GB Memory - 4TB SSD",
+  "il1pi5id": "6394409",
+  "il1pi5br": "Apple",
+  "il1pi5pr": 4799,
+  "il1pi5ca": "MacBook Pro",
+  "il1pi5ps": 5,
+  "il1pi6nm": "MacBook Pro 16\" Laptop - Intel Core i9 - 64GB Memory - 8TB SSD",
+  "il1pi6id": "6394367",
+  "il1pi6br": "Apple",
+  "il1pi6pr": 5999,
+  "il1pi6ca": "MacBook Pro",
+  "il1pi6ps": 6,
+  "il1pi7nm": "MacBook Pro 16\" Laptop - Intel Core i7 - 16GB Memory - 512GB SSD",
+  "il1pi7id": "6394168",
+  "il1pi7br": "Apple",
+  "il1pi7pr": 2599,
+  "il1pi7ca": "MacBook Pro",
+  "il1pi7ps": 7,
+  "il1pi8nm": "Apple 13\" MacBook Pro - 32GB Memory - 512GB SSD - Silver",
+  "il1pi8id": "6445516",
+  "il1pi8br": "Apple",
+  "il1pi8pr": 2399.99,
+  "il1pi8ca": "MacBook Pro",
+  "il1pi8ps": 8,
+  "il1pi9nm": "Apple 13\" MacBook Pro - 32GB Memory - 1TB SSD - Silver",
+  "il1pi9id": "6445508",
+  "il1pi9br": "Apple",
+  "il1pi9pr": 2599.99,
+  "il1pi9ca": "MacBook Pro",
+  "il1pi9ps": 9,
+  "il1pi10nm": "Apple 13\" MacBook Pro - 16GB Memory - 512GB SSD - Silver",
+  "il1pi10id": "6445514",
+  "il1pi10br": "Apple",
+  "il1pi10pr": 1999.99,
+  "il1pi10ca": "MacBook Pro",
+  "il1pi10ps": 10,
+  "il1nm": "coveo:search:ff77b57a-c118-49d5-8eec-edaa6ac5614c",
+  "pa": "impression",
+  "pal": "coveo:search:ff77b57a-c118-49d5-8eec-edaa6ac5614c",
+  "cid": "98aa9a0c-6e72-44a2-a3f3-309b6737205a",
+  "uid": "anonymous",
+  "cu": "CAD",
+  "aip": 1
+}</pre></details><span class='spacing'></span><span class='type notvalidIndB'>Query</span><span class="time">14:43:10</span><span class='url validInd'><a href='https://platform.cloud.coveo.com/rest/search/v2?organizationId=bestbuycommercedemo2020i4xxjh61' target='_blank'>https://platform.cloud.coveo.com/rest/search/v2?organizationId=bestbuycommercedemo2020i4xxjh61</a><span class='sc'>statusCode: 200</span></span><ul><li class='validInd '>searchHub<span class='propvalue'>mainsearch</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>tab<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>locale<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>visitorId<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd '>q<span class='propvalue'>macbook pro</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>aq<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>cq<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>pipeline<span class='propvalue'>search</span><span class='propex'>Expected: Should be empty</span></li><li class='validInd notmandatory'>recommendation<span class='propvalue'></span><span class='propex'>Expected: Should be empty with normal search</span></li><li class='validInd notmandatory'>context<span class='propvalue'>[object Object]</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd notmandatory'>dq<span class='propvalue'></span><span class='propex'>Expected: Should be false, decreases performance</span></li><li class='validInd notmandatory'>lq<span class='propvalue'></span><span class='propex'>Expected: Should be false, decreases performance</span></li><li class='validInd notmandatory'>filterField<span class='propvalue'></span><span class='propex'>Expected: Should be false, decreases performance</span></li><li class='validInd notmandatory'>partialMatch<span class='propvalue'></span><span class='propex'>Expected: Should be false, decreases performance</span></li><li class='validInd notmandatory'>enableWildcards<span class='propvalue'></span><span class='propex'>Expected: Should be false, decreases performance</span></li><li class='validInd notmandatory'>enableDuplicateFiltering<span class='propvalue'></span><span class='propex'>Expected: Should be false, decreases performance</span></li><li class='notvalidInd notmandatory'>commerce<span class='propvalue'></span><span class='propex'>Expected: In case of Commerce queries, should contain commerce parameters</span></li><li class='notvalidInd notmandatory'>dictionaryFieldContext<span class='propvalue'></span><span class='propex'>Expected: In case of Commerce queries, dictionary fields</span></li></ul><details class=code>  <summary>Post/Form Data</summary>  <pre class='mycode'>{
+  "debug": false,
+  "aq": "",
+  "cq": "",
+  "context": {},
+  "enableDidYouMean": true,
+  "facets": [
+    {
+      "delimitingCharacter": ">",
+      "filterFacetCount": true,
+      "injectionDepth": 1000,
+      "numberOfValues": 5,
+      "sortCriteria": "occurrences",
+      "type": "specific",
+      "currentValues": [
+        {
+          "value": "Samsung",
+          "state": "idle"
+        },
+        {
+          "value": "Viking",
+          "state": "idle"
+        },
+        {
+          "value": "Noble House",
+          "state": "idle"
+        },
+        {
+          "value": "Walker Edison",
+          "state": "idle"
+        },
+        {
+          "value": "Apple",
+          "state": "idle"
+        }
+      ],
+      "freezeCurrentValues": false,
+      "isFieldExpanded": false,
+      "preventAutoSelect": false,
+      "facetSearch": {
+        "captions": {},
+        "numberOfValues": 10,
+        "query": ""
+      },
+      "facetId": "ec_brand",
+      "field": "ec_brand"
+    },
+    {
+      "delimitingCharacter": "|",
+      "filterFacetCount": true,
+      "injectionDepth": 1000,
+      "numberOfValues": 5,
+      "sortCriteria": "occurrences",
+      "basePath": [],
+      "filterByBasePath": true,
+      "currentValues": [],
+      "preventAutoSelect": false,
+      "type": "hierarchical",
+      "field": "ec_category",
+      "facetId": "ec_category"
+    }
+  ],
+  "fieldsToInclude": [
+    "author",
+    "language",
+    "urihash",
+    "objecttype",
+    "collection",
+    "source",
+    "permanentid",
+    "category_slug",
+    "customerreviewcount",
+    "details",
+    "ec_brand",
+    "ec_category",
+    "ec_description",
+    "ec_image",
+    "ec_images",
+    "ec_item_group_id",
+    "ec_name",
+    "ec_price",
+    "ec_promo_price",
+    "ec_rating",
+    "ec_reviews",
+    "ec_shortdesc",
+    "features",
+    "model",
+    "modelnumber",
+    "category",
+    "clickUri",
+    "sku",
+    "title"
+  ],
+  "numberOfResults": 10,
+  "firstResult": 0,
+  "pipeline": "Search",
+  "q": "Macbook Pro",
+  "enableQuerySyntax": false,
+  "searchHub": "MainSearch",
+  "sortCriteria": "relevancy",
+  "facetOptions": {
+    "freezeFacetOrder": false
+  },
+  "organizationId": "bestbuycommercedemo2020i4xxjh61"
+}</pre></details><span class='spacing'></span><span class='type notvalidIndB'>Query Suggest</span><span class="time">14:43:09</span><span class='url validInd'><a href='https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61' target='_blank'>https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61</a><span class='sc'>statusCode: 200</span></span><ul><li class='validInd '>searchHub<span class='propvalue'>mainsearch</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>visitorId<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>tab<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>pipeline<span class='propvalue'>search</span><span class='propex'>Expected: Should be empty</span></li><li class='validInd notmandatory'>context<span class='propvalue'>[object Object]</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>locale<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li></ul><details class=code>  <summary>Post/Form Data</summary>  <pre class='mycode'>{
+  "count": 5,
+  "q": "Macbook Pro",
+  "actionsHistory": [],
+  "context": {},
+  "pipeline": "Search",
+  "searchHub": "MainSearch",
+  "organizationId": "bestbuycommercedemo2020i4xxjh61"
+}</pre></details><span class='spacing'></span><span class='type notvalidIndB'>Query Suggest</span><span class="time">14:43:09</span><span class='url validInd'><a href='https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61' target='_blank'>https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61</a><span class='sc'>statusCode: 200</span></span><ul><li class='validInd '>searchHub<span class='propvalue'>mainsearch</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>visitorId<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>tab<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>pipeline<span class='propvalue'>search</span><span class='propex'>Expected: Should be empty</span></li><li class='validInd notmandatory'>context<span class='propvalue'>[object Object]</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>locale<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li></ul><details class=code>  <summary>Post/Form Data</summary>  <pre class='mycode'>{
+  "count": 5,
+  "q": "Macbook Pr",
+  "actionsHistory": [],
+  "context": {},
+  "pipeline": "Search",
+  "searchHub": "MainSearch",
+  "organizationId": "bestbuycommercedemo2020i4xxjh61"
+}</pre></details><span class='spacing'></span><span class='type notvalidIndB'>Query Suggest</span><span class="time">14:43:09</span><span class='url validInd'><a href='https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61' target='_blank'>https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61</a><span class='sc'>statusCode: 200</span></span><ul><li class='validInd '>searchHub<span class='propvalue'>mainsearch</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>visitorId<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>tab<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>pipeline<span class='propvalue'>search</span><span class='propex'>Expected: Should be empty</span></li><li class='validInd notmandatory'>context<span class='propvalue'>[object Object]</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>locale<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li></ul><details class=code>  <summary>Post/Form Data</summary>  <pre class='mycode'>{
+  "count": 5,
+  "q": "Macbook P",
+  "actionsHistory": [],
+  "context": {},
+  "pipeline": "Search",
+  "searchHub": "MainSearch",
+  "organizationId": "bestbuycommercedemo2020i4xxjh61"
+}</pre></details><span class='spacing'></span><span class='type notvalidIndB'>Query Suggest</span><span class="time">14:43:09</span><span class='url validInd'><a href='https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61' target='_blank'>https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61</a><span class='sc'>statusCode: 200</span></span><ul><li class='validInd '>searchHub<span class='propvalue'>mainsearch</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>visitorId<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>tab<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>pipeline<span class='propvalue'>search</span><span class='propex'>Expected: Should be empty</span></li><li class='validInd notmandatory'>context<span class='propvalue'>[object Object]</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>locale<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li></ul><details class=code>  <summary>Post/Form Data</summary>  <pre class='mycode'>{
+  "count": 5,
+  "q": "Macbook ",
+  "actionsHistory": [],
+  "context": {},
+  "pipeline": "Search",
+  "searchHub": "MainSearch",
+  "organizationId": "bestbuycommercedemo2020i4xxjh61"
+}</pre></details><span class='spacing'></span><span class='type notvalidIndB'>Query Suggest</span><span class="time">14:43:09</span><span class='url validInd'><a href='https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61' target='_blank'>https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61</a><span class='sc'>statusCode: 200</span></span><ul><li class='validInd '>searchHub<span class='propvalue'>mainsearch</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>visitorId<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>tab<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>pipeline<span class='propvalue'>search</span><span class='propex'>Expected: Should be empty</span></li><li class='validInd notmandatory'>context<span class='propvalue'>[object Object]</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>locale<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li></ul><details class=code>  <summary>Post/Form Data</summary>  <pre class='mycode'>{
+  "count": 5,
+  "q": "Macbook",
+  "actionsHistory": [],
+  "context": {},
+  "pipeline": "Search",
+  "searchHub": "MainSearch",
+  "organizationId": "bestbuycommercedemo2020i4xxjh61"
+}</pre></details><span class='spacing'></span><span class='type notvalidIndB'>Query Suggest</span><span class="time">14:43:09</span><span class='url validInd'><a href='https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61' target='_blank'>https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61</a><span class='sc'>statusCode: 200</span></span><ul><li class='validInd '>searchHub<span class='propvalue'>mainsearch</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>visitorId<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>tab<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>pipeline<span class='propvalue'>search</span><span class='propex'>Expected: Should be empty</span></li><li class='validInd notmandatory'>context<span class='propvalue'>[object Object]</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>locale<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li></ul><details class=code>  <summary>Post/Form Data</summary>  <pre class='mycode'>{
+  "count": 5,
+  "q": "Macboo",
+  "actionsHistory": [],
+  "context": {},
+  "pipeline": "Search",
+  "searchHub": "MainSearch",
+  "organizationId": "bestbuycommercedemo2020i4xxjh61"
+}</pre></details><span class='spacing'></span><span class='type notvalidIndB'>Query Suggest</span><span class="time">14:43:09</span><span class='url validInd'><a href='https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61' target='_blank'>https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61</a><span class='sc'>statusCode: 200</span></span><ul><li class='validInd '>searchHub<span class='propvalue'>mainsearch</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>visitorId<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>tab<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>pipeline<span class='propvalue'>search</span><span class='propex'>Expected: Should be empty</span></li><li class='validInd notmandatory'>context<span class='propvalue'>[object Object]</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>locale<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li></ul><details class=code>  <summary>Post/Form Data</summary>  <pre class='mycode'>{
+  "count": 5,
+  "q": "Macbo",
+  "actionsHistory": [],
+  "context": {},
+  "pipeline": "Search",
+  "searchHub": "MainSearch",
+  "organizationId": "bestbuycommercedemo2020i4xxjh61"
+}</pre></details><span class='spacing'></span><span class='type notvalidIndB'>Query Suggest</span><span class="time">14:43:09</span><span class='url validInd'><a href='https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61' target='_blank'>https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61</a><span class='sc'>statusCode: 200</span></span><ul><li class='validInd '>searchHub<span class='propvalue'>mainsearch</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>visitorId<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>tab<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>pipeline<span class='propvalue'>search</span><span class='propex'>Expected: Should be empty</span></li><li class='validInd notmandatory'>context<span class='propvalue'>[object Object]</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>locale<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li></ul><details class=code>  <summary>Post/Form Data</summary>  <pre class='mycode'>{
+  "count": 5,
+  "q": "Macb",
+  "actionsHistory": [],
+  "context": {},
+  "pipeline": "Search",
+  "searchHub": "MainSearch",
+  "organizationId": "bestbuycommercedemo2020i4xxjh61"
+}</pre></details><span class='spacing'></span><span class='type notvalidIndB'>Query Suggest</span><span class="time">14:43:09</span><span class='url validInd'><a href='https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61' target='_blank'>https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61</a><span class='sc'>statusCode: 200</span></span><ul><li class='validInd '>searchHub<span class='propvalue'>mainsearch</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>visitorId<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>tab<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>pipeline<span class='propvalue'>search</span><span class='propex'>Expected: Should be empty</span></li><li class='validInd notmandatory'>context<span class='propvalue'>[object Object]</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>locale<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li></ul><details class=code>  <summary>Post/Form Data</summary>  <pre class='mycode'>{
+  "count": 5,
+  "q": "Mac",
+  "actionsHistory": [],
+  "context": {},
+  "pipeline": "Search",
+  "searchHub": "MainSearch",
+  "organizationId": "bestbuycommercedemo2020i4xxjh61"
+}</pre></details><span class='spacing'></span><span class='type notvalidIndB'>Query Suggest</span><span class="time">14:43:09</span><span class='url validInd'><a href='https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61' target='_blank'>https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61</a><span class='sc'>statusCode: 200</span></span><ul><li class='validInd '>searchHub<span class='propvalue'>mainsearch</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>visitorId<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>tab<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>pipeline<span class='propvalue'>search</span><span class='propex'>Expected: Should be empty</span></li><li class='validInd notmandatory'>context<span class='propvalue'>[object Object]</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>locale<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li></ul><details class=code>  <summary>Post/Form Data</summary>  <pre class='mycode'>{
+  "count": 5,
+  "q": "Ma",
+  "actionsHistory": [],
+  "context": {},
+  "pipeline": "Search",
+  "searchHub": "MainSearch",
+  "organizationId": "bestbuycommercedemo2020i4xxjh61"
+}</pre></details><span class='spacing'></span><span class='type notvalidIndB'>Query Suggest</span><span class="time">14:43:09</span><span class='url validInd'><a href='https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61' target='_blank'>https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61</a><span class='sc'>statusCode: 200</span></span><ul><li class='validInd '>searchHub<span class='propvalue'>mainsearch</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>visitorId<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>tab<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>pipeline<span class='propvalue'>search</span><span class='propex'>Expected: Should be empty</span></li><li class='validInd notmandatory'>context<span class='propvalue'>[object Object]</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>locale<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li></ul><details class=code>  <summary>Post/Form Data</summary>  <pre class='mycode'>{
+  "count": 5,
+  "q": "M",
+  "actionsHistory": [],
+  "context": {},
+  "pipeline": "Search",
+  "searchHub": "MainSearch",
+  "organizationId": "bestbuycommercedemo2020i4xxjh61"
+}</pre></details><span class='spacing'></span><span class='type notvalidIndB'>Query Suggest</span><span class="time">14:43:08</span><span class='url validInd'><a href='https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61' target='_blank'>https://platform.cloud.coveo.com/rest/search/v2/querySuggest?organizationId=bestbuycommercedemo2020i4xxjh61</a><span class='sc'>statusCode: 200</span></span><ul><li class='validInd '>searchHub<span class='propvalue'>mainsearch</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>visitorId<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>tab<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>pipeline<span class='propvalue'>search</span><span class='propex'>Expected: Should be empty</span></li><li class='validInd notmandatory'>context<span class='propvalue'>[object Object]</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>locale<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li></ul><details class=code>  <summary>Post/Form Data</summary>  <pre class='mycode'>{
+  "count": 5,
+  "q": "",
+  "actionsHistory": [],
+  "context": {},
+  "pipeline": "Search",
+  "searchHub": "MainSearch",
+  "organizationId": "bestbuycommercedemo2020i4xxjh61"
+}</pre></details><span class='spacing'></span><span class='type notvalidIndB'>E Commerce - impression</span><span class="time">14:43:08</span><span class='url validInd'><a href='https://platform.cloud.coveo.com/rest/ua/v15/analytics/collect' target='_blank'>https://platform.cloud.coveo.com/rest/ua/v15/analytics/collect</a><span class='sc'>statusCode: 200</span></span><ul><li class='validInd '>t (hitType)<span class='propvalue'>event</span><span class='propex'>Expected: event</span></li><li class='validInd '>cid (clientId)<span class='propvalue'>98aa9a0c-6e72-44a2-a3f3-309b6737205a</span><span class='propex'>Expected: /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/</span></li><li class='validInd '>dl (location)<span class='propvalue'>https://genericstore.coveodemo.com/searchpage#q=</span><span class='propex'>Expected: /^https?://.+/</span></li><li class='validInd '>pid (pageViewId)<span class='propvalue'>d1b4df04-be7f-4405-8acc-89ee2c290a6b</span><span class='propex'>Expected: /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/</span></li><li class='validInd '>cu (currencyCode)<span class='propvalue'>cad</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd notmandatory'>uid (userId)<span class='propvalue'>anonymous</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>pa (action)<span class='propvalue'>impression</span><span class='propex'>Expected: Empty/undefined</span></li><li class='notvalidInd '>pal (list)<span class='propvalue'>coveo:search:6b006fa8-226c-4d7f-9367-9fcb308b7941</span><span class='propex'>Expected: Empty/undefined</span></li><li class='validInd '>pr1id<span class='propvalue'></span><span class='propex'>Expected: Empty/undefined</span></li><li class='validInd '>il1nm<span class='propvalue'>coveo:search:6b006fa8-226c-4d7f-9367-9fcb308b7941</span><span class='propex'>Expected: /^coveo:search:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/</span></li><li class='validInd '>il1pi1id<span class='propvalue'>6400420</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd '>il1pi1br<span class='propvalue'>samsung</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd '>il1pi1nm<span class='propvalue'>sound tower powered wireless speaker (each)</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd '>il1pi1ca<span class='propvalue'>bluetooth & wireless speakers</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd '>il1pi1pr<span class='propvalue'>699.99</span><span class='propex'>Expected: /^d+(.d+)?$/</span></li><li class='validInd '>il1pi1ps<span class='propvalue'>1</span><span class='propex'>Expected: Integer == 1</span></li><li class='validInd '>il1pi1qt<span class='propvalue'></span><span class='propex'>Expected: Empty/undefined</span></li></ul><details class=code>  <summary>Post/Form Data</summary>  <pre class='mycode'>{
+  "dl": "https://genericstore.coveodemo.com/searchPage#q=",
+  "t": "event",
+  "pid": "d1b4df04-be7f-4405-8acc-89ee2c290a6b",
+  "tm": "1613396588448",
+  "z": "2aad8946-4b8c-4e13-ac0f-cea30bc89c23",
+  "sr": "3072x1728",
+  "sd": "24-bit",
+  "ul": "en-US",
+  "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.146 Safari/537.36",
+  "dt": "Main Search | Coveo Store",
+  "de": "UTF-8",
+  "il1pi1nm": "Sound Tower Powered Wireless Speaker (Each)",
+  "il1pi1id": "6400420",
+  "il1pi1br": "Samsung",
+  "il1pi1pr": 699.99,
+  "il1pi1ca": "Bluetooth & Wireless Speakers",
+  "il1pi1ps": 1,
+  "il1pi2nm": "27\" Single Electric Wall Oven with Built-In Microwave",
+  "il1pi2id": "9181055",
+  "il1pi2br": "GE",
+  "il1pi2pr": 2699.99,
+  "il1pi2ca": "Wall Oven & Microwave Combos",
+  "il1pi2ps": 2,
+  "il1pi3nm": "USB Audio Interface",
+  "il1pi3id": "6239564",
+  "il1pi3br": "RÃDE",
+  "il1pi3pr": 129,
+  "il1pi3ca": "Audio Interfaces",
+  "il1pi3ps": 3,
+  "il1pi4nm": "Espresso Style K-Cup Pods (48-Pack)",
+  "il1pi4id": "6265765",
+  "il1pi4pr": 28.99,
+  "il1pi4ca": "Coffee Pods",
+  "il1pi4ps": 4,
+  "il1pi5nm": "Wireless Subwoofer",
+  "il1pi5id": "6400706",
+  "il1pi5br": "Samsung",
+  "il1pi5pr": 299.99,
+  "il1pi5ca": "Subwoofer Speakers",
+  "il1pi5ps": 5,
+  "il1pi6nm": "2.1 Ch 290W Sound Bar With Wireless Subwoofer Dolby Audio",
+  "il1pi6id": "6422043",
+  "il1pi6br": "Samsung",
+  "il1pi6pr": 259.99,
+  "il1pi6ca": "Sound Bars",
+  "il1pi6ps": 6,
+  "il1pi7nm": "3.1.2-Channel 330W Soundbar with 8\" Wireless Subwoofer",
+  "il1pi7id": "6327847",
+  "il1pi7br": "Samsung",
+  "il1pi7pr": 799.99,
+  "il1pi7ca": "Sound Bars",
+  "il1pi7ps": 7,
+  "il1pi8nm": "Galaxy Buds+ True Wireless Earbud Headphones",
+  "il1pi8id": "6411071",
+  "il1pi8br": "Samsung",
+  "il1pi8pr": 149.99,
+  "il1pi8ca": "All Headphones",
+  "il1pi8ps": 8,
+  "il1pi9nm": "Galaxy Buds+ True Wireless Earbud Headphones",
+  "il1pi9id": "6400945",
+  "il1pi9br": "Samsung",
+  "il1pi9pr": 149.99,
+  "il1pi9ca": "All Headphones",
+  "il1pi9ps": 9,
+  "il1pi10nm": "HW-T550 2.1ch Soundbar with Dolby Audio / DTS Virtual:X (2020)",
+  "il1pi10id": "6400703",
+  "il1pi10br": "Samsung",
+  "il1pi10pr": 279.99,
+  "il1pi10ca": "Sound Bars",
+  "il1pi10ps": 10,
+  "il1nm": "coveo:search:6b006fa8-226c-4d7f-9367-9fcb308b7941",
+  "pa": "impression",
+  "pal": "coveo:search:6b006fa8-226c-4d7f-9367-9fcb308b7941",
+  "cid": "98aa9a0c-6e72-44a2-a3f3-309b6737205a",
+  "uid": "anonymous",
+  "cu": "CAD",
+  "aip": 1
+}</pre></details><span class='spacing'></span><span class='type validIndB'>E Commerce - pageview</span><span class="time">14:43:07</span><span class='url validInd'><a href='https://platform.cloud.coveo.com/rest/ua/v15/analytics/collect' target='_blank'>https://platform.cloud.coveo.com/rest/ua/v15/analytics/collect</a><span class='sc'>statusCode: 200</span></span><ul><li class='validInd '>t (hitType)<span class='propvalue'>pageview</span><span class='propex'>Expected: pageview</span></li><li class='validInd '>cid (clientId)<span class='propvalue'>98aa9a0c-6e72-44a2-a3f3-309b6737205a</span><span class='propex'>Expected: /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/</span></li><li class='validInd '>dl (location)<span class='propvalue'>https://genericstore.coveodemo.com/searchpage</span><span class='propex'>Expected: /^https?://.+</span></li><li class='validInd notmandatory'>dt (title)<span class='propvalue'>main search | coveo store</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd '>pid (pageViewId)<span class='propvalue'>d1b4df04-be7f-4405-8acc-89ee2c290a6b</span><span class='propex'>Expected: /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/</span></li><li class='validInd '>cu (currencyCode)<span class='propvalue'>cad</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd notmandatory'>ul (language)<span class='propvalue'>en-us</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd notmandatory'>uid (userId)<span class='propvalue'>anonymous</span><span class='propex'>Expected: Not empty/undefined</span></li></ul><details class=code>  <summary>Post/Form Data</summary>  <pre class='mycode'>{
+  "dl": "https://genericstore.coveodemo.com/searchPage",
+  "t": "pageview",
+  "pid": "d1b4df04-be7f-4405-8acc-89ee2c290a6b",
+  "tm": "1613396587401",
+  "z": "1807a7ca-58dc-4cb9-a96e-2dce949bc488",
+  "sr": "3072x1728",
+  "sd": "24-bit",
+  "ul": "en-US",
+  "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.146 Safari/537.36",
+  "dt": "Main Search | Coveo Store",
+  "de": "UTF-8",
+  "cid": "98aa9a0c-6e72-44a2-a3f3-309b6737205a",
+  "uid": "anonymous",
+  "cu": "CAD",
+  "aip": 1
+}</pre></details><span class='spacing'></span><span class='type notvalidIndB'>Query</span><span class="time">14:43:07</span><span class='url validInd'><a href='https://platform.cloud.coveo.com/rest/search/v2?organizationId=bestbuycommercedemo2020i4xxjh61' target='_blank'>https://platform.cloud.coveo.com/rest/search/v2?organizationId=bestbuycommercedemo2020i4xxjh61</a><span class='sc'>statusCode: 200</span></span><ul><li class='validInd '>searchHub<span class='propvalue'>mainsearch</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>tab<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>locale<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>visitorId<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>q<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>aq<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>cq<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>pipeline<span class='propvalue'>search</span><span class='propex'>Expected: Should be empty</span></li><li class='validInd notmandatory'>recommendation<span class='propvalue'></span><span class='propex'>Expected: Should be empty with normal search</span></li><li class='validInd notmandatory'>context<span class='propvalue'>[object Object]</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd notmandatory'>dq<span class='propvalue'></span><span class='propex'>Expected: Should be false, decreases performance</span></li><li class='validInd notmandatory'>lq<span class='propvalue'></span><span class='propex'>Expected: Should be false, decreases performance</span></li><li class='validInd notmandatory'>filterField<span class='propvalue'></span><span class='propex'>Expected: Should be false, decreases performance</span></li><li class='validInd notmandatory'>partialMatch<span class='propvalue'></span><span class='propex'>Expected: Should be false, decreases performance</span></li><li class='validInd notmandatory'>enableWildcards<span class='propvalue'></span><span class='propex'>Expected: Should be false, decreases performance</span></li><li class='validInd notmandatory'>enableDuplicateFiltering<span class='propvalue'></span><span class='propex'>Expected: Should be false, decreases performance</span></li><li class='notvalidInd notmandatory'>commerce<span class='propvalue'></span><span class='propex'>Expected: In case of Commerce queries, should contain commerce parameters</span></li><li class='notvalidInd notmandatory'>dictionaryFieldContext<span class='propvalue'></span><span class='propex'>Expected: In case of Commerce queries, dictionary fields</span></li></ul><details class=code>  <summary>Post/Form Data</summary>  <pre class='mycode'>{
+  "debug": false,
+  "aq": "",
+  "cq": "",
+  "context": {},
+  "enableDidYouMean": true,
+  "facets": [
+    {
+      "delimitingCharacter": ">",
+      "filterFacetCount": true,
+      "injectionDepth": 1000,
+      "numberOfValues": 5,
+      "sortCriteria": "occurrences",
+      "type": "specific",
+      "currentValues": [],
+      "freezeCurrentValues": false,
+      "isFieldExpanded": false,
+      "preventAutoSelect": false,
+      "facetSearch": {
+        "captions": {},
+        "numberOfValues": 10,
+        "query": ""
+      },
+      "facetId": "ec_brand",
+      "field": "ec_brand"
+    },
+    {
+      "delimitingCharacter": "|",
+      "filterFacetCount": true,
+      "injectionDepth": 1000,
+      "numberOfValues": 5,
+      "sortCriteria": "occurrences",
+      "basePath": [],
+      "filterByBasePath": true,
+      "currentValues": [],
+      "preventAutoSelect": false,
+      "type": "hierarchical",
+      "field": "ec_category",
+      "facetId": "ec_category"
+    }
+  ],
+  "fieldsToInclude": [
+    "author",
+    "language",
+    "urihash",
+    "objecttype",
+    "collection",
+    "source",
+    "permanentid",
+    "category_slug",
+    "customerreviewcount",
+    "details",
+    "ec_brand",
+    "ec_category",
+    "ec_description",
+    "ec_image",
+    "ec_images",
+    "ec_item_group_id",
+    "ec_name",
+    "ec_price",
+    "ec_promo_price",
+    "ec_rating",
+    "ec_reviews",
+    "ec_shortdesc",
+    "features",
+    "model",
+    "modelnumber",
+    "category",
+    "clickUri",
+    "sku",
+    "title"
+  ],
+  "numberOfResults": 10,
+  "firstResult": 0,
+  "pipeline": "Search",
+  "q": "",
+  "enableQuerySyntax": false,
+  "searchHub": "MainSearch",
+  "sortCriteria": "relevancy",
+  "facetOptions": {
+    "freezeFacetOrder": true
+  },
+  "organizationId": "bestbuycommercedemo2020i4xxjh61"
+}</pre></details><span class='spacing'></span><span class='type notvalidIndB'>Query</span><span class="time">14:43:07</span><span class='url validInd'><a href='https://platform.cloud.coveo.com/rest/search/v2?organizationId=bestbuycommercedemo2020i4xxjh61' target='_blank'>https://platform.cloud.coveo.com/rest/search/v2?organizationId=bestbuycommercedemo2020i4xxjh61</a><span class='sc'>statusCode: 200</span></span><ul><li class='validInd '>searchHub<span class='propvalue'>mainsearch</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>tab<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>locale<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>visitorId<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd '>q<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>aq<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>cq<span class='propvalue'></span><span class='propex'>Expected: Not empty/undefined</span></li><li class='notvalidInd notmandatory'>pipeline<span class='propvalue'>search</span><span class='propex'>Expected: Should be empty</span></li><li class='validInd notmandatory'>recommendation<span class='propvalue'></span><span class='propex'>Expected: Should be empty with normal search</span></li><li class='validInd notmandatory'>context<span class='propvalue'>[object Object]</span><span class='propex'>Expected: Not empty/undefined</span></li><li class='validInd notmandatory'>dq<span class='propvalue'></span><span class='propex'>Expected: Should be false, decreases performance</span></li><li class='validInd notmandatory'>lq<span class='propvalue'></span><span class='propex'>Expected: Should be false, decreases performance</span></li><li class='validInd notmandatory'>filterField<span class='propvalue'></span><span class='propex'>Expected: Should be false, decreases performance</span></li><li class='validInd notmandatory'>partialMatch<span class='propvalue'></span><span class='propex'>Expected: Should be false, decreases performance</span></li><li class='validInd notmandatory'>enableWildcards<span class='propvalue'></span><span class='propex'>Expected: Should be false, decreases performance</span></li><li class='validInd notmandatory'>enableDuplicateFiltering<span class='propvalue'></span><span class='propex'>Expected: Should be false, decreases performance</span></li><li class='notvalidInd notmandatory'>commerce<span class='propvalue'></span><span class='propex'>Expected: In case of Commerce queries, should contain commerce parameters</span></li><li class='notvalidInd notmandatory'>dictionaryFieldContext<span class='propvalue'></span><span class='propex'>Expected: In case of Commerce queries, dictionary fields</span></li></ul><details class=code>  <summary>Post/Form Data</summary>  <pre class='mycode'>{
+  "debug": false,
+  "aq": "",
+  "cq": "",
+  "context": {},
+  "enableDidYouMean": false,
+  "facets": [
+    {
+      "delimitingCharacter": ";",
+      "filterFacetCount": true,
+      "injectionDepth": 1000,
+      "numberOfValues": 10000,
+      "sortCriteria": "occurrences",
+      "basePath": [],
+      "filterByBasePath": true,
+      "currentValues": [],
+      "preventAutoSelect": false,
+      "type": "hierarchical",
+      "facetId": "ec_category",
+      "field": "ec_category"
+    }
+  ],
+  "fieldsToInclude": [
+    "author",
+    "language",
+    "urihash",
+    "objecttype",
+    "collection",
+    "source",
+    "permanentid"
+  ],
+  "numberOfResults": 10,
+  "firstResult": 0,
+  "pipeline": "Search",
+  "q": "",
+  "enableQuerySyntax": false,
+  "searchHub": "MainSearch",
+  "sortCriteria": "relevancy",
+  "facetOptions": {
+    "freezeFacetOrder": false
+  },
+  "organizationId": "bestbuycommercedemo2020i4xxjh61"
+}</pre></details><span class='spacing'></span><span class='type validIndB'>Navigated to new Page</span><span class="time">14:43:06</span><span class='url validInd'><a href='https://genericstore.coveodemo.com/searchPage' target='_blank'>https://genericstore.coveodemo.com/searchPage</a><span class='sc'>statusCode: 200</span></span><ul><li class='notvalidInd notmandatory' style='width: auto !important;'>searchToken<span class='propvalue'><pre class='code'>undefined</pre></span></li><li class='notvalidInd notmandatory' style='width: auto !important;'>analyticsToken<span class='propvalue'><pre class='code'>undefined</pre></span></li></ul><details class=code>  <summary>Post/Form Data</summary>  <pre class='mycode'>{}</pre></details>
+  </body>
+  </html>

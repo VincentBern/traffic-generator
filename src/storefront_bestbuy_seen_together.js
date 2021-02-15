@@ -1,9 +1,40 @@
 var fs = require("fs");
 
-let runSpecialTestsNumberOfTimes = 3;
+let runSpecialTestsNumberOfTimes = 0;
 let runRandomTestsNumberOfTimes = 2;
 
 
+function enableRecorder(browser) {
+  const url = 'chrome-extension://agbemobelhfkcadfajnbehibhpgkkigk/popup.html';
+  browser.url(url);
+  browser.pause(1000);
+  browser.click('#setSearchTracker');
+  browser.pause(1000);
+
+}
+
+async function downloadReport(browser) {
+  const url = 'chrome-extension://agbemobelhfkcadfajnbehibhpgkkigk/popup.html';
+  browser.url(url);
+  browser.pause(1000);
+  browser.click('#download-global');
+  browser.pause(1000);
+  //Now the id 'myDownloadContent' contains the href -> file, download -> filename
+  browser.execute(function () {
+    let href = document.getElementById('myDownloadContent').getAttribute('href');
+    let download = document.getElementById('myDownloadContent').getAttribute('download');
+    return { 'href': href, 'download': download };
+  }, function (result) {
+    //console.log('result value is:', result);
+    var report = fs.createWriteStream('output/' + (result.value.download), { flags: "w" });
+    report.write(decodeURIComponent(result.value.href));
+    report.close();
+  });
+
+
+  browser.pause(5000);
+
+}
 //*******************************************************
 //loadSettings, load the settings from the json file
 //*******************************************************
@@ -72,6 +103,7 @@ describe("BestBuy (Storefront headless)", async function () {
   beforeEach(async function (browser) {
     console.log('In BeforeEach');
     await browser.resizeWindow(1565, 1237);
+    //enableRecorder(browser);
     await browser.url("https://genericstore.coveodemo.com/searchPage");
     //await browser.url("http://localhost:3000/searchPage");
   });
@@ -127,5 +159,8 @@ describe("BestBuy (Storefront headless)", async function () {
 
   });
 
-  afterEach(browser => browser.end());
+  afterEach(async function (browser) {
+    //downloadReport(browser);
+    browser.end();
+  });
 });

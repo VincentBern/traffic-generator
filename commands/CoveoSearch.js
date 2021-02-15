@@ -12,19 +12,19 @@ module.exports = class CoveoSearch {
     await this.api.click(selector);
     let value = await this.api.getValue(selector);
     //First sent END
-    await this.api.setValue(selector, "\uE010");
+    /*await this.api.setValue(selector, "\uE010");
     console.log(value.value);
     for (var i = 0; i < value.value.length; i++) {
       //await this.api.Keys.BACKSPACE;
       await this.api.setValue(selector, "\u0008");
-    }
-    /*result = await this.api.setValue(selector, [
+    }*/
+    result = await this.api.setValue(selector, [
       this.api.Keys.CONTROL,
       "a",
       this.api.Keys.DELETE,
-    ]);*/
+    ]);
 
-    //result = await this.api.clearValue(inputBoxSelector);
+    result = await this.api.clearValue(inputBoxSelector);
     console.log('In CoveoSearch, clear input: ' + JSON.stringify(result));
     if (result.status == -1) return false;
 

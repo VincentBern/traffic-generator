@@ -19,7 +19,26 @@
   "test_settings": {
     "default": {
       "desiredCapabilities": {
-        "browserName": "chrome"
+        "browserName": "chrome",
+        "javascriptEnabled": true,
+        "acceptSslCerts": true,
+        "chromeOptions": {
+          "args": [
+            "--load-extension=C:/Users/wnijmeijer/Google Drive/Documents/GitHub/coveo-response-checker",
+            "safebrowsing-disable-download-protection"
+          ],
+          "prefs": {
+            "download": {
+              "prompt_for_download": false,
+              "default_directory": "D:/export/chrome/"
+            },
+            "browser": {
+              "set_download_behavior": {
+                "behavior": "allow"
+              }
+            }
+          }
+        }
       }
     }
   },
