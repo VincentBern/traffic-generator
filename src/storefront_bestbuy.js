@@ -18,6 +18,18 @@ describe("BestBuy (Storefront headless)", function () {
     await browser.CoveoOpenResult("RND", false, "", 10);
   });
 
+  test("DNE - Nintendo Switch", async function (browser) {
+    await browser.CoveoSearch("switch console");
+    await browser.CoveoSelectFacetValue("Nintendo");
+    await browser.CoveoOpenResult("RND", false, "", 10);
+  });
+
+  test("DNE - Audio-Technica", async function (browser) {
+    await browser.CoveoSearch("ATH Headphones");
+    await browser.CoveoSelectFacetValue("Audio-Technica");
+    await browser.CoveoOpenResult();
+  });
+
   test("DNE - Washer", async function (browser) {
     await browser.CoveoSearch("Washer");
 
