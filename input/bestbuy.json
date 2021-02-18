@@ -2,6 +2,40 @@
   "url": "https://help.salesforce.com/home",
   "title": "Salesforce Search",
   "logfile": "output/Salesforce.log",
+  "mandatoryEvents": [
+    {
+      "type": "E Commerce",
+      "subtype": "detail"
+    },
+    {
+      "type": "E Commerce",
+      "subtype": "impression"
+    },
+    {
+      "type": "Analytics",
+      "subtype": ""
+    },
+    {
+      "type": "E Commerce",
+      "subtype": "pageview"
+    },
+    {
+      "type": "E Commerce",
+      "subtype": "click"
+    },
+    {
+      "type": "Query",
+      "subtype": ""
+    },
+    {
+      "type": "Query Suggest",
+      "subtype": ""
+    },
+    {
+      "type": "Navigated to new Page",
+      "subtype": ""
+    }
+  ],
   "randomScripts": [
     "searchAndOpen2x",
     "searchAndClick",
@@ -10,10 +44,32 @@
   ],
   "randomKeywords": [
     "audio",
+    "laptop",
+    "laptop intel",
+    "laptop 14",
+    "laptop 13",
+    "laptop AMD",
+    "laptop Lenovo",
+    "laptop apple",
+    "desktop intel",
+    "desktop Dell",
+    "desktop HP",
+    "refurbished desktop",
+    "intel core",
+    "raspberry pi",
+    "touch screen",
     "appliances",
     "Home Theather",
     "Computers",
     "Tablets",
+    "small",
+    "apple",
+    "dell",
+    "lenovo",
+    "soundbar",
+    "soundbar bluetooth",
+    "sonos",
+    "bose",
     "Cell Phones",
     "Video Games",
     "Car Electronics",
@@ -33,16 +89,56 @@
   ],
   "scriptKeywords": [
     {
-      "script": "searchSpecial1",
-      "keyword": "exchange"
+      "script": "seenTogether",
+      "keywords": [
+        "MacBook Pro 15.4 Laptop  Intel Core i9  16GB Memory",
+        "MacBook Pro 13 Display with Touch Bar  Intel Core i5  8GB Memory ",
+        "MacBook Pro  13 Display with Touch Bar  Intel Core i7  16GB Memory ",
+        "MacBook Pro  13 Display with Touch Bar  Intel Core i5  16GB Memory ",
+        "MacBook Pro  13 Display with Touch Bar  Intel Core i5  8GB Memory ",
+        "Macbook Pro"
+      ],
+      "mandatoryEvents": [
+        {
+          "type": "E Commerce",
+          "subtype": "detail",
+          "postData": [
+            "t",
+            "cid",
+            "pid"
+          ]
+        },
+        {
+          "type": "E Commerce",
+          "subtype": "click"
+        },
+        {
+          "type": "E Commerce",
+          "subtype": "clicks"
+        }
+      ]
     },
     {
-      "script": "searchSpecial1",
-      "keyword": "exchange feed"
+      "script": "seenTogether",
+      "keywords": [
+        "4.5 Cu. Ft. 14-Cycle Front-Loading Washer with Steam",
+        "2.4 Cu. Ft. 14-Cycle Front-Loading Washer",
+        "5.0 Cu. Ft. 12-Cycle Front-Loading Smart Wi-Fi Washer with Steam",
+        "2.2 Cu. Ft. 12-Cycle High-Efficiency Steam Front-Loading Washer with Steam",
+        "4.8 Cu. Ft. 12-Cycle High-Efficiency Front-Loading Washer with Steam",
+        "14 Cycle Front-Loading Washer"
+      ]
     },
     {
-      "script": "searchSpecial2",
-      "keyword": "account"
+      "script": "seenTogether",
+      "keywords": [
+        "MX-T50 Sound Tower 500W Wireless Speaker",
+        "Sound Tower Powered Wireless Speaker (Each)",
+        "Five Wireless Smart Speaker",
+        "ISB310B Wireless Tailgate Party Speaker",
+        "LSX Hi-Res Wireless Speakers",
+        "Wireless speaker"
+      ]
     }
   ],
   "username": "",

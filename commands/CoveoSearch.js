@@ -20,13 +20,11 @@ module.exports = class CoveoSearch {
     }
     if (result.status == -1) return false;
 
-    await this.api.pause(1000);
-    //let lastSearchUid = (await this.api.getLastResponse()).searchUid;
+    let lastSearchUid = (await this.api.getLastResponse()).searchUid;
     result = await this.api.setValue(inputBoxSelector, '');
 
     await this.api.click(inputBoxSelector);
     result = await this.api.setValue(inputBoxSelector, text);
-    await this.api.pause(1000);
     result = await this.api.keys(this.api.Keys.ENTER);
 
     await this.api.CoveoWaitForSearch(lastSearchUid);
