@@ -1,4 +1,4 @@
-module.exports = class CoveoOpenResult {
+module.exports = class CoveoOpenResultByTitle {
 
   getRandomInt(min, max) {
     return min + Math.floor(Math.random() * Math.floor(max));
