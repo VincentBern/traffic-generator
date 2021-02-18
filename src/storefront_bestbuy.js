@@ -11,6 +11,25 @@ describe("BestBuy (Storefront headless)", function () {
     // await browser.url("http://localhost:3000");
   });
 
+  test("DNE - Samnsung", async function (browser) {
+    await browser.CoveoSearch("Galaxy Phone");
+    await browser.CoveoSelectFacetValue("Samsung");
+    await browser.CoveoSelectFacetValue("Cell Phones");
+    await browser.CoveoOpenResult("RND", false, "", 10);
+  });
+
+  test("DNE - Nintendo Switch", async function (browser) {
+    await browser.CoveoSearch("switch console");
+    await browser.CoveoSelectFacetValue("Nintendo");
+    await browser.CoveoOpenResult("RND", false, "", 10);
+  });
+
+  test("DNE - Audio-Technica", async function (browser) {
+    await browser.CoveoSearch("ATH Headphones");
+    await browser.CoveoSelectFacetValue("Audio-Technica");
+    await browser.CoveoOpenResult();
+  });
+
   test("DNE - Washer", async function (browser) {
     await browser.CoveoSearch("Washer");
 
@@ -94,5 +113,8 @@ describe("BestBuy (Storefront headless)", function () {
     await browser.CoveoOpenResult();
   });
 
-  afterEach(browser => browser.end());
+  afterEach(async function (browser) {
+    await browser.pause(1000); // give some time for events to be sent
+    browser.end()
+  });
 });
