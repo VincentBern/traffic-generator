@@ -1,6 +1,6 @@
 var fs = require("fs");
 
-let runSpecialTestsNumberOfTimes = 3;
+let runSpecialTestsNumberOfTimes = 100;
 let runRandomTestsNumberOfTimes = 0;
 let allgood = true;
 
@@ -108,33 +108,35 @@ function examineMandatoryEvents(browser, mandatoryEvents) {
 
         //check if event is in MandatoryEvents, if so, check postdata
         let mandatory = false;
-        mandatoryEvents.map((event) => {
-          if (event.type == values[i].type && event.subtype == values[i].subtype) {
-            //Process it
-            console.log(FgYellow + '       --> MANDATORY EVENT <--' + Reset);
-            if (event.postData != undefined) {
-              console.log('Mandatory Postdata: ');
-              event.postData.map((post) => {
-                if (values[i].postdata[post] == undefined) {
+        if (mandatoryEvents != undefined) {
+          mandatoryEvents.map((event) => {
+            if (event.type == values[i].type && event.subtype == values[i].subtype) {
+              //Process it
+              console.log(FgYellow + '       --> MANDATORY EVENT <--' + Reset);
+              if (event.postData != undefined) {
+                console.log('Mandatory Postdata: ');
+                event.postData.map((post) => {
+                  if (values[i].postdata[post] == undefined) {
+                    oneisbad = true;
+                    console.log(FgWhite + BgRed + ' ' + post + ', Does not exists' + Reset);
+                  }
+                  else {
+                    console.log(FgWhite + BgGreen + ' ' + post + ', Does exists' + Reset);
+                  }
+                });
+              } else {
+                console.log('No Mandatory Postdata defined, checks are used from Extension');
+                mandatory = true;
+                if (values[i].oneisbad == true) {
                   oneisbad = true;
-                  console.log(FgWhite + BgRed + ' ' + post + ', Does not exists' + Reset);
                 }
-                else {
-                  console.log(FgWhite + BgGreen + ' ' + post + ', Does exists' + Reset);
-                }
-              });
-            } else {
-              console.log('No Mandatory Postdata defined, checks are used from Extension');
-              mandatory = true;
-              if (values[i].oneisbad == true) {
+              }
+              if (values[i].status == false) {
                 oneisbad = true;
               }
             }
-            if (values[i].status == false) {
-              oneisbad = true;
-            }
-          }
-        });
+          });
+        }
         if (mandatory) {
           console.log('All mandatory flags are valid: ' + !values[i].oneisbad);
           if (values[i].oneisbad == true) {
@@ -158,13 +160,15 @@ function examineMandatoryEvents(browser, mandatoryEvents) {
       //Compare the mandatory vs collectedEvents
       //console.log(JSON.stringify(mandatoryEvents));
       //console.log(JSON.stringify(collectedEvents));
-      const missingInCollected = mandatoryEvents
-        .filter(item => !collectedEvents
-          .some(other => {
-            if (item.type == other.type && item.subtype == other.subtype) return true;
-          })
-        );
-
+      let missingInCollected = [];
+      if (mandatoryEvents != undefined) {
+        missingInCollected = mandatoryEvents
+          .filter(item => !collectedEvents
+            .some(other => {
+              if (item.type == other.type && item.subtype == other.subtype) return true;
+            })
+          );
+      }
       //console.log(JSON.stringify(missingInCollected));
       if (oneisbad == true) {
         allgood = false;
@@ -269,6 +273,7 @@ describe("BestBuy (Storefront headless)", async function () {
       console.log("No Of Tests: " + settings.randomKeywords.length);
       for (let j = 0; j < runRandomTestsNumberOfTimes; j++) {
         for (let i = 0; i < settings.randomKeywords.length; i++) {
+          console.log(FgYellow + "Running Random Test: " + (j + 1) + "/" + runRandomTestsNumberOfTimes + " with keywords number: " + (i + 1) + "/" + settings.randomKeywords.length + Reset);
           await runRandomTest(
             settings.randomKeywords[i]
           );
@@ -289,6 +294,8 @@ describe("BestBuy (Storefront headless)", async function () {
       console.log("No Of Tests: " + settings.scriptKeywords.length);
       for (let j = 0; j < runSpecialTestsNumberOfTimes; j++) {
         for (let i = 0; i < settings.scriptKeywords.length; i++) {
+          console.log(FgYellow + "Running Special Test: " + (j + 1) + "/" + runSpecialTestsNumberOfTimes + " with keywords number: " + (i + 1) + "/" + settings.scriptKeywords.length + Reset);
+
           await runSpecialTest(
             settings.scriptKeywords[i]
           );

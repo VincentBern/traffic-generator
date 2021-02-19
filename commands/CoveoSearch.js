@@ -24,6 +24,7 @@ module.exports = class CoveoSearch {
     result = await this.api.setValue(inputBoxSelector, '');
 
     await this.api.click(inputBoxSelector);
+    console.log('In CoveoSearch, for2: ' + text);
     result = await this.api.setValue(inputBoxSelector, text);
     result = await this.api.keys(this.api.Keys.ENTER);
 

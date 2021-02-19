@@ -5,7 +5,11 @@
   "webdriver": {
     "start_process": true,
     "server_path": "node_modules/.bin/chromedriver",
-    "port": 9515
+    "port": 9515,
+    "timeout_options": {
+      "timeout": 15000,
+      "retry_attempts": 3
+    }
   },
   "custom_commands_path": "commands",
   "globals_path": "./src/globals.js",
