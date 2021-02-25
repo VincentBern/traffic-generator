@@ -1,0 +1,43 @@
+{
+  "searchBox": {
+    "input": "#search-box",
+    "clearButton": {
+      "dirty": "button.MuiAutocomplete-clearIndicator.MuiAutocomplete-clearIndicatorDirty",
+      "button": "button.MuiAutocomplete-clearIndicator"
+    },
+    "submitButton": "selector"
+  },
+  "searchPage": {
+    "resultListContainer": "#result-list--search-page"
+  },
+  "listingPage": {
+    "container": "#generic-store-pdp",
+    "addToCart": ".CoveoResultAddToCart"
+  },
+  "productDetailPage": "selector",
+  "result": {
+    "resultCard": ".CoveoResult",
+    "resultTitle": ".CoveoResultLink"
+  },
+  "facets": {
+    "showMore": "selector",
+    "searchValueInput": "selector",
+    "facetName_1": "selector",
+    "facetName_2": "selector"
+  },
+  "pagination": {
+    "next": "[aria-label=\"Go to next page\"]",
+    "previous": "selector",
+    "page": "selector"
+  },
+  "addToCart": {
+    "button": ".CoveoResultAddToCart"
+  },
+  "header": {
+    "cart": "#cart-header"
+  },
+  "cartPage": {
+    "container": "#generic-store-cart",
+    "checkoutButton": "button#checkout"
+  }
+}

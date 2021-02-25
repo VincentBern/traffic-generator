@@ -1,72 +1,36 @@
+const { fileReader, cssToXpath } = require('../Utils/Utilities');
+const Headless = fileReader("input/selectors/GenericStore.json");
+
 module.exports = class CoveoOpenResultByTitle {
 
-  getRandomInt(min, max) {
-    return min + Math.floor(Math.random() * Math.floor(max));
-  }
-
-  async nextPage() {
-    return await this.api.click("//*[contains(@class, 'MuiPagination-root')]//*[contains(@aria-label, 'Go to next page')]");
-  }
-
-  async isVisible(path, resolvePromise, iterations) {
-
-    if (iterations === 0) {
-      resolvePromise(false);
-      return;
-    }
-
-    await this.api.isVisible(path, async (result) => {
-      if (result.status === -1) {
-        const nextPageResult = await this.nextPage();
-
-        if (nextPageResult.status === -1) {
-          resolvePromise(false);
-          return;
-        }
-        else {
-          await this.isVisible(path, resolvePromise, --iterations);
-        }
-      }
-      else {
-        resolvePromise(true);
-        return;
-      }
-    })
-  }
-
-  async isVisibleWithPagination(path) {
-    return new Promise(async (resolvePromise) => {
-      await this.isVisible(path, resolvePromise, 5);
-    })
-  }
-
-  async command(xpathText = '', resultlist = "#result-list--search-page") {
+  async command(
+    text = '',
+    resultListSelector = Headless.searchPage.resultListContainer,
+    resultCard = Headless.result.resultCard,
+    resultTitle = Headless.result.resultTitle
+  ) {
 
     let path = '';
-
-    if (resultlist) {
-      path = resultlist.charAt(0) === '#' ? `//*[@id="${resultlist.substring(1)}"]` : `//*[contains(@class, ${resultlist.substring(1)})]`
+    if (resultListSelector && resultListSelector !== '') {
+      path = cssToXpath(resultListSelector);
     }
 
-    path += `//*[contains(@class, 'CoveoResult')]//*[contains(@class, 'CoveoResultLink')][contains(text(),'${xpathText}')]`;
+    const resultPath = cssToXpath(resultCard + ' ' + resultTitle);
+    path += resultPath + `[contains(text(),'${text}')]`;
 
     this.api.useXpath();
-
-    let res = await this.isVisibleWithPagination(path);
+    let res = await this.api.CoveoResultVisibleWithPagination(path);
 
     if (res) {
-
-      await this.api.getLocationInView(path, async (result) => {
+      // Scroll element into view
+      await this.api.getLocationInView(path, async () => {
         await this.api.execute('scrollTo(0, 0)')
       });
-
-      await this.api.pause(1000);
-
+      await this.api.pause(500);
       await this.api.click('xpath', path);
     }
 
     await this.api.pause(1000);
-
     this.api.useCss();
 
     return res;

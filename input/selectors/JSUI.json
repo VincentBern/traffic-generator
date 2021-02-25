@@ -1,0 +1,24 @@
+{
+  "searchBox": {
+    "input": "CoveoSearchbox .magic-box-input > input",
+    "clearButton": "selector",
+    "submitButton": "selector"
+  },
+  "searchPage": {
+    "resultListContainer": "#result-list--search-page"
+  },
+  "listingPage": "selector",
+  "productDetailPage": "selector",
+  "resultCart": "selector",
+  "facets": {
+    "showMore": "selector",
+    "searchValue": "selector",
+    "facetName_1": "selector",
+    "facetName_2": "selector"
+  },
+  "pagination": {
+    "next": "selector",
+    "previous": "selector",
+    "page": "selector"
+  }
+}
