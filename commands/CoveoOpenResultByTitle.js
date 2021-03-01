@@ -1,13 +1,13 @@
-const { fileReader, cssToXpath } = require('../Utils/Utilities');
-const Headless = fileReader("input/selectors/GenericStore.json");
+const { cssToXpath } = require('../Utils/Utilities');
+const HeadlessSelectors = require("../input/selectors/GenericStore.json");
 
 module.exports = class CoveoOpenResultByTitle {
 
   async command(
     text = '',
-    resultListSelector = Headless.searchPage.resultListContainer,
-    resultCard = Headless.result.resultCard,
-    resultTitle = Headless.result.resultTitle
+    resultListSelector = HeadlessSelectors.searchPage.resultListContainer,
+    resultCardSelector = HeadlessSelectors.result.resultCard,
+    resultTitleSelector = HeadlessSelectors.result.resultTitle
   ) {
 
     let path = '';
@@ -15,15 +15,14 @@ module.exports = class CoveoOpenResultByTitle {
       path = cssToXpath(resultListSelector);
     }
 
-    const resultPath = cssToXpath(resultCard + ' ' + resultTitle);
+    const resultPath = cssToXpath(resultCardSelector + ' ' + resultTitleSelector);
     path += resultPath + `[contains(text(),'${text}')]`;
 
-    this.api.useXpath();
     let res = await this.api.CoveoResultVisibleWithPagination(path);
 
     if (res) {
       // Scroll element into view
-      await this.api.getLocationInView(path, async () => {
+      await this.api.getLocationInView('xpath', path, async () => {
         await this.api.execute('scrollTo(0, 0)')
       });
       await this.api.pause(500);
@@ -31,8 +30,6 @@ module.exports = class CoveoOpenResultByTitle {
     }
 
     await this.api.pause(1000);
-    this.api.useCss();
-
     return res;
   }
 };

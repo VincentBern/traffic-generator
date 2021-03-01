@@ -1,25 +1,25 @@
-const { fileReader, cssToXpath } = require('../Utils/Utilities');
-const Headless = fileReader("input/selectors/GenericStore.json");
+const { cssToXpath } = require('../Utils/Utilities');
+const HeadlessSelectors = require("../input/selectors/GenericStore.json");
 
-module.exports = class CoveoResultVisible {
+module.exports = class CoveoResultVisibleWithPagination {
 
-  async isVisible(path, resolvePromise, iterations) {
+  async isVisible(xpathSelector, resolvePromise, iterations) {
 
     if (iterations === 0) {
       resolvePromise(false);
       return;
     }
 
-    await this.api.isVisible(path, async (result) => {
+    await this.api.isVisible('xpath', xpathSelector, async (result) => {
       if (result.status === -1) {
-        const nextPageResult = await this.api.click(cssToXpath(Headless.pagination.next));
+        const nextPageResult = await this.api.click('xpath', cssToXpath(HeadlessSelectors.pagination.next));
 
         if (nextPageResult.status === -1) {
           resolvePromise(false);
           return;
         }
         else {
-          await this.isVisible(path, resolvePromise, --iterations);
+          await this.isVisible(xpathSelector, resolvePromise, --iterations);
         }
       }
       else {
@@ -29,15 +29,14 @@ module.exports = class CoveoResultVisible {
     })
   }
 
-  async isVisibleWithPagination(path) {
+  async isVisibleWithPagination(xpathSelector) {
     return new Promise(async (resolvePromise) => {
-      await this.isVisible(path, resolvePromise, 5);
+      await this.isVisible(xpathSelector, resolvePromise, 5);
     })
   }
 
-  async command(resultxPath) {
-    this.api.useXpath();
-    let res = await this.isVisibleWithPagination(resultxPath);
+  async command(xpathSelector) {
+    let res = await this.isVisibleWithPagination(xpathSelector);
     return res;
   }
 };

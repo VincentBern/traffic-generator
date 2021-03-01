@@ -1,6 +1,6 @@
 {
   "searchBox": {
-    "input": "CoveoSearchbox .magic-box-input > input",
+    "input": ".CoveoSearchbox .magic-box-input > input",
     "clearButton": "selector",
     "submitButton": "selector"
   },

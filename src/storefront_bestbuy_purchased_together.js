@@ -1,7 +1,6 @@
-const { fileReader } = require('../Utils/Utilities');
-const settings = fileReader("input/BestBuy.json");
-const StoreFrontSelectors = fileReader("input/selectors/GenericStore.json");
-const ProductsBoughtTogether = fileReader("input/scenarios/productsBoughtTogether.json");
+const settings = require("../input/BestBuy.json");
+const StoreFrontSelectors = require("../input/selectors/GenericStore.json");
+const ProductsBoughtTogether = require("../input/scenarios/productsBoughtTogether.json");
 
 describe("BestBuy (Storefront headless)", function () {
   // Nightwatch session config

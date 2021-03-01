@@ -1,9 +1,8 @@
-const { fileReader } = require('../Utils/Utilities');
-const Headless = fileReader("input/selectors/GenericStore.json");
-const JSUI = fileReader("input/selectors/JSUI.json");
+const HeadlessSelectors = require("../input/selectors/GenericStore.json");
+const JSUISelectors = require("../input/selectors/JSUI.json");
 
 module.exports = class CoveoSearch {
-  async command(text, searchinterface, searchBox = JSUI.searchBox.input + ', ' + Headless.searchBox.input) {
+  async command(text, searchinterface, searchBox = JSUISelectors.searchBox.input + ', ' + HeadlessSelectors.searchBox.input) {
 
     const inputBoxSelector = `${searchinterface} ${searchBox}`;
 

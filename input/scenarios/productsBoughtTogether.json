@@ -1,7 +1,7 @@
 {
   "iterations": "",
   "groups": {
-    "grouop_1": [
+    "group_1": [
       {
         "result_title": "MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB",
         "keyword": "macbook pro"
@@ -19,7 +19,7 @@
         "keyword": "macbook"
       }
     ],
-    "grouop_2": [
+    "group_2": [
       {
         "result_title": "Signature Series Dragonfly Cardioid Microphone",
         "keyword": "microphone blue"
@@ -41,7 +41,7 @@
         "keyword": "Mic stand"
       }
     ],
-    "grouop_3": [
+    "group_3": [
       {
         "result_title": "4L Analog Air Fryer",
         "keyword": "Air fryer"
