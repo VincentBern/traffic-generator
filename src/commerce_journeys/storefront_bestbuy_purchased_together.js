@@ -1,6 +1,6 @@
-const settings = require("../input/BestBuy.json");
-const StoreFrontSelectors = require("../input/selectors/GenericStore.json");
-const ProductsBoughtTogether = require("../input/scenarios/productsBoughtTogether.json");
+const settings = require("../../input/BestBuy.json");
+const StoreFrontSelectors = require("../../input/selectors/GenericStore.json");
+const ProductsBoughtTogether = require("../../input/scenarios/productsBoughtTogether.json");
 
 describe("BestBuy (Storefront headless)", function () {
   // Nightwatch session config
@@ -21,7 +21,7 @@ describe("BestBuy (Storefront headless)", function () {
 
       await browser.CoveoHeadlessClearSearchBox();
       await browser.CoveoSearch(keyword);
-      await browser.CoveoOpenResultByTitle(
+      await browser.CoveoOpenResultByText(
         result_title,
         searchPage.resultListContainer
       );
@@ -65,7 +65,7 @@ describe("BestBuy (Storefront headless)", function () {
           await RunJourney(scenarios[i][j].keyword, scenarios[i][j].result_title)
         }
 
-        // Checkout and kill session at the end of each loop
+        // Checkout and kill session at the end of each journey
         checkout();
       }
     }

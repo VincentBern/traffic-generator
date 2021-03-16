@@ -1,3 +1,5 @@
+const GenericStoreSelectors = require('../input/selectors/GenericStore.json');
+
 describe("BestBuy (Storefront headless)", function () {
   //Keep browser open when fails
   this.endSessionOnFail = true;
@@ -12,105 +14,66 @@ describe("BestBuy (Storefront headless)", function () {
   });
 
   test("DNE - Samnsung", async function (browser) {
-    await browser.CoveoSearch("Galaxy Phone");
-    await browser.CoveoSelectFacetValue("Samsung");
-    await browser.CoveoSelectFacetValue("Cell Phones");
-    await browser.CoveoOpenResult("RND", false, "", 10);
+    await browser.CoveoSearch("washer");
+    await browser.CoveoSelectFacetValueByText(["Appliances", "Washers & Dryers", "Washing Machines"]);
+    await browser.CoveoClickResult();
   });
 
   test("DNE - Nintendo Switch", async function (browser) {
     await browser.CoveoSearch("switch console");
-    await browser.CoveoSelectFacetValue("Nintendo");
-    await browser.CoveoOpenResult("RND", false, "", 10);
+    await browser.CoveoSelectFacetValueByText("Nintendo", GenericStoreSelectors.facets.brand);
+    await browser.CoveoClickResult();
   });
 
   test("DNE - Audio-Technica", async function (browser) {
     await browser.CoveoSearch("ATH Headphones");
-    await browser.CoveoSelectFacetValue("Audio-Technica");
-    await browser.CoveoOpenResult();
-  });
-
-  test("DNE - Washer", async function (browser) {
-    await browser.CoveoSearch("Washer");
-
-    await browser.CoveoSelectFacetValue("Appliances");
-    await browser.CoveoSelectFacetValue("Washers & Dryers");
-    await browser.CoveoSelectFacetValue("Washing Machines");
-
-    await browser.CoveoOpenResult();
+    await browser.CoveoSelectFacetValueByText("Audio-Technica", GenericStoreSelectors.facets.brand);
+    await browser.CoveoClickResult();
   });
 
   test("DNE - Dryer", async function (browser) {
     await browser.CoveoSearch("Dryer");
-
-    await browser.CoveoSelectFacetValue("Appliances");
-    await browser.CoveoSelectFacetValue("Washers & Dryers");
-    await browser.CoveoSelectFacetValue("Dryers");
-
-    await browser.CoveoOpenResult();
+    await browser.CoveoSelectFacetValueByText(["Appliances", "Washers & Dryers", "Dryers"]);
+    await browser.CoveoClickResult();
   });
 
   test("DNE - Hand Dryer", async function (browser) {
     await browser.CoveoSearch("Hand Dryer");
-
-    await browser.CoveoSelectFacetValue("Appliances");
-    await browser.CoveoSelectFacetValue("Small Kitchen Appliances");
-    await browser.CoveoSelectFacetValue("Kitchen Gadgets");
-    await browser.CoveoSelectFacetValue("Soap Dispensers & Hand Dryers");
-
-    await browser.CoveoOpenResult();
+    await browser.CoveoSelectFacetValueByText(["Appliances", "Small Kitchen Appliances", "Kitchen Gadgets", "Soap Dispensers & Hand Dryers"]);
+    await browser.CoveoClickResult();
   });
 
   test("DNE - wireless headphones", async function (browser) {
     await browser.CoveoSearch("wireless headphones");
-
-    await browser.CoveoSelectFacetValue("Audio");
-    await browser.CoveoSelectFacetValue("Headphones");
-
-    await browser.CoveoOpenResult();
+    await browser.CoveoSelectFacetValueByText(["Audio", "Headphones"]);
+    await browser.CoveoClickResult();
   });
 
 
   test("DNE - ipad pro", async function (browser) {
     await browser.CoveoSearch("ipad pro");
-
-    await browser.CoveoSelectFacetValue("Computers & Tablets");
-    await browser.CoveoSelectFacetValue("Tablets");
-    await browser.CoveoSelectFacetValue("Apple iPad");
-    await browser.CoveoSelectFacetValue("iPad Pro");
-
-    await browser.CoveoOpenResult();
+    await browser.CoveoSelectFacetValueByText(["Computers & Tablets", "Tablets", "Apple iPad", "iPad Pro"]);
+    await browser.CoveoClickResult();
   });
 
   test("DNE - flashlight", async function (browser) {
     await browser.CoveoSearch("flashlight");
+    await browser.CoveoSelectFacetValueByText(["Home, Furniture & Office", "Lighting", "Flashlights & Portable Lights"]);
 
-    await browser.CoveoSelectFacetValue("Home, Furniture & Office");
-    await browser.CoveoSelectFacetValue("Lighting");
-    await browser.CoveoSelectFacetValue("Flashlights & Portable Lights");
-
+    await browser.CoveoHeadlessClearSearchBox();
     await browser.CoveoSearch("flashlight led");
 
-    await browser.CoveoOpenResult();
+    await browser.CoveoClickResult();
   });
 
   test("DNE - baby shark", async function (browser) {
     await browser.CoveoSearch("");
+    await browser.CoveoSelectFacetValueByText(["Toys, Games & Collectibles", "Toys", "Surprise Toys"]);
 
-    await browser.click("#category-facet--ec_category .CoveoFacetShowMore");
-    await browser.CoveoSelectFacetValue("Toys, Games & Collectibles");
-
-    await browser.click("#category-facet--ec_category .CoveoFacetShowMore");
-    await browser.CoveoSelectFacetValue("Toys");
-
-    await browser.click("#category-facet--ec_category .CoveoFacetShowMore");
-    await browser.pause(1000);
-    await browser.click("#category-facet--ec_category .CoveoFacetShowMore");
-    await browser.CoveoSelectFacetValue("Surprise Toys");
-
+    await browser.CoveoHeadlessClearSearchBox();
     await browser.CoveoSearch("baby shark");
 
-    await browser.CoveoOpenResult();
+    await browser.CoveoClickResult();
   });
 
   afterEach(async function (browser) {

@@ -22,8 +22,11 @@
   "facets": {
     "showMore": "selector",
     "searchValueInput": "selector",
-    "facetName_1": "selector",
-    "facetName_2": "selector"
+    "facetValue": ".facet-value",
+    "category": "#category-facet--ec_category",
+    "brand": "#facet--ec_brand",
+    "facetName_2": "selector",
+    "moreButton": ".CoveoFacetShowMore"
   },
   "pagination": {
     "next": "[aria-label=\"Go to next page\"]",

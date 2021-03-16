@@ -5,6 +5,7 @@ module.exports = class CoveoOpenResultByTitle {
 
   async command(
     text = '',
+    paginationDepth = 5,
     resultListSelector = HeadlessSelectors.searchPage.resultListContainer,
     resultCardSelector = HeadlessSelectors.result.resultCard,
     resultTitleSelector = HeadlessSelectors.result.resultTitle
@@ -18,7 +19,7 @@ module.exports = class CoveoOpenResultByTitle {
     const resultPath = cssToXpath(resultCardSelector + ' ' + resultTitleSelector);
     path += resultPath + `[contains(text(),'${text}')]`;
 
-    let res = await this.api.CoveoResultVisibleWithPagination(path);
+    let res = await this.api.CoveoResultVisibleWithPagination(path, paginationDepth);
 
     if (res) {
       // Scroll element into view
