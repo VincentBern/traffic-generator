@@ -23,7 +23,7 @@ describe("BestBuy (Storefront headless)", function () {
       await browser.CoveoSearch(keyword);
       await browser.CoveoOpenResultByText(
         result_title,
-        searchPage.resultListContainer
+        searchPage.container
       );
       await browser.waitForElementVisible(pdp.container);
       await browser.click(pdp.addToCart);

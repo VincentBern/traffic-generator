@@ -7,9 +7,7 @@
     },
     "submitButton": "selector"
   },
-  "searchPage": {
-    "resultListContainer": "#result-list--search-page"
-  },
+  "searchPage": "#result-list--search-page",
   "listingPage": {
     "container": "#generic-store-pdp",
     "addToCart": ".CoveoResultAddToCart"
@@ -17,16 +15,16 @@
   "productDetailPage": "selector",
   "result": {
     "resultCard": ".CoveoResult",
-    "resultTitle": ".CoveoResultLink"
+    "resultTitle": ".CoveoResultLink",
+    "resultList": "#result-list--search-page"
   },
   "facets": {
-    "showMore": "selector",
+    "showMore": ".CoveoFacetShowMore",
     "searchValueInput": "selector",
     "facetValue": ".facet-value",
     "category": "#category-facet--ec_category",
     "brand": "#facet--ec_brand",
-    "facetName_2": "selector",
-    "moreButton": ".CoveoFacetShowMore"
+    "facetName_2": "selector"
   },
   "pagination": {
     "next": "[aria-label=\"Go to next page\"]",

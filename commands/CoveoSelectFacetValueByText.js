@@ -1,5 +1,7 @@
 const GenericStoreSelectors = require('../input/selectors/GenericStore.json');
+const JSUISelectors = require("../input/selectors/JSUI.json");
 const { cssToXpath } = require('../Utils/Utilities');
+const { SelectorExtract } = require('../Utils/Utilities');
 
 module.exports = class CoveoSelectFacetValueByText {
 
@@ -60,12 +62,10 @@ module.exports = class CoveoSelectFacetValueByText {
     facetValueSelector,
     facetMoreButtonSelector
   ) {
-
     const xpathFacetValueSelector = cssToXpath(FacetSelector + ' ' + facetValueSelector);
 
     // Of facet value is an array, get the first value
     let currentFacetValue = Array.isArray(facetValue) ? facetValue[0] : facetValue;
-
     // Get the real text value of the facet (if there is any that matches)
     currentFacetValue =
       await this.getProperFacetValue(
@@ -129,7 +129,6 @@ module.exports = class CoveoSelectFacetValueByText {
 
         let randomValue = Math.ceil(Math.random() * elements.value.length - 1);
 
-        console.log(randomValue);
         this.api.elementIdText(elements.value[randomValue].ELEMENT, async (elementText) => {
 
           const xpathFacetWithText =
@@ -148,17 +147,17 @@ module.exports = class CoveoSelectFacetValueByText {
 
   async command(
     facetValue = "",
-    FacetSelector = GenericStoreSelectors.facets.category,
-    facetValueSelector = GenericStoreSelectors.facets.facetValue,
-    facetMoreButtonSelector = GenericStoreSelectors.facets.moreButton
+    Selectors = { GenericStoreSelectors, JSUISelectors }
   ) {
+
+    const { facetSelector, facetValueSelector, facetMoreButtonSelector } = SelectorExtract(Selectors);
 
     let res;
     if (facetValue === "") {
-      res = this.randomSelection(FacetSelector, facetValueSelector);
+      res = this.randomSelection(facetSelector, facetValueSelector);
     }
     else {
-      res = await this.selectFacetValueRecursive(facetValue, FacetSelector, facetValueSelector, facetMoreButtonSelector);
+      res = await this.selectFacetValueRecursive(facetValue, facetSelector, facetValueSelector, facetMoreButtonSelector);
     }
 
     await this.api.pause(1000);

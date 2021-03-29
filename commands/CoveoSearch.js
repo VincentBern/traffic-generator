@@ -1,23 +1,28 @@
-const HeadlessSelectors = require("../input/selectors/GenericStore.json");
+const GenericStoreSelectors = require("../input/selectors/GenericStore.json");
 const JSUISelectors = require("../input/selectors/JSUI.json");
+const { SelectorExtract } = require('../Utils/Utilities');
 
 module.exports = class CoveoSearch {
-  async command(text, searchinterface, searchBox = JSUISelectors.searchBox.input + ', ' + HeadlessSelectors.searchBox.input) {
+  async command(
+    text,
+    Selectors = { GenericStoreSelectors, JSUISelectors }) {
 
-    const inputBoxSelector = `${searchinterface} ${searchBox}`;
+    const { searchBoxInputSelector } = SelectorExtract(Selectors);
 
-    let result = await this.api.waitForElementVisible(inputBoxSelector);
+    let result = await this.api.waitForElementVisible(searchBoxInputSelector);
     if (result.status == -1) return false;
 
-    // Add condition to operate ONLY when using JSUI
-    let lastSearchUid = (await this.api.getLastResponse()).searchUid;
+    await this.api.CoveoClearValue(searchBoxInputSelector);
 
-    await this.api.click(inputBoxSelector);
-    result = await this.api.setValue(inputBoxSelector, text);
+    // Add condition to operate ONLY when using JSUI
+    // let lastSearchUid = (await this.api.getLastResponse()).searchUid;
+
+    await this.api.click(searchBoxInputSelector);
+    result = await this.api.setValue(searchBoxInputSelector, text);
     result = await this.api.keys(this.api.Keys.ENTER);
 
     // Add condition to operate ONLY when using JSUI
-    await this.api.CoveoWaitForSearch(lastSearchUid);
+    // await this.api.CoveoWaitForSearch(lastSearchUid);
     await this.api.pause(1000); // slow down a bit for UA events
 
     return (result.status !== -1);

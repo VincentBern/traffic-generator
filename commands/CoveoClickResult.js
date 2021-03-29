@@ -1,4 +1,6 @@
-const HeadlessSelectors = require("../input/selectors/GenericStore.json");
+const GenericStoreSelectors = require("../input/selectors/GenericStore.json");
+const JSUISelectors = require("../input/selectors/JSUI.json");
+const { SelectorExtract } = require('../Utils/Utilities');
 
 module.exports = class CoveoOpenResult {
 
@@ -8,15 +10,17 @@ module.exports = class CoveoOpenResult {
 
   async command(
     nthValue = "RND",
-    resultListSelector = HeadlessSelectors.searchPage.resultListContainer,
-    resultCardSelector = HeadlessSelectors.result.resultCard,
+    Selectors = { GenericStoreSelectors, JSUISelectors }
   ) {
+
+    const { resultListSelector, resultCardSelector, resultLinkSelector } = SelectorExtract(Selectors);
+
     if (nthValue === "RND") {
       let results = await this.api.elements('css selector', `${resultListSelector} ${resultCardSelector}`);
       nthValue = this.getRandomInt(1, results.value.length);
     }
 
-    let selector = `${resultListSelector} ${resultCardSelector}:nth-child(${nthValue}) .CoveoResultLink`.trim();
+    let selector = `${resultListSelector} ${resultCardSelector}:nth-child(${nthValue}) ${resultLinkSelector}`.trim();
 
     let res = await this.api.click(selector);
     await this.api.pause(3000);

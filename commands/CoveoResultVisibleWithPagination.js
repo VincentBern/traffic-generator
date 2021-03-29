@@ -1,9 +1,11 @@
 const { cssToXpath } = require('../Utils/Utilities');
-const HeadlessSelectors = require("../input/selectors/GenericStore.json");
+const { SelectorExtract } = require('../Utils/Utilities');
 
 module.exports = class CoveoResultVisibleWithPagination {
 
-  async isVisible(xpathSelector, resolvePromise, iterations) {
+  async isVisible(xpathSelector, resolvePromise, iterations, Selectors) {
+
+    const { paginationNextSelector } = SelectorExtract(Selectors);
 
     if (iterations === 0) {
       resolvePromise(false);
@@ -12,14 +14,14 @@ module.exports = class CoveoResultVisibleWithPagination {
 
     await this.api.isVisible('xpath', xpathSelector, async (result) => {
       if (result.status === -1) {
-        const nextPageResult = await this.api.click('xpath', cssToXpath(HeadlessSelectors.pagination.next));
+        const nextPageResult = await this.api.click('xpath', cssToXpath(paginationNextSelector));
 
         if (nextPageResult.status === -1) {
           resolvePromise(false);
           return;
         }
         else {
-          await this.isVisible(xpathSelector, resolvePromise, --iterations);
+          await this.isVisible(xpathSelector, resolvePromise, --iterations, Selectors);
         }
       }
       else {
@@ -29,14 +31,14 @@ module.exports = class CoveoResultVisibleWithPagination {
     })
   }
 
-  async isVisibleWithPagination(xpathSelector, paginationDepth) {
+  async isVisibleWithPagination(xpathSelector, paginationDepth, Selectors) {
     return new Promise(async (resolvePromise) => {
-      await this.isVisible(xpathSelector, resolvePromise, paginationDepth);
+      await this.isVisible(xpathSelector, resolvePromise, paginationDepth, Selectors);
     })
   }
 
-  async command(xpathSelector, paginationDepth = 5) {
-    let res = await this.isVisibleWithPagination(xpathSelector);
+  async command(xpathSelector, paginationDepth = 5, Selectors) {
+    let res = await this.isVisibleWithPagination(xpathSelector, paginationDepth, Selectors);
     return res;
   }
 };
