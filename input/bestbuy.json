@@ -1,5 +1,6 @@
 {
-  "url": "https://help.salesforce.com/home",
+  "url": "https://genericstore.coveodemo.com/searchPage",
+  "chrome_extension": "chrome-extension://agbemobelhfkcadfajnbehibhpgkkigk/popup.html",
   "title": "Salesforce Search",
   "logfile": "output/Salesforce.log",
   "mandatoryEvents": [
