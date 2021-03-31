@@ -1,5 +1,3 @@
-const GenericStoreSelectors = require("../input/selectors/GenericStore.json");
-const JSUISelectors = require("../input/selectors/JSUI.json");
 const { SelectorExtract } = require('../Utils/Utilities');
 
 module.exports = class CoveoOpenResult {
@@ -8,21 +6,29 @@ module.exports = class CoveoOpenResult {
     return min + Math.floor(Math.random() * Math.floor(max));
   }
 
+  async selectResultByNumber(selector, nthValue) {
+    return new Promise(async (resolve) => {
+      await this.api.elements('css selector', `${selector}`, async (results) => {
+
+        if (nthValue === 'RND' || nthValue === "") {
+          nthValue = this.getRandomInt(1, results.value.length);
+        }
+
+        await this.api.elementIdClick(results.value[nthValue - 1].ELEMENT);
+        resolve(true);
+      });
+    })
+  }
+
   async command(
     nthValue = "RND",
-    Selectors = { GenericStoreSelectors, JSUISelectors }
+    Selectors = null
   ) {
 
-    const { resultListSelector, resultCardSelector, resultLinkSelector } = SelectorExtract(Selectors);
+    const Selector_resultList_ResultCard
+      = SelectorExtract(Selectors).getParentChildSelector("resultListSelector", "resultLinkSelector");
 
-    if (nthValue === "RND") {
-      let results = await this.api.elements('css selector', `${resultListSelector} ${resultCardSelector}`);
-      nthValue = this.getRandomInt(1, results.value.length);
-    }
-
-    let selector = `${resultListSelector} ${resultCardSelector}:nth-child(${nthValue}) ${resultLinkSelector}`.trim();
-
-    let res = await this.api.click(selector);
+    let res = await this.selectResultByNumber(Selector_resultList_ResultCard, nthValue);
     await this.api.pause(3000);
     return res;
   }

@@ -1,13 +1,11 @@
-const GenericStoreSelectors = require("../input/selectors/GenericStore.json");
-const JSUISelectors = require("../input/selectors/JSUI.json");
 const { SelectorExtract } = require('../Utils/Utilities');
 
 module.exports = class CoveoSearch {
   async command(
     text,
-    Selectors = { GenericStoreSelectors, JSUISelectors }) {
+    Selectors) {
 
-    const { searchBoxInputSelector } = SelectorExtract(Selectors);
+    const { searchBoxInputSelector } = SelectorExtract(Selectors).getSelectors();
 
     let result = await this.api.waitForElementVisible(searchBoxInputSelector);
     if (result.status == -1) return false;

@@ -4,10 +4,10 @@ const { SelectorExtract } = require('../Utils/Utilities');
 
 module.exports = class CoveoClearSearchBox {
   async command(
-    Selectors = { GenericStoreSelectors, JSUISelectors }
+    Selectors = null
   ) {
 
-    const { searchBoxInputSelector, searchBoxClearButtonSelector } = SelectorExtract(Selectors);
+    const { searchBoxInputSelector, searchBoxClearButtonSelector } = SelectorExtract(Selectors).getSelectors();
 
     let result = await this.api.waitForElementVisible(searchBoxInputSelector);
     if (result.status == -1) return false;

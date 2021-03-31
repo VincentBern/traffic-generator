@@ -20,7 +20,7 @@
   "facets": {
     "showMore": ".coveo-category-facet-more, .coveo-dynamic-hierarchical-facet-show-more",
     "facetValue": ".coveo-category-facet-value-caption, .coveo-dynamic-hierarchical-facet-value-label",
-    "category": "#CategoryFacet"
+    "category": "[data-title='Categories'].CoveoDynamicHierarchicalFacet"
   },
   "pagination": {
     "next": ".CoveoShowMore",

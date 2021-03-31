@@ -1,11 +1,8 @@
-const { cssToXpath } = require('../Utils/Utilities');
 const { SelectorExtract } = require('../Utils/Utilities');
 
 module.exports = class CoveoResultVisibleWithPagination {
 
   async isVisible(xpathSelector, resolvePromise, iterations, Selectors) {
-
-    const { paginationNextSelector } = SelectorExtract(Selectors);
 
     if (iterations === 0) {
       resolvePromise(false);
@@ -14,7 +11,10 @@ module.exports = class CoveoResultVisibleWithPagination {
 
     await this.api.isVisible('xpath', xpathSelector, async (result) => {
       if (result.status === -1) {
-        const nextPageResult = await this.api.click('xpath', cssToXpath(paginationNextSelector));
+
+        const { paginationNextSelector } = SelectorExtract(Selectors).getSelectors('xpath');
+
+        const nextPageResult = await this.api.click('xpath', paginationNextSelector);
 
         if (nextPageResult.status === -1) {
           resolvePromise(false);
