@@ -2,81 +2,67 @@ const GenericStoreSelectors = require("../input/selectors/GenericStore.json");
 const JSUISelectors = require("../input/selectors/JSUI.json");
 const cssToXpath = require('./cssToXpath');
 
-// const SelectorNames = Object.freeze(
-//   {
-//     resultList: "resultListSelector",
-//     resultCard: "resultCardSelector",
-//     resultTitle: "resultTitleSelector",
-//     resultLink: "resultLinkSelector",
-//     paginationNext: "paginationNextSelector",
-//     facet: "facetSelector",
-//     facetValue: "facetValueSelector",
-//     facetMoreButton: "facetMoreButtonSelector",
-//     searchBoxInput: "searchBoxInputSelector",
-//     searchBoxClearButton: "searchBoxClearButtonSelector"
-//   });
-
 module.exports = function SelectorExtract(
-  SelectorObject,
-  facetName = 'category'
+  CustomSelector,
+  options = {
+    facetName: 'category'
+  }
 ) {
-
-  const _and = ", ";
 
   // RESULT SELECTORS
   const resultListSelector = {
-    custom: SelectorObject?.searchPage || "",
-    genericStore: GenericStoreSelectors.searchPage || "",
-    jsui: JSUISelectors.searchPage || ""
+    custom: CustomSelector?.result?.resultList || "",
+    genericStore: GenericStoreSelectors.result.resultList || "",
+    jsui: JSUISelectors.result.resultList || ""
   }
   const resultCardSelector = {
-    custom: SelectorObject?.result?.resultCard || "",
+    custom: CustomSelector?.result?.resultCard || "",
     genericStore: GenericStoreSelectors.result.resultCard || "",
     jsui: JSUISelectors.result?.resultCard || ""
   }
   const resultTitleSelector = {
-    custom: SelectorObject?.result?.resultTitle || "",
+    custom: CustomSelector?.result?.resultTitle || "",
     genericStore: GenericStoreSelectors.result.resultTitle || "",
     jsui: JSUISelectors.result.resultTitle || ""
   }
   const resultLinkSelector = {
-    custom: SelectorObject?.result?.resultLink || "",
+    custom: CustomSelector?.result?.resultLink || "",
     genericStore: GenericStoreSelectors.result.resultLink || "",
     jsui: JSUISelectors.result.resultLink || ""
   }
 
   // PAGINATION SELECTORS
   const paginationNextSelector = {
-    custom: SelectorObject?.pagination?.next || "",
+    custom: CustomSelector?.pagination?.next || "",
     genericStore: GenericStoreSelectors.pagination.next || "",
     jsui: JSUISelectors.pagination.next || ""
   }
 
   // FACET SELECTORS
   const facetSelector = {
-    custom: SelectorObject?.facets && SelectorObject.facets[facetName] || "",
-    genericStore: GenericStoreSelectors.facets[facetName] || "",
-    jsui: JSUISelectors.facets[facetName] || ""
+    custom: CustomSelector?.facets && CustomSelector.facets[options?.facetName] || "",
+    genericStore: GenericStoreSelectors.facets[options?.facetName] || "",
+    jsui: JSUISelectors.facets[options?.facetName] || ""
   }
   const facetValueSelector = {
-    custom: SelectorObject?.facets?.facetValue || "",
+    custom: CustomSelector?.facets?.facetValue || "",
     genericStore: GenericStoreSelectors.facets.facetValue || "",
     jsui: JSUISelectors.facets.facetValue || ""
   }
   const facetMoreButtonSelector = {
-    custom: SelectorObject?.facets?.showMore || "",
+    custom: CustomSelector?.facets?.showMore || "",
     genericStore: GenericStoreSelectors.facets.showMore || "",
     jsui: JSUISelectors.facets.showMore || ""
   }
 
   // SEARCH BOX
   const searchBoxInputSelector = {
-    custom: SelectorObject?.searchBox?.input || "",
+    custom: CustomSelector?.searchBox?.input || "",
     genericStore: GenericStoreSelectors.searchBox.input || "",
-    jsui: JSUISelectors.searchBox.inpu || ""
+    jsui: JSUISelectors.searchBox.input || ""
   }
   const searchBoxClearButtonSelector = {
-    custom: SelectorObject?.searchBox?.clearButton.button || "",
+    custom: CustomSelector?.searchBox?.clearButton.button || "",
     genericStore: GenericStoreSelectors.searchBox.clearButton.button || "",
     jsui: JSUISelectors.searchBox.clearButton.button || ""
   }
@@ -94,20 +80,21 @@ module.exports = function SelectorExtract(
     searchBoxClearButtonSelector
   }
 
+  // Gets the selectors for custom Selector group or JSUI + Generic Store
   function getSelectors(use = 'css') {
     let selectors = {};
 
     Object.keys(SelectorsMenu).forEach(selectorKey => {
-      const custom = SelectorsMenu[selectorKey].custom;
-      const genericStore = SelectorsMenu[selectorKey].genericStore;
-      const jsui = SelectorsMenu[selectorKey].jsui;
+      const custom = SelectorsMenu[selectorKey]?.custom;
+      const genericStore = SelectorsMenu[selectorKey]?.genericStore;
+      const jsui = SelectorsMenu[selectorKey]?.jsui;
 
       let classTemp = ''
-      if (custom) {
+      if (CustomSelector) {
         classTemp = custom;
       }
       else if (genericStore && jsui) {
-        classTemp = genericStore + _and + jsui
+        classTemp = genericStore + ", " + jsui
       }
       else if (!genericStore && jsui) {
         classTemp = jsui
@@ -116,66 +103,95 @@ module.exports = function SelectorExtract(
         classTemp = genericStore
       }
 
-      if (use === 'xpath') {
-        selectors[selectorKey] = cssToXpath(classTemp)
-        return;
-      }
-
-      selectors[selectorKey] = classTemp;
+      selectors[selectorKey] = use === 'xpath' ? cssToXpath(classTemp) : classTemp;
     });
 
     return selectors;
   }
 
-  function coupleClassGroups(classGroupA, classGroupB, withText) {
+  // Takes in two selector groups (parent, child), and a text component (if targeting by text with xpath)
+  function parseParentChildSelectors(SelectorsGroupA, SelectorsGroupB, withText) {
 
-    const a_split = classGroupA.split(',');
-    const b_split = classGroupB.split(',');
+    const a_split = SelectorsGroupA.split(',');
+    const b_split = SelectorsGroupB.split(',');
 
     let parsed = [];
 
     a_split.forEach(group_a => {
       b_split.forEach(group_b => {
-        if (withText !== "") {
-          let selectorTemp = cssToXpath(group_a + " " + group_b);
+        if (!!withText) {
+          let selectorTemp = cssToXpath((group_a + " " + group_b).trim());
           selectorTemp += withText;
           parsed.push(selectorTemp);
         }
         else {
-          parsed.push(group_a + " " + group_b);
+          parsed.push((group_a + " " + group_b).trim());
         }
       })
     });
-
-    if (withText !== "") {
-      return parsed.join(' | ');
-    }
-    else {
-      return parsed.join(',');
-    }
+    return parsed.join(!!withText ? ' | ' : ', ');
   }
 
-  function getParentChildSelector(classA, classB, use = "css", withText = "") {
+  /** This function takes two groups of classes (parent and child for each selector group, 
+   * JSUI and GENERIC STORE) and builds the selector parent-child with the appropriate reltionships
+   * for all possible combinations. 
+   * 
+   * For example, we want the selector for ResultList > ResultLink for both JSUI and GenStore
+   * 
+   * ResultLink for JSUI:             ".resultLink, .CoveoResultLink"
+   * ResultLink for Generic Store:    ".result-link, .coveo-result-link",
+   * Resultlist for JSUI:             ".result-list, .CoveoResultList"
+   * Resultlist Generic Store:        '.result-list-container'
+   * 
+   * if we assume that selectorResultList = GenericStore_ResultList + ", " + JSUI_ResultList
+   * AND
+   * selectorResultLink= GenericStore_ResultLink + ", " + JSUI_ResultLink
+   * 
+   * THEN
+   * we do the following: document.querySelector(${selectorResultList} ${selectorResultLink}})
+   * We would end up with:
+   * .result-list, .CoveoResultList, .result-list-container .resultLink, .CoveoResultLink, 
+   * .result-link, .coveo-result-link
+   * 
+   * Definitely not what we want, as we would up with non-sensical selectors that
+   * would target .result-list alone and a combination of other selectors.
+   * 
+   * We want a combination of all possible scenarios for each selector group inside a single selector
+   * split by Selector group (JSUI first, and then Generic Store):
+   * .result-list .resultLink, .result-list .CoveoResultLink, .CoveoResultList .resultLink, .CoveoResultList .CoveoResultLink,
+   * .result-list-container .result-list-container
+  */
+  function getParentChildSelector(parentSelectorName, childSelectorName, use = "css", withText = "") {
 
     let classTemp = '';
-    if (SelectorObject) {
-      classTemp = coupleClassGroups(SelectorsMenu[classA].custom, SelectorsMenu[classB].custom, withText);
+    // If we're using a custom Selector group
+    if (CustomSelector) {
+      classTemp = parseParentChildSelectors(
+        SelectorsMenu[parentSelectorName].custom,
+        SelectorsMenu[childSelectorName].custom,
+        withText).trim();
     }
     else {
+      // Otherwise return GenericStore + ", " + JSUI Selectors
       classTemp =
-        coupleClassGroups(SelectorsMenu[classA].genericStore, SelectorsMenu[classB].genericStore, withText);
+        parseParentChildSelectors(
+          SelectorsMenu[parentSelectorName].genericStore,
+          SelectorsMenu[childSelectorName].genericStore,
+          withText).trim();
 
-      if (withText !== "") {
-        classTemp = classTemp + " | ";
-      } else {
-        classTemp = classTemp + _and
-      }
+      // need to use " | " because coupleClassGroups and withText would changed the selector to xpath
+      classTemp = !!withText ? classTemp + " | " : classTemp + ", ";
 
-      classTemp = classTemp + coupleClassGroups(SelectorsMenu[classA].jsui, SelectorsMenu[classB].jsui, withText);
+      classTemp = classTemp + parseParentChildSelectors(
+        SelectorsMenu[parentSelectorName].jsui,
+        SelectorsMenu[childSelectorName].jsui,
+        withText).trim();
     }
 
-    if (use === "xpath" && withText === "") {
-      return cssToXpath(classTemp);
+    if (use === "xpath" && !withText) {
+      // Only conver to expath when withText isn't set, as parseParentChildSelectors()
+      // will convert to xpath when a value fot withText is passed
+      return cssToXpath(classTemp.trim());
     }
 
     return classTemp;
@@ -183,9 +199,6 @@ module.exports = function SelectorExtract(
 
   return {
     getParentChildSelector,
-    getSelectors,
-    // getJSUISelectors: this.SelectorsMenu,
-    // getCustomSelectors: "",
-    // getGenericStoreSeletors: "",
+    getSelectors
   };
 }

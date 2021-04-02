@@ -8,16 +8,15 @@
     "submitButton": "selector"
   },
   "searchPage": "#result-list--search-page",
-  "listingPage": {
+  "productDetailPage": {
     "container": "#generic-store-pdp",
     "addToCart": ".CoveoResultAddToCart"
   },
-  "productDetailPage": "selector",
   "result": {
     "resultCard": ".CoveoResult",
     "resultTitle": ".CoveoResultLink",
-    "resultList": "#result-list--search-page",
-    "resultLink": ".CoveoResultLink"
+    "resultLink": ".CoveoResultLink",
+    "resultList": "#result-list--search-page"
   },
   "facets": {
     "showMore": ".CoveoFacetShowMore",

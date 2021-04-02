@@ -1,5 +1,4 @@
-const settings = require("../../input/BestBuy.json");
-const StoreFrontSelectors = require("../../input/selectors/GenericStore.json");
+const GenericStoreSelectors = require('../../input/selectors/GenericStore.json');
 const ProductsBoughtTogether = require("../../input/scenarios/productsBoughtTogether.json");
 
 describe("BestBuy (Storefront headless)", function () {
@@ -11,20 +10,15 @@ describe("BestBuy (Storefront headless)", function () {
 
   beforeEach(async function (browser) {
     await browser.resizeWindow(1565, 1237);
-    await browser.url(settings.url);
+    await browser.url("https://genericstore.coveodemo.com/searchPage");
   });
 
   const setJourney = (keyword, result_title, resolve) => {
     test(`Running: ${keyword}. For ${result_title}`, async (browser) => {
-      const pdp = StoreFrontSelectors.listingPage;
-      const searchPage = StoreFrontSelectors.searchPage;
+      const pdp = GenericStoreSelectors.productDetailPage;
 
-      await browser.CoveoHeadlessClearSearchBox();
       await browser.CoveoSearch(keyword);
-      await browser.CoveoOpenResultByText(
-        result_title,
-        searchPage.container
-      );
+      await browser.CoveoClickResultByText(result_title);
       await browser.waitForElementVisible(pdp.container);
       await browser.click(pdp.addToCart);
       await browser.pause(1000);
@@ -34,8 +28,8 @@ describe("BestBuy (Storefront headless)", function () {
 
   const checkout = () => {
     test("Checkout and Kill session", async function (browser) {
-      const header = StoreFrontSelectors.header;
-      const cartPage = StoreFrontSelectors.cartPage;
+      const header = GenericStoreSelectors.header;
+      const cartPage = GenericStoreSelectors.cartPage;
 
       await browser.waitForElementVisible(header.cart);
       await browser.click(header.cart);

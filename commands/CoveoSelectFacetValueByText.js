@@ -1,5 +1,15 @@
 const { SelectorExtract } = require('../Utils/Utilities');
 
+/**
+ * Clicks on a result item based on provided text
+ * @param  {[string]} facetValue String to search product by
+ * @param  {[Object]} Selectors Object containing selectors
+ * @return {[Promise]} true if facet value click was successful, false if it wasn't
+ */
+
+facetValue = "",
+  Selectors = null
+
 module.exports = class CoveoSelectFacetValueByText {
 
   elemntText = async function (currentFacetValue, ElementIDvalue) {
@@ -28,38 +38,14 @@ module.exports = class CoveoSelectFacetValueByText {
     });
   }
 
-  clickFacetValue = async function (xpathFacetValue) {
-    // Click on element using execute
-    return new Promise(async (res) => {
-      return await this.api.execute(function (xpathFacetValue) {
-        return new Promise(async (executeResolve) => {
-          // Get element by xpath inside broswer
-          function getElementByXpath(path) {
-            return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-          }
-
-          // Add an event listener to facet value using xpath
-          var evt = new Event("click", { "bubbles": true });
-          getElementByXpath(xpathFacetValue).addEventListener("click", (e) => {
-            executeResolve('clicked');
-          });
-          getElementByXpath(xpathFacetValue).dispatchEvent(evt);
-        })
-      }, [xpathFacetValue], function (r) {
-        if (r.value === 'clicked') {
-          res(true);
-        }
-      });
-    })
-  }
-
   selectFacetValueRecursive = async function (
     facetValue,
-    Selectors
+    Selectors,
+    facetName
   ) {
 
     const xpathFacetValueSelector =
-      SelectorExtract(Selectors).getParentChildSelector(
+      SelectorExtract(Selectors, { facetName }).getParentChildSelector(
         "facetSelector",
         "facetValueSelector",
         "xpath"
@@ -79,7 +65,7 @@ module.exports = class CoveoSelectFacetValueByText {
     if (!currentFacetValue) {
 
       const Selector_facet_moreButton =
-        SelectorExtract(Selectors).getParentChildSelector(
+        SelectorExtract(Selectors, { facetName }).getParentChildSelector(
           "facetSelector",
           "facetMoreButtonSelector"
         );
@@ -103,15 +89,16 @@ module.exports = class CoveoSelectFacetValueByText {
     else {
 
       const xpathFacetWithText =
-        SelectorExtract(Selectors).getParentChildSelector(
+        SelectorExtract(Selectors, { facetName }).getParentChildSelector(
           "facetSelector",
           "facetValueSelector",
           "xpath",
-          "[contains(text(),'" + currentFacetValue + "')]"
+          "[contains(.,'" + currentFacetValue + "')]"
         );
 
       // Click on element using execute
-      let res = await this.clickFacetValue(xpathFacetWithText);
+      // let res = await this.clickFacetValue(xpathFacetWithText);
+      let clickRes = await this.api._CoveoClick(xpathFacetWithText);
 
       await this.api.pause(1000);
 
@@ -120,7 +107,7 @@ module.exports = class CoveoSelectFacetValueByText {
         facetValue.shift();
 
         // If the click on the first value is successful and there is a following value run the method again
-        if (res && facetValue.length > 0) {
+        if (clickRes && facetValue.length > 0) {
           return await this.selectFacetValueRecursive(
             facetValue,
             Selectors
@@ -133,12 +120,12 @@ module.exports = class CoveoSelectFacetValueByText {
     }
   }
 
-  randomSelection = async function (Selectors) {
+  randomSelection = async function (Selectors, facetName) {
 
     return new Promise((res) => {
 
       const facetValueXpath =
-        SelectorExtract(Selectors).getParentChildSelector(
+        SelectorExtract(Selectors, { facetName }).getParentChildSelector(
           "facetSelector",
           "facetValueSelector",
           'xpath'
@@ -150,14 +137,15 @@ module.exports = class CoveoSelectFacetValueByText {
         this.api.elementIdText(elements.value[randomValue].ELEMENT, async (elementText) => {
 
           const xpathFacetWithText =
-            SelectorExtract(Selectors).getParentChildSelector(
+            SelectorExtract(Selectors, { facetName }).getParentChildSelector(
               "facetSelector",
               "facetValueSelector",
               'xpath',
-              "[contains(text()," + elementText.value + "')]"
+              "[contains(.," + elementText.value + "')]"
             );
 
-          const clickRes = await this.clickFacetValue(xpathFacetWithText);
+          // const clickRes = await this.clickFacetValue(xpathFacetWithText);
+          let clickRes = await this.api._CoveoClick(xpathFacetWithText);
 
           if (clickRes) {
             res(true);
@@ -170,15 +158,16 @@ module.exports = class CoveoSelectFacetValueByText {
 
   async command(
     facetValue = "",
-    Selectors = null
+    Selectors = null,
+    facetName = "category",
   ) {
 
     let res;
     if (facetValue === "" || facetValue === "RND") {
-      res = await this.randomSelection(Selectors);
+      res = await this.randomSelection(Selectors, facetName);
     }
     else {
-      res = await this.selectFacetValueRecursive(facetValue, Selectors);
+      res = await this.selectFacetValueRecursive(facetValue, Selectors, facetName);
     }
 
     await this.api.pause(1000);

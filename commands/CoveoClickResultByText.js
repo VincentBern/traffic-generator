@@ -1,34 +1,37 @@
-const { SelectorExtract } = require('../Utils/Utilities');
+const { SelectorExtract, escapeSpecialChars } = require('../Utils/Utilities');
+
+/**
+ * Clicks on a result item based on provided text
+ * @param  {[string]} text String to search product by
+ * @param  {[Object]} Selectors Object containing selectors
+ * @param  {[Object]} paginationDepth How many pages should be iterated through to find result
+ * @param  {[integer]} index In case of multiple results that match, choose based on order index
+ * @return {[Promise]} true if click was successful, false if it wasn't
+ */
 
 module.exports = class CoveoOpenResultByTitle {
 
   async command(
     text = '',
     Selectors,
-    exactMatch = false,
-    paginationDepth = 5
+    paginationDepth = 5,
+    index = 0
   ) {
 
-    let SelectorResultXpath = '';
+    // console.log('escapeSpecialChars(text)', escapeSpecialChars(text));
 
-    if (exactMatch) {
-      SelectorResultXpath +=
-        SelectorExtract(Selectors).getParentChildSelector(
-          "resultListSelector",
-          "resultTitleSelector",
-          "xpath",
-          "[text()='" + text + "'])"
-        );
-    }
-    else {
-      SelectorResultXpath +=
-        SelectorExtract(Selectors).getParentChildSelector(
-          "resultListSelector",
-          "resultTitleSelector",
-          "xpath",
-          "[contains(text(),'" + text + "')]"
-        );
-    }
+    const escapedText = escapeSpecialChars(text);
+
+    // console.log('escapedText', escapedText);
+    console.log('text', text);
+
+    let SelectorResultXpath =
+      SelectorExtract(Selectors).getParentChildSelector(
+        "resultListSelector",
+        "resultTitleSelector",
+        "xpath",
+        "[contains(.,'" + text + "')]"
+      );
 
     let res = await this.api.CoveoResultVisibleWithPagination(SelectorResultXpath, paginationDepth, Selectors);
 
@@ -36,7 +39,7 @@ module.exports = class CoveoOpenResultByTitle {
       // Scroll element into view
       await this.api.getLocationInView('xpath', SelectorResultXpath);
       await this.api.pause(500);
-      await this.api.click('xpath', SelectorResultXpath);
+      await this.api._CoveoClick(SelectorResultXpath, index);
     }
 
     await this.api.pause(1000);

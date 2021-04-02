@@ -1,6 +1,13 @@
 const { SelectorExtract } = require('../Utils/Utilities');
 
-module.exports = class CoveoOpenResult {
+/**
+ * Clicks on a result item based on list index numner
+ * @param  {[number]} nthValue Result index number
+ * @param  {[string]} Selector Custom Selector (not requeried)
+ * @return {[Promise]} true if click was successful, false if it wasn't
+ */
+
+module.exports = class CoveoClickResultByNumber {
 
   getRandomInt(min, max) {
     return min + Math.floor(Math.random() * Math.floor(max));
@@ -8,9 +15,9 @@ module.exports = class CoveoOpenResult {
 
   async selectResultByNumber(selector, nthValue) {
     return new Promise(async (resolve) => {
-      await this.api.elements('css selector', `${selector}`, async (results) => {
+      await this.api.elements('css selector', selector, async (results) => {
 
-        if (nthValue === 'RND' || nthValue === "") {
+        if (typeof nthValue !== 'number') {
           nthValue = this.getRandomInt(1, results.value.length);
         }
 
@@ -28,7 +35,9 @@ module.exports = class CoveoOpenResult {
     const Selector_resultList_ResultCard
       = SelectorExtract(Selectors).getParentChildSelector("resultListSelector", "resultLinkSelector");
 
-    let res = await this.selectResultByNumber(Selector_resultList_ResultCard, nthValue);
+    let res = await this.api.isVisible(Selector_resultList_ResultCard);
+
+    res = await this.selectResultByNumber(Selector_resultList_ResultCard, nthValue);
     await this.api.pause(3000);
     return res;
   }

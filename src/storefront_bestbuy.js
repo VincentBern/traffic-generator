@@ -16,44 +16,44 @@ describe("BestBuy (Storefront headless)", function () {
   test("DNE - Samnsung", async function (browser) {
     await browser.CoveoSearch("washer");
     await browser.CoveoSelectFacetValueByText(["Appliances", "Washers & Dryers", "Washing Machines"]);
-    await browser.CoveoClickResult();
+    await browser.CoveoClickResultByNumber();
   });
 
   test("DNE - Nintendo Switch", async function (browser) {
     await browser.CoveoSearch("switch console");
     await browser.CoveoSelectFacetValueByText("Nintendo", GenericStoreSelectors.facets.brand);
-    await browser.CoveoClickResult();
+    await browser.CoveoClickResultByNumber();
   });
 
   test("DNE - Audio-Technica", async function (browser) {
     await browser.CoveoSearch("ATH Headphones");
     await browser.CoveoSelectFacetValueByText("Audio-Technica", GenericStoreSelectors.facets.brand);
-    await browser.CoveoClickResult();
+    await browser.CoveoClickResultByNumber();
   });
 
   test("DNE - Dryer", async function (browser) {
     await browser.CoveoSearch("Dryer");
     await browser.CoveoSelectFacetValueByText(["Appliances", "Washers & Dryers", "Dryers"]);
-    await browser.CoveoClickResult();
+    await browser.CoveoClickResultByNumber();
   });
 
   test("DNE - Hand Dryer", async function (browser) {
     await browser.CoveoSearch("Hand Dryer");
     await browser.CoveoSelectFacetValueByText(["Appliances", "Small Kitchen Appliances", "Kitchen Gadgets", "Soap Dispensers & Hand Dryers"]);
-    await browser.CoveoClickResult();
+    await browser.CoveoClickResultByNumber();
   });
 
   test("DNE - wireless headphones", async function (browser) {
     await browser.CoveoSearch("wireless headphones");
     await browser.CoveoSelectFacetValueByText(["Audio", "Headphones"]);
-    await browser.CoveoClickResult();
+    await browser.CoveoClickResultByNumber();
   });
 
 
   test("DNE - ipad pro", async function (browser) {
     await browser.CoveoSearch("ipad pro");
     await browser.CoveoSelectFacetValueByText(["Computers & Tablets", "Tablets", "Apple iPad", "iPad Pro"]);
-    await browser.CoveoClickResult();
+    await browser.CoveoClickResultByNumber();
   });
 
   test("DNE - flashlight", async function (browser) {
@@ -63,7 +63,7 @@ describe("BestBuy (Storefront headless)", function () {
     await browser.CoveoHeadlessClearSearchBox();
     await browser.CoveoSearch("flashlight led");
 
-    await browser.CoveoClickResult();
+    await browser.CoveoClickResultByNumber();
   });
 
   test("DNE - baby shark", async function (browser) {
@@ -73,7 +73,7 @@ describe("BestBuy (Storefront headless)", function () {
     await browser.CoveoHeadlessClearSearchBox();
     await browser.CoveoSearch("baby shark");
 
-    await browser.CoveoClickResult();
+    await browser.CoveoClickResultByNumber();
   });
 
   afterEach(async function (browser) {

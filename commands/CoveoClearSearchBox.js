@@ -1,29 +1,28 @@
-const GenericStoreSelectors = require("../input/selectors/GenericStore.json");
-const JSUISelectors = require("../input/selectors/JSUI.json");
-const { SelectorExtract } = require('../Utils/Utilities');
+/**
+ * Clear searchbox by 'backspacing' on each character
+ * @param  {[string]} selector String to search product by
+ * @return {[Promise]} true if clear was successful, false if it wasn't
+ */
 
-module.exports = class CoveoClearSearchBox {
-  async command(
-    Selectors = null
-  ) {
+module.exports = class CoveoClearValue {
+  async command(selector) {
+    const { RIGHT_ARROW, BACK_SPACE } = this.api.Keys;
 
-    const { searchBoxInputSelector, searchBoxClearButtonSelector } = SelectorExtract(Selectors).getSelectors();
+    this.api.pause(1000);
 
-    let result = await this.api.waitForElementVisible(searchBoxInputSelector);
-    if (result.status == -1) return false;
+    let valueClearRes = await this.api.getValue(selector, async (result) => {
+      const chars = result.value.split('')
+      // Make sure we are at the end of the input
+      for (const char of chars) {
+        await this.api.setValue(selector, RIGHT_ARROW)
+      }
+      for (const char of chars) {
+        await this.api.setValue(selector, BACK_SPACE)
+      }
+    })
 
-    // Click on input so that clear button shows up
-    await this.api.click(searchBoxInputSelector);
-    await this.api.pause(500);
+    await this.api.pause(1000);
 
-    let clearButtonResponse = await this.api.CoveoIsVisible(searchBoxClearButtonSelector);
-
-    // need to check with 'true' because value would be an object in case of error.
-    if (clearButtonResponse === true) {
-      result = await this.api.click(searchBoxClearButtonSelector);
-      await this.api.pause(500);
-    }
-
-    result = await this.api.clearValue(searchBoxInputSelector);
+    return valueClearRes;
   }
 }
