@@ -97,7 +97,6 @@ module.exports = class CoveoSelectFacetValueByText {
         );
 
       // Click on element using execute
-      // let res = await this.clickFacetValue(xpathFacetWithText);
       let clickRes = await this.api.CoveoClick(xpathFacetWithText);
 
       await this.api.pause(1000);

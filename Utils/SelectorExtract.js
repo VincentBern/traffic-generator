@@ -111,36 +111,6 @@ module.exports = function SelectorExtract(
     return use === 'xpath' ? cssToXpath(classTemp) : classTemp;
   }
 
-  // Gets the selectors for custom Selector group or JSUI + Generic Store
-  function getSelectors(use = 'css') {
-    let selectors = {};
-
-    Object.keys(SelectorsMenu).forEach(selectorKey => {
-      const custom = SelectorsMenu[selectorKey]?.custom;
-      const genericStore = SelectorsMenu[selectorKey]?.genericStore;
-      const jsui = SelectorsMenu[selectorKey]?.jsui;
-
-      let classTemp = ''
-      if (CustomSelector) {
-        classTemp = custom;
-      }
-      else if (genericStore && jsui) {
-        classTemp = genericStore + ", " + jsui
-      }
-      else if (!genericStore && jsui) {
-        classTemp = jsui
-      }
-      else {
-        classTemp = genericStore
-      }
-
-      // console.log('classTemp', classTemp);
-      selectors[selectorKey] = use === 'xpath' ? cssToXpath(classTemp) : classTemp;
-    });
-
-    return selectors;
-  }
-
   // Takes in two selector groups (parent, child), and a text component (if targeting by text with xpath)
   function parseParentChildSelectors(SelectorsGroupA, SelectorsGroupB, withText) {
 
@@ -231,7 +201,6 @@ module.exports = function SelectorExtract(
 
   return {
     getParentChildSelector,
-    getSelectors,
     getSelector
   };
 }

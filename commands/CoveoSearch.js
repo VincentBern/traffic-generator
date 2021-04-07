@@ -12,7 +12,7 @@ module.exports = class CoveoSearch {
     text,
     Selectors) {
 
-    const { searchBoxInputSelector } = SelectorExtract(Selectors).getSelectors();
+    const searchBoxInputSelector = SelectorExtract(Selectors).getSelector('searchBoxInputSelector');
 
     let result = await this.api.waitForElementVisible(searchBoxInputSelector);
     if (result.status == -1) return false;

@@ -10,8 +10,11 @@ const { cssToXpath } = require('../Utils/Utilities');
 module.exports = class CoveoClick {
 
   async clickXpath(SelectorResultXpath, index = 1) {
-    return new Promise(async (res) => {
 
+    // safety in case of wrong index input
+    index = index === 0 ? 1 : index;
+
+    return new Promise(async (res) => {
       return await this.api.execute(function (SelectorResultXpath, index) {
         return new Promise(async (executeResolve) => {
 
@@ -49,6 +52,9 @@ module.exports = class CoveoClick {
           }
 
           let possibleChild = xpathResult.iterateNext();
+
+          console.log('selector', selector);
+          console.log('possibleChild', possibleChild);
 
           if (possibleChild) {
             if (isDescendant(selector, possibleChild)) {
