@@ -7,7 +7,7 @@
     },
     "submitButton": ""
   },
-  "searchPage": ".CoveoSearchInterface",
+  "searchPage": "[data-page='SearchResultsPage']",
   "result": {
     "resultCard": ".CoveoResult",
     "resultTitle": ".coveo-title",
@@ -19,7 +19,7 @@
     "showMore": ".coveo-category-facet-more, .coveo-dynamic-hierarchical-facet-show-more, .coveo-facet-more",
     "facetValue": ".coveo-facet-value-caption, .coveo-category-facet-value-caption, .coveo-dynamic-hierarchical-facet-value-label",
     "category": "#CategoryFacet",
-    "facetName": ""
+    "refiner": "div[data-field='@frefiner75392']"
   },
   "pagination": {
     "next": ".coveo-pager-next a",

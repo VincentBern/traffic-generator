@@ -1,6 +1,6 @@
 const JSUISelectors = require('../../input/selectors/JSUI.json');
 
-describe("BestBuy (Storefront headless)", function () {
+describe("Running Search Journeys", function () {
   //Keep browser open when fails
   this.endSessionOnFail = true;
   this.abortOnElementLocateError = false;
@@ -44,8 +44,6 @@ describe("BestBuy (Storefront headless)", function () {
     const facetName = "refiner";
     // Go through 20 pages (fetch more results) to find product. Default 5
     const paginationDepth = 20;
-    // In case that many results match the same time. Default: 0 (takes first match)
-    const resultIndex = 0;
     // Result title to search by
     const resultTile = "The Digital Privacy Act: Important Amendments to Canadian Privacy Law";
 

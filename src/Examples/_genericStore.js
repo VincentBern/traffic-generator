@@ -1,6 +1,4 @@
-const GenericStoreSelectors = require('../../input/selectors/GenericStore.json');
-
-describe("BestBuy (Storefront headless)", function () {
+describe("Running Search Journeys", function () {
   //Keep browser open when fails
   this.endSessionOnFail = true;
   this.abortOnElementLocateError = false;
@@ -28,7 +26,7 @@ describe("BestBuy (Storefront headless)", function () {
 
   test("Search, filter by category facet and click", async function (browser) {
     await browser.CoveoSearch("laptop");
-    await browser.CoveoSelectFacetValueByText(["Computers & Tablets", "laptops", "All Laptops", "MacBooks"]);
+    await browser.CoveoSelectFacetValueByText(["computers & tablets", "laptops", "All Laptops", "MacBooks"]);
     await browser.CoveoClickResultByNumber();
   });
 
@@ -48,13 +46,13 @@ describe("BestBuy (Storefront headless)", function () {
     );
   });
 
-  // test("Search, click and Add to Cart", async function (browser) {
-  //   await browser.CoveoSearch("laptop");
-  //   await browser.CoveoClickResultByText("Neo 15.6\" Laptop - Intel Core i5 - 8GB Memory - 1TB HDD");
-  //   await browser.waitForElementVisible(GenericStoreSelectors.productDetailPage.container);
-  //   await browser.click(GenericStoreSelectors.productDetailPage.addToCart);
-  //   await browser.pause(1000);
-  // });
+  test("Search, click and Add to Cart", async function (browser) {
+    await browser.CoveoSearch("laptop");
+    await browser.CoveoClickResultByText("Neo 15.6\" Laptop - Intel Core i5 - 8GB Memory - 1TB HDD");
+    await browser.waitForElementVisible(GenericStoreSelectors.productDetailPage.container);
+    await browser.click(GenericStoreSelectors.productDetailPage.addToCart);
+    await browser.pause(1000);
+  });
 
   afterEach(async function (browser) {
     await browser.pause(1000); // give some time for events to be sent

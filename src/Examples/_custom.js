@@ -1,6 +1,6 @@
 const CustomSelectors = require('../../input/selectors/TheGYM.json');
 
-describe("BestBuy (Storefront headless)", function () {
+describe("Running Search Journeys", function () {
   //Keep browser open when fails
   this.endSessionOnFail = true;
   this.abortOnElementLocateError = false;

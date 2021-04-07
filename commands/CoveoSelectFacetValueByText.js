@@ -4,6 +4,7 @@ const { SelectorExtract } = require('../Utils/Utilities');
  * Clicks on a result item based on provided text
  * @param  {[string]} facetValue String to search product by
  * @param  {[Object]} Selectors Object containing selectors
+ * @param  {[Object]} facetName Name of facet selector as it appears in the JSON selectors file
  * @return {[Promise]} true if facet value click was successful, false if it wasn't
  */
 
@@ -41,7 +42,7 @@ module.exports = class CoveoSelectFacetValueByText {
   selectFacetValueRecursive = async function (
     facetValue,
     Selectors,
-    facetName
+    facetName,
   ) {
 
     const xpathFacetValueSelector =
@@ -63,7 +64,6 @@ module.exports = class CoveoSelectFacetValueByText {
 
     // if there is no match, request for more facet values
     if (!currentFacetValue) {
-
       const Selector_facet_moreButton =
         SelectorExtract(Selectors, { facetName }).getParentChildSelector(
           "facetSelector",
@@ -98,7 +98,7 @@ module.exports = class CoveoSelectFacetValueByText {
 
       // Click on element using execute
       // let res = await this.clickFacetValue(xpathFacetWithText);
-      let clickRes = await this.api._CoveoClick(xpathFacetWithText);
+      let clickRes = await this.api.CoveoClick(xpathFacetWithText);
 
       await this.api.pause(1000);
 
@@ -121,7 +121,6 @@ module.exports = class CoveoSelectFacetValueByText {
   }
 
   randomSelection = async function (Selectors, facetName) {
-
     return new Promise((res) => {
 
       const facetValueXpath =
@@ -145,7 +144,7 @@ module.exports = class CoveoSelectFacetValueByText {
             );
 
           // const clickRes = await this.clickFacetValue(xpathFacetWithText);
-          let clickRes = await this.api._CoveoClick(xpathFacetWithText);
+          let clickRes = await this.api.CoveoClick(xpathFacetWithText);
 
           if (clickRes) {
             res(true);
@@ -159,7 +158,7 @@ module.exports = class CoveoSelectFacetValueByText {
   async command(
     facetValue = "",
     Selectors = null,
-    facetName = "category",
+    facetName = "category"
   ) {
 
     let res;

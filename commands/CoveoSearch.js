@@ -3,7 +3,7 @@ const { SelectorExtract } = require('../Utils/Utilities');
 /**
  * Search using main searchBox
  * @param  {[string]} text String to search by
- * @param  {[string]} Selector String to search product by
+ * @param  {[string]} Selectors String to search product by
  * @return {[Promise]} true if search was successful, false if it wasn't
  */
 
@@ -13,7 +13,6 @@ module.exports = class CoveoSearch {
     Selectors) {
 
     const { searchBoxInputSelector } = SelectorExtract(Selectors).getSelectors();
-    console.log('searchBoxInputSelector', searchBoxInputSelector);
 
     let result = await this.api.waitForElementVisible(searchBoxInputSelector);
     if (result.status == -1) return false;

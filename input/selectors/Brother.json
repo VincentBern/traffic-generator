@@ -1,6 +1,6 @@
 {
   "searchBox": {
-    "input": ".CoveoSearchbox .magic-box-input > input",
+    "input": "#coveof40aabba .magic-box-input > input",
     "button": ".search-cell .search-button",
     "clearButton": {
       "button": ".magic-box-clear"
@@ -10,7 +10,7 @@
   "searchPage": ".CoveoSearchInterface",
   "result": {
     "resultCard": ".CoveoResult",
-    "resultTitle": ".coveo-title",
+    "resultTitle": ".CoveoResultLink",
     "resultLink": ".CoveoResultLink",
     "resultList": ".coveo-result-list-container"
   },

@@ -16,7 +16,6 @@ module.exports = class CoveoResultVisibleWithPagination {
       resolvePromise(false);
       return;
     }
-
     await this.api.isVisible('xpath', xpathSelector, async (result) => {
 
       if (result.status === -1) {

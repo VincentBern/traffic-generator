@@ -1,25 +1,26 @@
 {
   "searchBox": {
     "input": ".CoveoSearchbox .magic-box-input > input",
-    "button": ".search-cell .search-button",
+    "button": ".CoveoSearchButton",
     "clearButton": {
       "button": ".magic-box-clear"
     },
     "submitButton": ""
   },
-  "searchPage": ".CoveoSearchInterface",
+  "searchPage": "#unifiedSearchPage",
   "result": {
     "resultCard": ".CoveoResult",
-    "resultTitle": ".coveo-title",
+    "resultTitle": ".CoveoResultLink",
     "resultLink": ".CoveoResultLink",
     "resultList": ".coveo-result-list-container"
   },
-  "tab": ".CoveoTab",
   "facets": {
     "showMore": ".coveo-category-facet-more, .coveo-dynamic-hierarchical-facet-show-more, .coveo-facet-more",
-    "facetValue": ".coveo-facet-value-caption, .coveo-category-facet-value-caption, .coveo-dynamic-hierarchical-facet-value-label",
-    "category": "#CategoryFacet",
-    "facetName": ""
+    "facetValue": ".coveo-facet-value, .coveo-facet-value-caption, .coveo-category-facet-value-caption, .coveo-dynamic-hierarchical-facet-value-label",
+    "category": "",
+    "interests": "div[data-field='@commoninterestedin']",
+    "resourceType": "div[data-field='@commonresourcetype']",
+    "deploymentType": ".CoveoIntegrationSelection"
   },
   "pagination": {
     "next": ".coveo-pager-next a",

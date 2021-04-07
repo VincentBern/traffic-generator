@@ -15,15 +15,8 @@ module.exports = class CoveoOpenResultByTitle {
     text = '',
     Selectors,
     paginationDepth = 5,
-    index = 0
+    index = 1
   ) {
-
-    // console.log('escapeSpecialChars(text)', escapeSpecialChars(text));
-
-    const escapedText = escapeSpecialChars(text);
-
-    // console.log('escapedText', escapedText);
-    console.log('text', text);
 
     let SelectorResultXpath =
       SelectorExtract(Selectors).getParentChildSelector(
@@ -39,7 +32,7 @@ module.exports = class CoveoOpenResultByTitle {
       // Scroll element into view
       await this.api.getLocationInView('xpath', SelectorResultXpath);
       await this.api.pause(500);
-      await this.api._CoveoClick(SelectorResultXpath, index);
+      await this.api.CoveoClick(SelectorResultXpath, index);
     }
 
     await this.api.pause(1000);

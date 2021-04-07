@@ -67,6 +67,13 @@ module.exports = function SelectorExtract(
     jsui: JSUISelectors.searchBox.clearButton.button || ""
   }
 
+  // TAB SELECTORS
+  const tabSelector = {
+    custom: CustomSelector?.tab || "",
+    genericStore: GenericStoreSelectors.tab || "",
+    jsui: JSUISelectors.tab || ""
+  }
+
   const SelectorsMenu = {
     resultListSelector,
     resultCardSelector,
@@ -77,7 +84,31 @@ module.exports = function SelectorExtract(
     facetValueSelector,
     facetMoreButtonSelector,
     searchBoxInputSelector,
-    searchBoxClearButtonSelector
+    searchBoxClearButtonSelector,
+    tabSelector
+  }
+
+  function getSelector(selectorName, use = 'css') {
+
+    const custom = SelectorsMenu[selectorName]?.custom;
+    const genericStore = SelectorsMenu[selectorName]?.genericStore;
+    const jsui = SelectorsMenu[selectorName]?.jsui;
+
+    let classTemp = ''
+    if (CustomSelector) {
+      classTemp = custom;
+    }
+    else if (genericStore && jsui) {
+      classTemp = genericStore + ", " + jsui
+    }
+    else if (!genericStore && jsui) {
+      classTemp = jsui
+    }
+    else {
+      classTemp = genericStore
+    }
+
+    return use === 'xpath' ? cssToXpath(classTemp) : classTemp;
   }
 
   // Gets the selectors for custom Selector group or JSUI + Generic Store
@@ -103,6 +134,7 @@ module.exports = function SelectorExtract(
         classTemp = genericStore
       }
 
+      // console.log('classTemp', classTemp);
       selectors[selectorKey] = use === 'xpath' ? cssToXpath(classTemp) : classTemp;
     });
 
@@ -199,6 +231,7 @@ module.exports = function SelectorExtract(
 
   return {
     getParentChildSelector,
-    getSelectors
+    getSelectors,
+    getSelector
   };
 }

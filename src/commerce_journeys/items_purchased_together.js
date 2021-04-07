@@ -1,7 +1,7 @@
 const GenericStoreSelectors = require('../../input/selectors/GenericStore.json');
 const ProductsBoughtTogether = require("../../input/scenarios/productsBoughtTogether.json");
 
-describe("BestBuy (Storefront headless)", function () {
+describe("Running Search Journeys", function () {
   // Nightwatch session config
   this.endSessionOnFail = true;
   this.abortOnElementLocateError = false;
