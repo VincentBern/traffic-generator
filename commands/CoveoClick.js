@@ -12,7 +12,7 @@ module.exports = class CoveoClick {
   async clickXpath(SelectorResultXpath, index = 1) {
 
     // safety in case of wrong index input
-    index = index === 0 ? 1 : index;
+    index = (typeof index !== 'number' || index < 1) ? 1 : index;
 
     return new Promise(async (res) => {
       return await this.api.execute(function (SelectorResultXpath, index) {
