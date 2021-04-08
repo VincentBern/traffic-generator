@@ -1,5 +1,5 @@
 var fs = require("fs");
-const config = require("./config");
+const config = require("./config_EXAMPLE.js");
 
 let runSpecialTestsNumberOfTimes = 1;
 let runRandomTestsNumberOfTimes = 1;

@@ -1,30 +1,33 @@
+const { SelectorExtract } = require('../Utils/Utilities');
+
+/**
+ * Search using main searchBox
+ * @param  {[string]} text String to search by
+ * @param  {[string]} Selectors String to search product by
+ * @return {[Promise]} true if search was successful, false if it wasn't
+ */
+
 module.exports = class CoveoSearch {
-  async command(text, searchinterface = "", selector = ".CoveoSearchbox .magic-box-input > input, #search-box") {
-    const inputBoxSelector = `${searchinterface} ${selector}`;
+  async command(
+    text,
+    Selectors) {
 
-    let result = await this.api.waitForElementVisible(inputBoxSelector);
+    const searchBoxInputSelector = SelectorExtract(Selectors).getSelector('searchBoxInputSelector');
+
+    let result = await this.api.waitForElementVisible(searchBoxInputSelector);
     if (result.status == -1) return false;
 
-    await this.api.click(inputBoxSelector);
-    await this.api.pause(500);
+    await this.api.CoveoClearSearchBox(searchBoxInputSelector);
 
-    let clearButton = await this.api.CoveoIsVisible('button.MuiAutocomplete-clearIndicator.MuiAutocomplete-clearIndicatorDirty');
-    if (clearButton === true) { // need to check with 'true' because value would be an object in case of error.
-      result = await this.api.click('button.MuiAutocomplete-clearIndicator');
-      await this.api.pause(500);
-    }
-    else {
-      result = await this.api.clearValue(inputBoxSelector);
-    }
-    if (result.status == -1) return false;
+    // Add condition to operate ONLY when using JSUI
+    // let lastSearchUid = (await this.api.getLastResponse()).searchUid;
 
-    let lastSearchUid = (await this.api.getLastResponse()).searchUid;
-
-    await this.api.click(inputBoxSelector);
-    result = await this.api.setValue(inputBoxSelector, text);
+    await this.api.click(searchBoxInputSelector);
+    result = await this.api.setValue(searchBoxInputSelector, text);
     result = await this.api.keys(this.api.Keys.ENTER);
 
-    await this.api.CoveoWaitForSearch(lastSearchUid);
+    // Add condition to operate ONLY when using JSUI
+    // await this.api.CoveoWaitForSearch(lastSearchUid);
     await this.api.pause(1000); // slow down a bit for UA events
 
     return (result.status !== -1);
