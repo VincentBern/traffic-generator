@@ -20,7 +20,7 @@ module.exports = class CoveoResultVisibleWithPagination {
 
       if (result.status === -1) {
 
-        const paginationNextSelector = SelectorExtract(Selectors).getSelectors('paginationNextSelector', 'xpath');
+        const paginationNextSelector = SelectorExtract(Selectors).getSelector('paginationNextSelector', 'xpath');
         const nextPageResult = await this.api.click('xpath', paginationNextSelector);
 
         if (nextPageResult.status === -1) {

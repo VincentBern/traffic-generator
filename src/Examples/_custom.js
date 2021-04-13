@@ -12,19 +12,19 @@ describe("Running Search Journeys", function () {
     await browser.url("https://thegym.coveodemo.com/");
   });
 
-  test("Search", async function (browser) {
-    await browser.CoveoSearch("running shoes", CustomSelectors);
-  });
+  // test("Search", async function (browser) {
+  //   await browser.CoveoSearch("running shoes", CustomSelectors);
+  // });
 
-  test("Search and click random result", async function (browser) {
-    await browser.CoveoSearch("running shoes", CustomSelectors);
-    await browser.CoveoClickResultByNumber("", CustomSelectors);
-  });
+  // test("Search and click random result", async function (browser) {
+  //   await browser.CoveoSearch("running shoes", CustomSelectors);
+  //   await browser.CoveoClickResultByNumber("", CustomSelectors);
+  // });
 
-  test("Search and click (using result title)", async function (browser) {
-    await browser.CoveoSearch("running shoes", CustomSelectors);
-    await browser.CoveoClickResultByText("St-2", CustomSelectors);
-  });
+  // test("Search and click (using result title)", async function (browser) {
+  //   await browser.CoveoSearch("running shoes", CustomSelectors);
+  //   await browser.CoveoClickResultByText("St-2", CustomSelectors);
+  // });
 
   test("Search, filter by category facet and click (using result title)", async function (browser) {
     await browser.CoveoSearch("running shoes", CustomSelectors);
