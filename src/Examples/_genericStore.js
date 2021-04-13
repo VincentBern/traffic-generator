@@ -1,3 +1,4 @@
+const GenericStoreSelectors = require('../../input/selectors/GenericStore.json');
 describe("Running Search Journeys", function () {
   //Keep browser open when fails
   this.endSessionOnFail = true;

@@ -43,7 +43,7 @@ describe("Running Search Journeys", function () {
     // Defined facet to be used
     const facetName = "refiner";
     // Go through 20 pages (fetch more results) to find product. Default 5
-    const paginationDepth = 20;
+    const paginationDepth = 5;
     // Result title to search by
     const resultTile = "The Digital Privacy Act: Important Amendments to Canadian Privacy Law";
 
