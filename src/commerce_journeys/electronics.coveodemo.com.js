@@ -21,7 +21,7 @@ describe("Running Search Journeys", function () {
       await browser.CoveoClickResultByText(result_title);
       await browser.waitForElementVisible(pdp.container);
       await browser.click(pdp.addToCart);
-      await browser.pause(250);
+      await browser.pause(1000);
       resolve();
     });
   };
@@ -36,7 +36,7 @@ describe("Running Search Journeys", function () {
       await browser.waitForElementVisible(cartPage.container);
       await browser.click(cartPage.checkoutButton);
 
-      await browser.pause(250);
+      await browser.pause(1000);
       await browser.end();
     });
   };

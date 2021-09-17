@@ -19,7 +19,7 @@ module.exports = class CoveoClearValue {
       }
     });
 
-    await this.api.pause(250);
+    await this.api.pause(1000);
 
     return valueClearRes;
   }
