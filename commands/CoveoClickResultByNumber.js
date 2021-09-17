@@ -54,14 +54,14 @@ module.exports = class CoveoClickResultByNumber {
               _resultLinkSelector.dispatchEvent(clickEvent);
             }
           }, 1000);
-        })
+        });
       }, [ResultCardSelector, resultLinkSelector, nthValue], function (r) {
         if (r.value === 'clicked') {
           res(true);
         }
         res(false);
       });
-    })
+    });
   }
 
   async command(

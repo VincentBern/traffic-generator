@@ -9,7 +9,7 @@ const { SelectorExtract } = require('../Utils/Utilities');
  */
 
 facetValue = "",
-  Selectors = null
+  Selectors = null;
 
 module.exports = class CoveoSelectFacetValueByText {
 
@@ -37,7 +37,7 @@ module.exports = class CoveoSelectFacetValueByText {
         res(false);
       });
     });
-  }
+  };
 
   selectFacetValueRecursive = async function (
     facetValue,
@@ -117,7 +117,7 @@ module.exports = class CoveoSelectFacetValueByText {
         }
       }
     }
-  }
+  };
 
   randomSelection = async function (Selectors, facetName) {
     return new Promise((res) => {
@@ -151,8 +151,8 @@ module.exports = class CoveoSelectFacetValueByText {
         });
 
       });
-    })
-  }
+    });
+  };
 
   async command(
     facetValue = "",

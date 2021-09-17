@@ -46,7 +46,7 @@ module.exports = class CoveoClick {
             if (index === counter) {
               selector = xpathResult.iterateNext();
             } else {
-              xpathResult.iterateNext()
+              xpathResult.iterateNext();
             }
             counter++;
           }
@@ -82,14 +82,14 @@ module.exports = class CoveoClick {
               selector.dispatchEvent(clickEvent);
             }
           }, 1000);
-        })
+        });
       }, [SelectorResultXpath, index], function (r) {
         if (r.value === 'clicked') {
           res(true);
         }
         res(false);
       });
-    })
+    });
   }
 
   async command(selector, index = 1, use = 'xpath') {

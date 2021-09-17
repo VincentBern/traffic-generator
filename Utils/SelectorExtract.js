@@ -14,65 +14,65 @@ module.exports = function SelectorExtract(
     custom: CustomSelector?.result?.resultList || "",
     genericStore: GenericStoreSelectors.result.resultList || "",
     jsui: JSUISelectors.result.resultList || ""
-  }
+  };
   const resultCardSelector = {
     custom: CustomSelector?.result?.resultCard || "",
     genericStore: GenericStoreSelectors.result.resultCard || "",
     jsui: JSUISelectors.result?.resultCard || ""
-  }
+  };
   const resultTitleSelector = {
     custom: CustomSelector?.result?.resultTitle || "",
     genericStore: GenericStoreSelectors.result.resultTitle || "",
     jsui: JSUISelectors.result.resultTitle || ""
-  }
+  };
   const resultLinkSelector = {
     custom: CustomSelector?.result?.resultLink || "",
     genericStore: GenericStoreSelectors.result.resultLink || "",
     jsui: JSUISelectors.result.resultLink || ""
-  }
+  };
 
   // PAGINATION SELECTORS
   const paginationNextSelector = {
     custom: CustomSelector?.pagination?.next || "",
     genericStore: GenericStoreSelectors.pagination.next || "",
     jsui: JSUISelectors.pagination.next || ""
-  }
+  };
 
   // FACET SELECTORS
   const facetSelector = {
     custom: CustomSelector?.facets && CustomSelector.facets[options?.facetName] || "",
     genericStore: GenericStoreSelectors.facets[options?.facetName] || "",
     jsui: JSUISelectors.facets[options?.facetName] || ""
-  }
+  };
   const facetValueSelector = {
     custom: CustomSelector?.facets?.facetValue || "",
     genericStore: GenericStoreSelectors.facets.facetValue || "",
     jsui: JSUISelectors.facets.facetValue || ""
-  }
+  };
   const facetMoreButtonSelector = {
     custom: CustomSelector?.facets?.showMore || "",
     genericStore: GenericStoreSelectors.facets.showMore || "",
     jsui: JSUISelectors.facets.showMore || ""
-  }
+  };
 
   // SEARCH BOX
   const searchBoxInputSelector = {
     custom: CustomSelector?.searchBox?.input || "",
     genericStore: GenericStoreSelectors.searchBox.input || "",
     jsui: JSUISelectors.searchBox.input || ""
-  }
+  };
   const searchBoxClearButtonSelector = {
     custom: CustomSelector?.searchBox?.clearButton.button || "",
     genericStore: GenericStoreSelectors.searchBox.clearButton.button || "",
     jsui: JSUISelectors.searchBox.clearButton.button || ""
-  }
+  };
 
   // TAB SELECTORS
   const tabSelector = {
     custom: CustomSelector?.tab || "",
     genericStore: GenericStoreSelectors.tab || "",
     jsui: JSUISelectors.tab || ""
-  }
+  };
 
   const SelectorsMenu = {
     resultListSelector,
@@ -86,7 +86,7 @@ module.exports = function SelectorExtract(
     searchBoxInputSelector,
     searchBoxClearButtonSelector,
     tabSelector
-  }
+  };
 
   function getSelector(selectorName, use = 'css') {
 
@@ -94,18 +94,18 @@ module.exports = function SelectorExtract(
     const genericStore = SelectorsMenu[selectorName]?.genericStore;
     const jsui = SelectorsMenu[selectorName]?.jsui;
 
-    let classTemp = ''
+    let classTemp = '';
     if (CustomSelector) {
       classTemp = custom;
     }
     else if (genericStore && jsui) {
-      classTemp = genericStore + ", " + jsui
+      classTemp = genericStore + ", " + jsui;
     }
     else if (!genericStore && jsui) {
-      classTemp = jsui
+      classTemp = jsui;
     }
     else {
-      classTemp = genericStore
+      classTemp = genericStore;
     }
 
     return use === 'xpath' ? cssToXpath(classTemp) : classTemp;
@@ -129,7 +129,7 @@ module.exports = function SelectorExtract(
         else {
           parsed.push((group_a + " " + group_b).trim());
         }
-      })
+      });
     });
     return parsed.join(!!withText ? ' | ' : ', ');
   }
@@ -203,4 +203,4 @@ module.exports = function SelectorExtract(
     getParentChildSelector,
     getSelector
   };
-}
+};

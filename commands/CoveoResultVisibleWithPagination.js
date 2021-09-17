@@ -35,13 +35,13 @@ module.exports = class CoveoResultVisibleWithPagination {
         resolvePromise(true);
         return;
       }
-    })
+    });
   }
 
   async isVisibleWithPagination(xpathSelector, paginationDepth, Selectors) {
     return new Promise(async (resolvePromise) => {
       await this.isVisible(xpathSelector, resolvePromise, paginationDepth, Selectors);
-    })
+    });
   }
 
   async command(xpathSelector, paginationDepth = 5, Selectors) {
