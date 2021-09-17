@@ -31,11 +31,11 @@ module.exports = class CoveoOpenResultByTitle {
     if (res) {
       // Scroll element into view
       await this.api.getLocationInView('xpath', SelectorResultXpath);
-      await this.api.pause(500);
+      await this.api.pause(250);
       await this.api.CoveoClick(SelectorResultXpath, index);
     }
 
-    await this.api.pause(1000);
+    await this.api.pause(250);
     return res;
   }
 };

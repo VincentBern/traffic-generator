@@ -14,5 +14,5 @@ cd /home/ec2-user/traffic-generator
 git pull
 npm i
 
-npx nightwatch ./src/commerce_journeys/electronics.coveodemo.com.js
+npx nightwatch ./src/commerce_journeys/electronics.coveodemo.com.js --headless --disable-gpu
 
