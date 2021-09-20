@@ -1,0 +1,67 @@
+{
+  "iterations": "",
+  "groups": {
+    "group_1": [
+      {
+        "result_title": "MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB",
+        "keyword": "macbook pro"
+      },
+      {
+        "result_title": "Memory Foam Sleeve for 13\"",
+        "keyword": "sleeve case laptop mac"
+      },
+      {
+        "result_title": "MagSafe 85W Power Adapter for 15\" and 17\"",
+        "keyword": "macbook pro charger"
+      },
+      {
+        "result_title": "10.5-Inch iPad Air",
+        "keyword": "iPad Air"
+      }
+    ],
+    "group_2": [
+      {
+        "result_title": "Signature Series Dragonfly Cardioid Microphone",
+        "keyword": "microphone blue"
+      },
+      {
+        "result_title": "Channel DJ Mixer",
+        "keyword": "dj mixer"
+      },
+      {
+        "result_title": "Amp Virtual 7.1 Surround Sound USB Sound Card",
+        "keyword": "mic sound card"
+      },
+      {
+        "result_title": "5.1-Channel Soundbar with Wireless Subwoofer",
+        "keyword": "Wireless Subwoofer"
+      },
+      {
+        "result_title": "Suspension Boom Scissor Microphone Stand with Pro",
+        "keyword": "Mic stand"
+      }
+    ],
+    "group_3": [
+      {
+        "result_title": "4L Analog Air Fryer",
+        "keyword": "Air fryer"
+      },
+      {
+        "result_title": "1.7 Cu. Ft. Built-In Microwave",
+        "keyword": "microwave built in"
+      },
+      {
+        "result_title": "Vibe 0.5 Cu. Ft. Mini Fridge",
+        "keyword": "mini fridge"
+      },
+      {
+        "result_title": "6-Quart Pressure Multi Cooker",
+        "keyword": "pressure cooker"
+      },
+      {
+        "result_title": "Bamboo Cutting Board for the Smart Oven Air",
+        "keyword": "cutting board"
+      }
+    ]
+  }
+}

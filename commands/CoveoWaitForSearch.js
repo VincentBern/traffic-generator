@@ -18,7 +18,7 @@ module.exports = class CoveoWaitForSearch {
         break;
       }
       tryCount--;
-      await this.api.pause(250);
+      await this.api.pause(1000);
     }
     if (tryCount < 1) {
       console.warn('CoveoWaitForSearch: Failed to get a new search response.');

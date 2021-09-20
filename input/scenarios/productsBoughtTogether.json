@@ -1,0 +1,67 @@
+{
+  "iterations": "",
+  "groups": {
+    "group_1": [
+      {
+        "result_title": "MacBook Pro - 13\" Display with Touch Bar - Intel Core i5 - 8GB",
+        "keyword": "macbook pro"
+      },
+      {
+        "result_title": "Memory Foam Sleeve for 13\" MacBook Pro, 13\" MacBook Air and Select Slim 12-13\" PC Laptops",
+        "keyword": "sleeve case laptop mac"
+      },
+      {
+        "result_title": "MagSafe 85W Power Adapter for 15\" and 17\"",
+        "keyword": "macbook pro charger"
+      },
+      {
+        "result_title": "MacBook 12\" Retina Display - Intel Core i5 - 8G",
+        "keyword": "macbook"
+      }
+    ],
+    "group_2": [
+      {
+        "result_title": "Signature Series Dragonfly Cardioid Microphone",
+        "keyword": "microphone blue"
+      },
+      {
+        "result_title": "DJ 4-Channel DJ Mixer",
+        "keyword": "dj mixer"
+      },
+      {
+        "result_title": "Amp Virtual 7.1 Surround Sound USB Sound Card",
+        "keyword": "mic sound card"
+      },
+      {
+        "result_title": "Studio Slim Series 3.1-Channel Soundbar System with 8\"",
+        "keyword": "recording speakers"
+      },
+      {
+        "result_title": "Suspension Boom Scissor Microphone Stand with Pro",
+        "keyword": "Mic stand"
+      }
+    ],
+    "group_3": [
+      {
+        "result_title": "4L Analog Air Fryer",
+        "keyword": "Air fryer"
+      },
+      {
+        "result_title": "1.7 Cu. Ft. Built-In Microwave",
+        "keyword": "microwave built in"
+      },
+      {
+        "result_title": "Amana Energy Star 4.3-Cu. Ft. Single-Door Mini Refrigerator",
+        "keyword": "mini fridge"
+      },
+      {
+        "result_title": "6-Quart Pressure Multi Cooker",
+        "keyword": "pressure cooker"
+      },
+      {
+        "result_title": "Bamboo Cutting Board for the Smart Oven Air",
+        "keyword": "cutting board"
+      }
+    ]
+  }
+}

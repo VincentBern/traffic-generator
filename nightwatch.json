@@ -8,7 +8,6 @@
     "port": 9515
   },
   "custom_commands_path": "commands",
-  "page_objects_path": "pages",
   "test_settings": {
     "default": {
       "desiredCapabilities": {

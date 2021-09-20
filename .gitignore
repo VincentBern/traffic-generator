@@ -4,3 +4,4 @@
 node_modules
 tests_output
 config.js
+run_tests.js

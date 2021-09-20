@@ -1,24 +1,34 @@
+const { SelectorExtract } = require('../Utils/Utilities');
+
+/**
+ * Search using main searchBox
+ * @param  {[string]} text String to search by
+ * @param  {[string]} Selectors String to search product by
+ * @return {[Promise]} true if search was successful, false if it wasn't
+ */
+
 module.exports = class CoveoSearch {
-  async command(text, searchinterface = "", selector = ".CoveoSearchbox .magic-box-input > input") {
-    const inputBoxSelector = `${searchinterface} ${selector}`;
+  async command(
+    text,
+    Selectors) {
 
-    let result = await this.api.waitForElementVisible(inputBoxSelector);
+    const searchBoxInputSelector = SelectorExtract(Selectors).getSelector('searchBoxInputSelector');
+
+    let result = await this.api.waitForElementVisible(searchBoxInputSelector);
     if (result.status == -1) return false;
 
-    result = await this.api.clearValue(inputBoxSelector);
-    if (result.status == -1) return false;
+    await this.api.CoveoClearSearchBox(searchBoxInputSelector);
 
+    // Add condition to operate ONLY when using JSUI
+    // let lastSearchUid = (await this.api.getLastResponse()).searchUid;
 
-    let lastSearchUid = (await this.api.getLastResponse()).searchUid;
-
-    result = await this.api.setValue(inputBoxSelector, text);
+    await this.api.click(searchBoxInputSelector);
+    result = await this.api.setValue(searchBoxInputSelector, text);
     result = await this.api.keys(this.api.Keys.ENTER);
 
-    await this.api.pause(1000);
-    await this.api.CoveoWaitForSearch(lastSearchUid);
-
-    await this.api.waitForElementPresent('.CoveoSearchInterface.coveo-after-initialization');
-    await this.api.waitForElementNotPresent('.CoveoSearchInterface.coveo-after-initialization.coveo-executing-query');
+    // Add condition to operate ONLY when using JSUI
+    // await this.api.CoveoWaitForSearch(lastSearchUid);
+    await this.api.pause(1000); // slow down a bit for UA events
 
     return (result.status !== -1);
   }

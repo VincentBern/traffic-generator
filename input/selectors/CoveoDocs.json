@@ -1,0 +1,30 @@
+{
+  "searchBox": {
+    "input": ".CoveoSearchbox .magic-box-input > input",
+    "button": ".CoveoSearchButton",
+    "clearButton": {
+      "button": ".magic-box-clear"
+    },
+    "submitButton": ""
+  },
+  "searchPage": "#unifiedSearchPage",
+  "result": {
+    "resultCard": ".CoveoResult",
+    "resultTitle": ".CoveoResultLink",
+    "resultLink": ".CoveoResultLink",
+    "resultList": ".coveo-result-list-container"
+  },
+  "facets": {
+    "showMore": ".coveo-category-facet-more, .coveo-dynamic-hierarchical-facet-show-more, .coveo-facet-more",
+    "facetValue": ".coveo-facet-value, .coveo-facet-value-caption, .coveo-category-facet-value-caption, .coveo-dynamic-hierarchical-facet-value-label",
+    "category": "",
+    "interests": "div[data-field='@commoninterestedin']",
+    "resourceType": "div[data-field='@commonresourcetype']",
+    "deploymentType": ".CoveoIntegrationSelection"
+  },
+  "pagination": {
+    "next": ".coveo-pager-next a",
+    "previous": "",
+    "page": ""
+  }
+}
