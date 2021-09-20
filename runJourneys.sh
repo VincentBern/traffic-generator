@@ -9,6 +9,8 @@
 # It is scheduled by a cron job (about every 15 minutes). See /etc/crontab
 #
 
+nvm use 16
+
 cd /home/ec2-user/traffic-generator
 
 git pull
