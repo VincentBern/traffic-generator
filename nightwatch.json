@@ -4,14 +4,16 @@
   ],
   "webdriver": {
     "start_process": true,
-    "server_path": "node_modules/.bin/chromedriver",
+    "server_path": "node_modules/.bin/geckodriver",
     "port": 9515
   },
   "custom_commands_path": "commands",
   "test_settings": {
     "default": {
       "desiredCapabilities": {
-        "browserName": "chrome"
+        "browserName": "firefox",
+        "acceptInsecureCerts": true,
+        "elementScrollBehavior": 1
       }
     }
   },

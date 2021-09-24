@@ -7,8 +7,8 @@
     "css-to-xpath": "^0.1.0"
   },
   "devDependencies": {
-    "chromedriver": "^93.0.1",
-    "nightwatch": "^1.7.10"
+    "geckodriver": "^2.0.4",
+    "nightwatch": "^1.7.11"
   },
   "scripts": {
     "test": "npx nightwatch"

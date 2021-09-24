@@ -30,7 +30,11 @@ module.exports = class CoveoOpenResultByTitle {
 
     if (res) {
       // Scroll element into view
-      await this.api.getLocationInView('xpath', SelectorResultXpath);
+      // await this.api.getLocationInView('xpath', SelectorResultXpath);
+
+      // res = await this.api.element('xpath', SelectorResultXpath);
+      // res = await this.api.moveTo(res.value.ELEMENT, 0, 0);
+
       await this.api.pause(1000);
       await this.api.CoveoClick(SelectorResultXpath, index);
     }

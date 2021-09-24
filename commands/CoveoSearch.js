@@ -24,7 +24,11 @@ module.exports = class CoveoSearch {
 
     await this.api.click(searchBoxInputSelector);
     result = await this.api.setValue(searchBoxInputSelector, text);
-    result = await this.api.keys(this.api.Keys.ENTER);
+    await this.api.pause(250); // slow down a bit for UA events
+
+    result = await this.api.setValue(searchBoxInputSelector, '\ue007');
+    // result = await this.api.keys(this.api.Keys.ENTER);
+    // result = await this.api.keys(this.api.Keys.NULL); // release keys
 
     // Add condition to operate ONLY when using JSUI
     // await this.api.CoveoWaitForSearch(lastSearchUid);
