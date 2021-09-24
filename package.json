@@ -8,16 +8,30 @@
   },
   "devDependencies": {
     "chromedriver": "^93.0.1",
-    "nightwatch": "^1.7.10"
+    "nightwatch": "^1.7.11"
   },
   "scripts": {
-    "test": "npx nightwatch"
+    "lint": "npm run lint:dockerfile && npm run format:check",
+    "lint:dockerfile": "dockerfilelint Dockerfile",
+    "nightwatch": "nightwatch -e chrome,firefox",
+    "start": "bin/start",
+    "start:debug": "bin/start-debug",
+    "stop": "bin/stop",
+    "test": "bin/test",
+    "test:debug": "bin/test-debug"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/coveo-labs/automatic-tester.git"
   },
-  "author": "",
+  "keywords": [
+    "docker",
+    "selenium",
+    "grid",
+    "nightwatch",
+    "javascript"
+  ],
+  "author": "Jerome Devost",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/coveo-labs/automatic-tester/issues"

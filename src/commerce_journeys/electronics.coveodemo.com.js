@@ -1,7 +1,7 @@
 const SELECTORS = require('../../input/selectors/GenericStore.json');
 const SCENARIO = require("../../input/scenarios/electronics.coveodemo.com.json");
 
-describe("Running Search Journeys", function () {
+describe("Running Electronics Journeys", function () {
   // Nightwatch session config
   this.endSessionOnFail = true;
   this.abortOnElementLocateError = false;
