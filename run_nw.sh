@@ -11,7 +11,7 @@
 
 # nvm use 16
 
-cd /home/ec2-user/traffic-generator
+cd /home/nightwatch/traffic-generator
 
 # git pull
 # npm i
