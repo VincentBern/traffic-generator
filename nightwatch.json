@@ -13,7 +13,20 @@
       "desiredCapabilities": {
         "browserName": "firefox",
         "acceptInsecureCerts": true,
-        "elementScrollBehavior": 1
+        "elementScrollBehavior": 1,
+        "moz:firefoxOptions": {
+          "binary": "/home/ec2-user/firefox/firefox"
+        },
+        "alwaysMatch": {
+          "moz:firefoxOptions": {
+            "binary": "/home/ec2-user/firefox/firefox",
+            "args": [
+              "-headless",
+              "-p"
+            ],
+            "profile": "nightwatch"
+          }
+        }
       }
     }
   },
