@@ -7,7 +7,7 @@
     "css-to-xpath": "^0.1.0"
   },
   "devDependencies": {
-    "geckodriver": "^2.0.4",
+    "chromedriver": "^94.0.0",
     "nightwatch": "^1.7.11"
   },
   "scripts": {
