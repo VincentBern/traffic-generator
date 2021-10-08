@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/bin/bash
+. $HOME/.bash_profile
 
 #
 # This is the script that is run periodically on the EC2 machine: coveodemo\jdevost 
@@ -9,11 +10,11 @@
 # It is scheduled by a cron job (about every 15 minutes). See /etc/crontab
 #
 
-nvm use 16
+# nvm use 16
 
 cd /home/ec2-user/traffic-generator
 
 git pull
 npm i
 
-node ./node_modules/nightwatch/bin/runner.js ./src/commerce_journeys/electronics.coveodemo.com.js --headless --disable-gpu > _last_run.log 2>&1
+./node_modules/nightwatch/bin/nightwatch ./src/commerce_journeys/electronics.coveodemo.com.js --headless --disable-gpu > _last_run_ec2user.log 2>&1
