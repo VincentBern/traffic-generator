@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/bin/bash
+. $HOME/.bash_profile
 
 #
 # This is the script that is run periodically on the EC2 machine: coveodemo\jdevost 
@@ -13,7 +14,7 @@
 
 cd /home/ec2-user/traffic-generator
 
-# git pull
-# npm i
+git pull
+npm i
 
 ./node_modules/nightwatch/bin/nightwatch ./src/commerce_journeys/electronics.coveodemo.com.js --headless --disable-gpu > _last_run_ec2.log 2>&1
