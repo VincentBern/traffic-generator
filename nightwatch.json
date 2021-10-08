@@ -4,29 +4,16 @@
   ],
   "webdriver": {
     "start_process": true,
-    "server_path": "node_modules/.bin/geckodriver",
+    "server_path": "node_modules/.bin/chromedriver",
     "port": 9515
   },
   "custom_commands_path": "commands",
   "test_settings": {
     "default": {
       "desiredCapabilities": {
-        "browserName": "firefox",
+        "browserName": "chrome",
         "acceptInsecureCerts": true,
-        "elementScrollBehavior": 1,
-        "moz:firefoxOptions": {
-          "binary": "/home/ec2-user/firefox/firefox"
-        },
-        "alwaysMatch": {
-          "moz:firefoxOptions": {
-            "binary": "/home/ec2-user/firefox/firefox",
-            "args": [
-              "-headless",
-              "-p"
-            ],
-            "profile": "nightwatch"
-          }
-        }
+        "elementScrollBehavior": 1
       }
     }
   },
