@@ -1,0 +1,33 @@
+{
+  "iterations": "",
+  "groups": {
+    "group_1": [
+      {
+        "result_title": "Straight Rigid Jeans for Men",
+        "keyword": "Jeans for Men"
+      },
+      {
+        "result_title": "V-Neck Sweater for Men",
+        "keyword": "v-neck"
+      },
+      {
+        "result_title": "Soft-Washed Color-Block Crew-Neck Tee for Men",
+        "keyword": "222465"
+      }
+    ],
+    "group_2": [
+      {
+        "result_title": "EveryWear Striped Slub-Knit Tee for Women",
+        "keyword": "Knit Tee"
+      },
+      {
+        "result_title": "Boyfriend Slub-Knit Tee for Women",
+        "keyword": "209477_34B"
+      },
+      {
+        "result_title": "Mid rise perfect boot jeans",
+        "keyword": "boot jeans"
+      }
+    ]
+  }
+}

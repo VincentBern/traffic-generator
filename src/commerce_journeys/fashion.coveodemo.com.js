@@ -1,5 +1,5 @@
 const SELECTORS = require('../../input/selectors/GenericStore.json');
-const SCENARIO = require("../../input/scenarios/electronics.coveodemo.com.json");
+const SCENARIO = require("../../input/scenarios/fashion.coveodemo.com.json");
 
 describe("Running Search Journeys", function () {
   // Nightwatch session config
@@ -10,7 +10,7 @@ describe("Running Search Journeys", function () {
 
   beforeEach(async function (browser) {
     await browser.resizeWindow(1565, 1237);
-    await browser.url("https://electronics.coveodemo.com/search");
+    await browser.url("https://fashion.coveodemo.com/search");
   });
 
   const setJourney = (keyword, result_title, resolve) => {
@@ -66,5 +66,4 @@ describe("Running Search Journeys", function () {
 
     await RunAsyncTests();
   });
-
 });
