@@ -20,3 +20,11 @@ npm i
 ./node_modules/nightwatch/bin/nightwatch ./src/commerce_journeys/electronics.coveodemo.com.js --headless --disable-gpu > _last_run_ec2user.log 2>&1
 ./node_modules/nightwatch/bin/nightwatch ./src/commerce_journeys/fashion.coveodemo.com.js --headless --disable-gpu >> _last_run_ec2user.log 2>&1
 ./node_modules/nightwatch/bin/nightwatch ./src/Examples/electronics.coveodemo.com.js --headless --disable-gpu >> _last_run_ec2user.log 2>&1
+
+./node_modules/nightwatch/bin/nightwatch ./src/Examples/RandomPurchase.fashion.js --headless --disable-gpu >> _last_run_ec2user.log 2>&1
+./node_modules/nightwatch/bin/nightwatch ./src/Examples/RandomPurchase.fashion.js --headless --disable-gpu >> _last_run_ec2user.log 2>&1
+./node_modules/nightwatch/bin/nightwatch ./src/Examples/RandomPurchase.fashion.js --headless --disable-gpu >> _last_run_ec2user.log 2>&1
+
+./node_modules/nightwatch/bin/nightwatch ./src/Examples/RandomPurchase.electronics.js --headless --disable-gpu >> _last_run_ec2user.log 2>&1
+./node_modules/nightwatch/bin/nightwatch ./src/Examples/RandomPurchase.electronics.js --headless --disable-gpu >> _last_run_ec2user.log 2>&1
+./node_modules/nightwatch/bin/nightwatch ./src/Examples/RandomPurchase.electronics.js --headless --disable-gpu >> _last_run_ec2user.log 2>&1

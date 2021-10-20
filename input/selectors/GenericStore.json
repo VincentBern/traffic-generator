@@ -16,7 +16,7 @@
     "resultCard": ".CoveoResult",
     "resultTitle": ".CoveoResultLink",
     "resultLink": ".CoveoResultLink",
-    "resultList": "#result-list--search-page"
+    "resultList": ".search__result-section .CoveoResultList"
   },
   "facets": {
     "showMore": ".CoveoFacetShowMore",
