@@ -29,7 +29,7 @@ function run_nightwatch {
   # replace --window-size by --user-agent 
   sed -e "s|--window-size=1565,1237|--user-agent=${useragent}|gi" nightwatch.json > nightwatch.$useragentmd5.json
 
-  ./node_modules/nightwatch/bin/nightwatch ./src/commerce_journeys/electronics.coveodemo.com.js --config nightwatch.$useragentmd5.json --headless --disable-gpu > _last_run_ec2user.log 2>&1
+  ./node_modules/nightwatch/bin/nightwatch $1 --config nightwatch.$useragentmd5.json --headless --disable-gpu > _last_run_ec2user.log 2>&1
   rm nightwatch.$useragentmd5.json
 }  
 
