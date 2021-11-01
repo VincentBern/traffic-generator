@@ -19,8 +19,10 @@ describe("Running Search Journeys", function () {
     for (let i = 0; i < loopSize; i++) {
       // Select a "Listing page" at random,
       await browser.CoveoSelectRandomlyFromShopMenu();
-      // then Select a Result at Random, 
+      // then Select a Result at Random,
       await browser.CoveoClickResultByNumber();
+      // then Select a Color at Random,
+      await browser.CoveoSelectRandomColor();
       // and buy it
       await browser.CoveoBuy(browser);
     }
