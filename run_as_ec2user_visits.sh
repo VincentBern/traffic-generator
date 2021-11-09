@@ -37,3 +37,5 @@ echo Start > _last_run_ec2user_visits.log 2>&1
 
 run_nightwatch ./src/Examples/RandomVisit.fashion.js
 run_nightwatch ./src/Examples/RandomVisit.fashion.js
+run_nightwatch ./src/Examples/RandomVisit.electronics.js
+run_nightwatch ./src/Examples/RandomVisit.electronics.js
