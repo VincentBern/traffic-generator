@@ -29,7 +29,7 @@ describe("Running Search Journeys", function () {
 
   beforeEach(async function (browser) {
     await browser.resizeWindow(1565, 1237);
-    await browser.url("https://electronics.coveodemo.com/");
+    await browser.url("https://electronics.coveodemo.com/?bot=1");
   });
 
   test("Facet - Laptop", async function (browser) {

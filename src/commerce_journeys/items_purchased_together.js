@@ -10,7 +10,7 @@ describe("Running Search Journeys", function () {
 
   beforeEach(async function (browser) {
     await browser.resizeWindow(1565, 1237);
-    await browser.url("https://genericstore.coveodemo.com/searchPage");
+    await browser.url("https://genericstore.coveodemo.com/searchPage?bot=1");
   });
 
   const setJourney = (keyword, result_title, resolve) => {
@@ -23,8 +23,8 @@ describe("Running Search Journeys", function () {
       await browser.click(pdp.addToCart);
       await browser.pause(1000);
       resolve();
-    })
-  }
+    });
+  };
 
   const checkout = () => {
     test("Checkout and Kill session", async function (browser) {
@@ -39,13 +39,13 @@ describe("Running Search Journeys", function () {
       await browser.pause(2000);
       await browser.end();
     });
-  }
+  };
 
   const RunJourney = async (keyword, result_title) => {
     return new Promise((resolve) => {
       setJourney(keyword, result_title, resolve);
-    })
-  }
+    });
+  };
 
   describe('', async function () {
     RunAsyncTests = async () => {
@@ -56,13 +56,13 @@ describe("Running Search Journeys", function () {
       // Loop through all Keywords and search values
       for (let i = 0; i < scenarios.length; i++) {
         for (let j = 0; j < scenarios[i].length; j++) {
-          await RunJourney(scenarios[i][j].keyword, scenarios[i][j].result_title)
+          await RunJourney(scenarios[i][j].keyword, scenarios[i][j].result_title);
         }
 
         // Checkout and kill session at the end of each journey
         checkout();
       }
-    }
+    };
 
     await RunAsyncTests();
   });

@@ -8,7 +8,7 @@ describe("Running Search Journeys", function () {
 
   beforeEach(async function (browser) {
     await browser.resizeWindow(1565, 1237);
-    await browser.url("https://genericstore.coveodemo.com/");
+    await browser.url("https://genericstore.coveodemo.com/?bot=1");
   });
 
   test("Search", async function (browser) {
@@ -57,6 +57,6 @@ describe("Running Search Journeys", function () {
 
   afterEach(async function (browser) {
     await browser.pause(1000); // give some time for events to be sent
-    browser.end()
+    browser.end();
   });
 });
