@@ -10,7 +10,7 @@ describe("Running Search Journeys", function () {
 
   beforeEach(async function (browser) {
     await browser.resizeWindow(1565, 1237);
-    await browser.url("https://fashion.coveodemo.com/search");
+    await browser.url("https://fashion.coveodemo.com/search?bot=1");
   });
 
   const setJourney = (keyword, result_title, resolve) => {
