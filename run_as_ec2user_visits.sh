@@ -24,7 +24,7 @@ number_of_useragents=${#array[@]}
 function run_nightwatch {
   echo $1
   useragent=${array[$(($RANDOM % $number_of_useragents))]}
-  useragentmd5=$(echo -n $useragent | openssl md5)
+  useragentmd5=$(echo -n $useragent | openssl md5 | sed 's/(stdin)= //')
 
   # replace --window-size by --user-agent 
   sed -e "s|--window-size=1565,1237|--user-agent=${useragent}|gi" nightwatch.json > nightwatch.$useragentmd5.json
