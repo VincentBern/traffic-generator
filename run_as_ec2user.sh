@@ -17,6 +17,11 @@ cd /home/ec2-user/traffic-generator
 git pull
 npm i
 
+# kill old processes in case they that are "stuck"
+pkill -f 'google/chrome'
+pkill -f 'chromedriver'
+pkill -f 'nightwatch'
+
 # Load a list of user agents
 IFS=$'\n' array=($(cat user_agents.txt))
 number_of_useragents=${#array[@]}
