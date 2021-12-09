@@ -69,13 +69,10 @@ module.exports = class CoveoClickResultByNumber {
     Selectors = null
   ) {
 
-    const Selector_resultList_ResultCard
-      = SelectorExtract(Selectors).getParentChildSelector("resultListSelector", "resultCardSelector");
-
+    const Selector_resultList_ResultCard = SelectorExtract(Selectors).getParentChildSelector("resultListSelector", "resultCardSelector");
     const resultLinkSelector = SelectorExtract(Selectors).getSelector('resultLinkSelector');
 
     let res = await this.api.isVisible(Selector_resultList_ResultCard);
-
     res = await this.clickResult(Selector_resultList_ResultCard, resultLinkSelector, nthValue);
 
     await this.api.pause(1000);
